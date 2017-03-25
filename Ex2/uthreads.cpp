@@ -7,13 +7,65 @@
 #include <vector>
 #include <map>
 #include <queue>
+#include "thread.h"
 
-std::map<unsigned int, sigjmp_buf> threads;
+
+//-------------------------------defines----------------------------------------
+#define Q_INIT 0
+
+//-------------------------------variables--------------------------------------
+
+// thread handling data structure
+std::map<unsigned int, thread> threads;
+// round robin thread queue
 std::queue<unsigned int> ready_queue;
-unsigned int threads_num;
-unsigned int quant;
+// current quanta
+unsigned int quanta;
+//min heap next next thread
+std::priority_queue<unsigned int> next_thread;
+// current running thread
+unsigned int curr_thread;
 
-struct thread{}typedef thread;
+struct sigaction sa;
+struct itimerval timer;
+
+
+//-----------------------------------functions----------------------------------
+
+unsigned int get_next_thread_id()
+{
+    if(next_thread.empty())
+    {
+        return threads.size() + 1;
+    }
+    else
+    {
+        unsigned int p = next_thread.top();
+        next_thread.pop();
+        return p;
+    }
+}
+
+void switch_threads()
+{
+    if (ready_queue.empty())
+    {
+        return;
+    }
+
+    int ret_val = sigsetjmp(threads[ready_queue.front()]._env,1);
+    if (ret_val == 1) {
+        return;
+    }
+    quanta++;
+    threads[curr_thread]._state = ready;
+    ready_queue.push(curr_thread);
+    curr_thread = ready_queue.front();
+    ready_queue.pop();
+    threads[curr_thread]._num_quantum++;
+    siglongjmp(threads[curr_thread]._env,1);
+}
+
 
 /*
  * Description: This function initializes the thread library.
@@ -23,7 +75,41 @@ struct thread{}typedef thread;
  * function with non-positive quantum_usecs.
  * Return value: On success, return 0. On failure, return -1.
 */
-int uthread_init(int quantum_usecs);
+int uthread_init(int quantum_usecs)
+{
+    quanta = Q_INIT;
+    if (quantum_usecs <= 0)
+    {
+        return -1;
+    }
+
+
+    sa.sa_handler = &switch_threads;
+    if (sigaction(SIGVTALRM, &sa, NULL) < 0) {
+        printf("sigaction error.");
+    }
+
+    // Configure the timer to expire
+    int q_time_usec = quantum_usecs / 1000000;
+    int q_time_sec = quantum_usecs % 1000000;
+    timer.it_value.tv_usec = q_time_usec;
+    timer.it_value.tv_sec = q_time_sec;
+    timer.it_interval.tv_usec = q_time_usec;
+    timer.it_interval.tv_sec = q_time_sec;
+
+    unsigned int id = get_next_thread_id();
+    threads[id] =  thread(id, 0, running);
+
+    quanta++;
+    threads[id]._num_quantum++;
+    curr_thread = id;
+
+    if (setitimer (ITIMER_VIRTUAL, &timer, NULL)) {
+        fprintf(stderr, "setitimer error.", 16);
+        return -1;
+
+    return 0;
+}
 
 /*
  * Description: This function creates a new thread, whose entry point is the
@@ -35,7 +121,21 @@ int uthread_init(int quantum_usecs);
  * Return value: On success, return the ID of the created thread.
  * On failure, return -1.
 */
-int uthread_spawn(void (*f)(void));
+int uthread_spawn(void (*f)(void))
+{
+    unsigned int id = get_next_thread_id();
+    if(id > MAX_THREAD_NUM)
+    {
+       fprintf(stderr, "max thread num reached", 22);
+        return -1;
+    }
+
+    threads.insert(std::pair(id, thread(id, (address_t)f)));
+    ready_queue.push(id);
+
+}
+
+
 
 
 /*
@@ -86,7 +186,10 @@ int uthread_resume(int tid);
  * the BLOCKED state a scheduling decision should be made.
  * Return value: On success, return 0. On failure, return -1.
 */
-int uthread_sync(int tid);
+int uthread_sync(int tid)
+{
+    return curr_thread;
+}
 
 
 /*
@@ -95,7 +198,7 @@ int uthread_sync(int tid);
 */
 int uthread_get_tid();
 
-
+// TODO easy
 /*
  * Description: This function returns the total number of quantums that were
  * started since the library was initialized, including the current quantum.
@@ -106,7 +209,7 @@ int uthread_get_tid();
 */
 int uthread_get_total_quantums();
 
-
+// TODO easy
 /*
  * Description: This function returns the number of quantums the thread with
  * ID tid was in RUNNING state. On the first time a thread runs, the function
@@ -118,4 +221,8 @@ int uthread_get_total_quantums();
 */
 int uthread_get_quantums(int tid);
 
+int main()
+{
+    return 0;
+}
 
