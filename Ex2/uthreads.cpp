@@ -196,7 +196,10 @@ int uthread_sync(int tid)
  * Description: This function returns the thread ID of the calling thread.
  * Return value: The ID of the calling thread.
 */
-int uthread_get_tid();
+int uthread_get_tid()
+{
+    return curr_thread;
+}
 
 // TODO easy
 /*
