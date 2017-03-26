@@ -8,6 +8,7 @@
 #include <map>
 #include <queue>
 #include "thread.h"
+#include <cstdlib>
 
 
 //-------------------------------defines----------------------------------------
@@ -46,7 +47,7 @@ unsigned int get_next_thread_id()
     }
 }
 
-void switch_threads()
+void switch_threads(int input)
 {
     if (ready_queue.empty())
     {
@@ -64,6 +65,26 @@ void switch_threads()
     ready_queue.pop();
     threads[curr_thread]._num_quantum++;
     siglongjmp(threads[curr_thread]._env,1);
+}
+
+void erase_from_queue(unsigned int to_erase)
+{
+    std::queue<unsigned int> temp;
+    while(ready_queue.empty())
+    {
+        if(ready_queue.front() == to_erase)
+        {
+            ready_queue.pop();
+            break;
+        }
+        temp.push(ready_queue.front());
+        ready_queue.pop();
+    }
+    while(!temp.empty())
+    {
+        ready_queue.push(temp.front());
+        temp.pop();
+    }
 }
 
 
@@ -85,7 +106,8 @@ int uthread_init(int quantum_usecs)
 
 
     sa.sa_handler = &switch_threads;
-    if (sigaction(SIGVTALRM, &sa, NULL) < 0) {
+    if (sigaction(SIGVTALRM, &sa, NULL) < 0)
+    {
         printf("sigaction error.");
     }
 
@@ -98,17 +120,19 @@ int uthread_init(int quantum_usecs)
     timer.it_interval.tv_sec = q_time_sec;
 
     unsigned int id = get_next_thread_id();
-    threads[id] =  thread(id, 0, running);
+    threads[id] = thread(id, 0, running);
 
     quanta++;
     threads[id]._num_quantum++;
     curr_thread = id;
 
-    if (setitimer (ITIMER_VIRTUAL, &timer, NULL)) {
+    if (setitimer(ITIMER_VIRTUAL, &timer, NULL))
+    {
         fprintf(stderr, "setitimer error.", 16);
         return -1;
 
-    return 0;
+        return 0;
+    }
 }
 
 /*
@@ -121,19 +145,19 @@ int uthread_init(int quantum_usecs)
  * Return value: On success, return the ID of the created thread.
  * On failure, return -1.
 */
-int uthread_spawn(void (*f)(void))
+    int uthread_spawn(void (*f)(void))
 {
-    unsigned int id = get_next_thread_id();
-    if(id > MAX_THREAD_NUM)
-    {
-       fprintf(stderr, "max thread num reached", 22);
-        return -1;
+        unsigned int id = get_next_thread_id();
+        if (id > MAX_THREAD_NUM)
+        {
+            fprintf(stderr, "max thread num reached", 22);
+            return -1;
+        }
+
+        threads.insert(std::pair(id, thread(id, (address_t) f)));
+        ready_queue.push(id);
+
     }
-
-    threads.insert(std::pair(id, thread(id, (address_t)f)));
-    ready_queue.push(id);
-
-}
 
 
 
@@ -149,7 +173,21 @@ int uthread_spawn(void (*f)(void))
  * terminated and -1 otherwise. If a thread terminates itself or the main
  * thread is terminated, the function does not return.
 */
-int uthread_terminate(int tid);
+int uthread_terminate(int tid)
+{
+    if(tid == 0)
+    {
+        exit(0);
+    }
+    if(threads.find(tid) == std::map::end()|| tid < 0 )
+    {
+        return -1;
+    }
+    threads.erase(tid);
+    erase_from_queue(tid);
+    next_thread.push(tid);
+    return 0;
+}
 
 
 /*
@@ -161,7 +199,15 @@ int uthread_terminate(int tid);
  * effect and is not considered as an error.
  * Return value: On success, return 0. On failure, return -1.
 */
-int uthread_block(int tid);
+    int uthread_block(int tid)
+{
+    if(threads.find(tid) == std::map::end() || tid <= 0 )
+    {
+        return -1;
+    }
+    threads[tid]._state = waiting;
+    erase_from_queue(tid);
+}
 
 
 /*
@@ -171,7 +217,7 @@ int uthread_block(int tid);
  * ID tid exists it is considered as an error.
  * Return value: On success, return 0. On failure, return -1.
 */
-int uthread_resume(int tid);
+    int uthread_resume(int tid);
 
 
 /*
@@ -186,20 +232,18 @@ int uthread_resume(int tid);
  * the BLOCKED state a scheduling decision should be made.
  * Return value: On success, return 0. On failure, return -1.
 */
-int uthread_sync(int tid)
-{
-    return curr_thread;
-}
+    int uthread_sync(int tid) {
+
+    }
 
 
 /*
  * Description: This function returns the thread ID of the calling thread.
  * Return value: The ID of the calling thread.
 */
-int uthread_get_tid()
-{
-    return curr_thread;
-}
+    int uthread_get_tid() {
+        return curr_thread;
+    }
 
 // TODO easy
 /*
@@ -210,7 +254,7 @@ int uthread_get_tid()
  * should be increased by 1.
  * Return value: The total number of quantums.
 */
-int uthread_get_total_quantums();
+    int uthread_get_total_quantums();
 
 // TODO easy
 /*
@@ -222,10 +266,7 @@ int uthread_get_total_quantums();
  * thread with ID tid exists it is considered as an error.
  * Return value: On success, return the number of quantums of the thread with ID tid. On failure, return -1.
 */
-int uthread_get_quantums(int tid);
+    int uthread_get_quantums(int tid);
 
-int main()
-{
-    return 0;
-}
+
 
