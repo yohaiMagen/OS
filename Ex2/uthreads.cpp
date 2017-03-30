@@ -207,6 +207,7 @@ int uthread_terminate(int tid)
     }
     threads[tid]._state = waiting;
     erase_from_queue(tid);
+    return 0;
 }
 
 
