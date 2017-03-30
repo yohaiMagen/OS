@@ -199,7 +199,7 @@ int uthread_terminate(int tid)
  * effect and is not considered as an error.
  * Return value: On success, return 0. On failure, return -1.
 */
-    int uthread_block(int tid)
+int uthread_block(int tid)
 {
     if(threads.find(tid) == std::map::end() || tid <= 0 )
     {
@@ -217,7 +217,10 @@ int uthread_terminate(int tid)
  * ID tid exists it is considered as an error.
  * Return value: On success, return 0. On failure, return -1.
 */
-    int uthread_resume(int tid);
+int uthread_resume(int tid)
+{
+    threads[tid]._state = ready;
+}
 
 
 /*
@@ -232,20 +235,20 @@ int uthread_terminate(int tid)
  * the BLOCKED state a scheduling decision should be made.
  * Return value: On success, return 0. On failure, return -1.
 */
-    int uthread_sync(int tid) {
+int uthread_sync(int tid)
+{
 
-    }
+}
 
 
 /*
  * Description: This function returns the thread ID of the calling thread.
  * Return value: The ID of the calling thread.
 */
-    int uthread_get_tid() {
-        return curr_thread;
-    }
+int uthread_get_tid() {
+    return curr_thread;
+}
 
-// TODO easy
 /*
  * Description: This function returns the total number of quantums that were
  * started since the library was initialized, including the current quantum.
@@ -254,9 +257,11 @@ int uthread_terminate(int tid)
  * should be increased by 1.
  * Return value: The total number of quantums.
 */
-    int uthread_get_total_quantums();
+int uthread_get_total_quantums()
+{
+    return quanta;
+}
 
-// TODO easy
 /*
  * Description: This function returns the number of quantums the thread with
  * ID tid was in RUNNING state. On the first time a thread runs, the function
@@ -266,7 +271,12 @@ int uthread_terminate(int tid)
  * thread with ID tid exists it is considered as an error.
  * Return value: On success, return the number of quantums of the thread with ID tid. On failure, return -1.
 */
-    int uthread_get_quantums(int tid);
+int uthread_get_quantums(int tid)
+{
+    threads[tid]._num_quantum;
+}
 
-
-
+int main()
+{
+    return 0;
+}
