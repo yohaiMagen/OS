@@ -20,6 +20,7 @@
 std::map<unsigned int, thread> threads;
 // round robin thread queue
 std::queue<unsigned int> ready_queue;
+bool erase_from_queue[100];
 // current quanta
 unsigned int quanta;
 //min heap next next thread
@@ -62,30 +63,39 @@ void switch_threads(int input)
     threads[curr_thread]._state = ready;
     ready_queue.push(curr_thread);
     curr_thread = ready_queue.front();
+    while(erase_from_queue[curr_thread])
+    {
+        ready_queue.pop();
+        if(ready_queue.empty())
+        {
+            return;
+        }
+        curr_thread = ready_queue.front();
+    }
     ready_queue.pop();
     threads[curr_thread]._num_quantum++;
     siglongjmp(threads[curr_thread]._env,1);
 }
 
-void erase_from_queue(unsigned int to_erase)
-{
-    std::queue<unsigned int> temp;
-    while(ready_queue.empty())
-    {
-        if(ready_queue.front() == to_erase)
-        {
-            ready_queue.pop();
-            break;
-        }
-        temp.push(ready_queue.front());
-        ready_queue.pop();
-    }
-    while(!temp.empty())
-    {
-        ready_queue.push(temp.front());
-        temp.pop();
-    }
-}
+//void erase_from_queue(unsigned int to_erase)
+//{
+//    std::queue<unsigned int> temp;
+//    while(ready_queue.empty())
+//    {
+//        if(ready_queue.front() == to_erase)
+//        {
+//            ready_queue.pop();
+//            break;
+//        }
+//        temp.push(ready_queue.front());
+//        ready_queue.pop();
+//    }
+//    while(!temp.empty())
+//    {
+//        ready_queue.push(temp.front());
+//        temp.pop();
+//    }
+//}
 
 
 /*
@@ -145,19 +155,18 @@ int uthread_init(int quantum_usecs)
  * Return value: On success, return the ID of the created thread.
  * On failure, return -1.
 */
-    int uthread_spawn(void (*f)(void))
+int uthread_spawn(void (*f)(void))
 {
-        unsigned int id = get_next_thread_id();
-        if (id > MAX_THREAD_NUM)
-        {
-            fprintf(stderr, "max thread num reached", 22);
-            return -1;
-        }
-
-        threads.insert(std::pair(id, thread(id, (address_t) f)));
-        ready_queue.push(id);
-
+    unsigned int id = get_next_thread_id();
+    if (id > MAX_THREAD_NUM)
+    {
+        fprintf(stderr, "max thread num reached", 22);
+        return -1;
     }
+    threads.insert(std::pair(id, thread(id, (address_t) f)));
+    ready_queue.push(id);
+
+}
 
 
 
@@ -184,7 +193,7 @@ int uthread_terminate(int tid)
         return -1;
     }
     threads.erase(tid);
-    erase_from_queue(tid);
+    erase_from_queue[tid] = true;
     next_thread.push(tid);
     return 0;
 }
@@ -206,7 +215,7 @@ int uthread_block(int tid)
         return -1;
     }
     threads[tid]._state = waiting;
-    erase_from_queue(tid);
+    erase_from_queue[tid] = true;
     return 0;
 }
 
