@@ -54,24 +54,24 @@ void switch_threads(int input)
     {
         return;
     }
-
-    int ret_val = sigsetjmp(threads[ready_queue.front()]._env,1);
-    if (ret_val == 1) {
-        return;
-    }
-    quanta++;
-    threads[curr_thread]._state = ready;
-    ready_queue.push(curr_thread);
-    curr_thread = ready_queue.front();
-    while(erase_from_queue[curr_thread])
+    int next_thread = ready_queue.front();
+    while(erase_from_queue[next_thread])
     {
         ready_queue.pop();
         if(ready_queue.empty())
         {
             return;
         }
-        curr_thread = ready_queue.front();
+        next_thread = ready_queue.front();
     }
+    int ret_val = sigsetjmp(threads[next_thread]._env,1);
+    if (ret_val == 1) {
+        return;
+    }
+    quanta++;
+    threads[curr_thread]._state = ready;
+    ready_queue.push(curr_thread);
+    curr_thread = next_thread;
     ready_queue.pop();
     threads[curr_thread]._num_quantum++;
     siglongjmp(threads[curr_thread]._env,1);
