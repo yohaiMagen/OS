@@ -21,6 +21,8 @@ unistd.h
 -
 sys/time.h
 -
+vector
+-
 uthreads.h
 /home/yohai/CLionProjects/OS/Ex2/uthreads.h
 
@@ -45,6 +47,8 @@ queue
 -
 thread.h
 /home/yohai/CLionProjects/OS/Ex2/thread.h
+cstdlib
+-
 
 /home/yohai/CLionProjects/OS/Ex2/uthreads.h
 

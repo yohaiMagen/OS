@@ -2,16 +2,16 @@
 // Created by yohai on 3/25/17.
 //
 
+#ifndef EX2_THREAD_H
+#define EX2_THREAD_H
+
 #include <stdio.h>
 #include <setjmp.h>
 #include <signal.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <vector>
 #include "uthreads.h"
-
-
-#ifndef EX2_THREAD_H
-#define EX2_THREAD_H
 
 #ifdef __x86_64__
 /* code for 64 bit Intel arch */
@@ -45,7 +45,7 @@ address_t translate_address(address_t addr)
 {
     address_t ret;
     asm volatile("xor    %%gs:0x18,%0\n"
-		"rol    $0x9,%0\n"
+        "rol    $0x9,%0\n"
                  : "=g" (ret)
                  : "0" (addr));
     return ret;
@@ -55,13 +55,14 @@ address_t translate_address(address_t addr)
 
 
 // thread state
-enum threadState { ready, running, waiting };
+enum threadState { ready, running, waiting, blocked, blockedNwaiting };
 
 /**
  * A simple thread
  */
 struct thread
 {
+    std::vector<unsigned int> _waiting_for_me;
     unsigned int _id; // unique number
     char _stack[STACK_SIZE];
     sigjmp_buf _env; //thread's buffer
@@ -70,6 +71,7 @@ struct thread
     threadState _state; // thread's state
     unsigned int _num_quantum; // number of quantum run by the thread
 
+    thread();
     thread(unsigned int id, address_t pc, threadState state = ready);
     ~thread();
 

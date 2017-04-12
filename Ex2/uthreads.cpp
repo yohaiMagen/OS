@@ -14,13 +14,12 @@
 //-------------------------------defines----------------------------------------
 #define Q_INIT 0
 
-//-------------------------------variables--------------------------------------
-
+//-------------------------------variables-------------------------------------
 // thread handling data structure
 std::map<unsigned int, thread> threads;
 // round robin thread queue
 std::queue<unsigned int> ready_queue;
-bool erase_from_queue[100];
+int erase_from_queue[100];
 // current quanta
 unsigned int quanta;
 //min heap next next thread
@@ -33,6 +32,35 @@ struct itimerval timer;
 
 
 //-----------------------------------functions----------------------------------
+int reset_timer()
+{
+    timer.it_value.tv_usec = 0;
+    timer.it_value.tv_sec = 0;
+    if (setitimer(ITIMER_VIRTUAL, &timer, NULL))
+    {
+        fprintf(stderr, "setitimer error.");
+        return -1;
+    }
+    return 0;
+}
+
+
+void uthread_unsync(unsigned int tid)
+{
+    for (std::vector<unsigned int>::iterator i = threads[tid]._waiting_for_me.begin(); i != threads[tid]._waiting_for_me.end(); ++i)
+    {
+        if(threads[*i]._state == blockedNwaiting)
+        {
+            threads[*i]._state = blocked;
+        }
+        else
+        {
+            threads[*i]._state = ready;
+            ready_queue.push(*i);
+        }
+    }
+    threads[tid]._waiting_for_me.clear();
+}
 
 unsigned int get_next_thread_id()
 {
@@ -50,34 +78,51 @@ unsigned int get_next_thread_id()
 
 void switch_threads(int input)
 {
+    sigset_t blc_set;
+    sigemptyset(&blc_set);
+    sigaddset(&blc_set, SIGVTALRM);
+    if(!sigprocmask(SIG_SETMASK, &blc_set, NULL))
+    {
+        exit(-1);
+    }
     if (ready_queue.empty())
     {
+        threads[curr_thread]._num_quantum++;
+        quanta++;
         return;
     }
     int next_thread = ready_queue.front();
-    while(erase_from_queue[next_thread])
+    while(erase_from_queue[next_thread] != 0)
     {
         ready_queue.pop();
+        erase_from_queue[next_thread]--;
         if(ready_queue.empty())
         {
             return;
         }
         next_thread = ready_queue.front();
     }
-    int ret_val = sigsetjmp(threads[next_thread]._env,1);
-    if (ret_val == 1) {
+    int ret_val = sigsetjmp(threads[curr_thread]._env, 1);
+    if (ret_val == 1)
+    {
+        if(!sigprocmask(SIG_UNBLOCK, &blc_set, NULL))
+        {
+            exit(-1);
+        }
+        threads[curr_thread]._state = running;
         return;
     }
     quanta++;
     threads[curr_thread]._state = ready;
     ready_queue.push(curr_thread);
+    uthread_unsync(curr_thread);
     curr_thread = next_thread;
     ready_queue.pop();
     threads[curr_thread]._num_quantum++;
-    siglongjmp(threads[curr_thread]._env,1);
+    siglongjmp(threads[curr_thread]._env, 1);
 }
 
-//void erase_from_queue(unsigned int to_erase)
+//void erase_from_queue_func(unsigned int to_erase)
 //{
 //    std::queue<unsigned int> temp;
 //    while(ready_queue.empty())
@@ -111,7 +156,7 @@ int uthread_init(int quantum_usecs)
     quanta = Q_INIT;
     if (quantum_usecs <= 0)
     {
-        return -1;
+        return -1;//TODO;
     }
 
 
@@ -124,7 +169,7 @@ int uthread_init(int quantum_usecs)
     // Configure the timer to expire
     int q_time_usec = quantum_usecs / 1000000;
     int q_time_sec = quantum_usecs % 1000000;
-    timer.it_value.tv_usec = q_time_usec;
+    timer.it_value.tv_usec = q_time_usec;//TODO add time to exit init
     timer.it_value.tv_sec = q_time_sec;
     timer.it_interval.tv_usec = q_time_usec;
     timer.it_interval.tv_sec = q_time_sec;
@@ -138,11 +183,10 @@ int uthread_init(int quantum_usecs)
 
     if (setitimer(ITIMER_VIRTUAL, &timer, NULL))
     {
-        fprintf(stderr, "setitimer error.", 16);
+        fprintf(stderr, "setitimer error.");
         return -1;
-
-        return 0;
     }
+    return 0;
 }
 
 /*
@@ -160,15 +204,13 @@ int uthread_spawn(void (*f)(void))
     unsigned int id = get_next_thread_id();
     if (id > MAX_THREAD_NUM)
     {
-        fprintf(stderr, "max thread num reached", 22);
-        return -1;
+        fprintf(stderr, "max thread num reached");
+        return -1;//TODO;
     }
-    threads.insert(std::pair(id, thread(id, (address_t) f)));
+    threads[id] = thread(id, (address_t) f);
     ready_queue.push(id);
 
 }
-
-
 
 
 /*
@@ -188,13 +230,21 @@ int uthread_terminate(int tid)
     {
         exit(0);
     }
-    if(threads.find(tid) == std::map::end()|| tid < 0 )
+    if(threads.find(tid) == threads.end() || tid < 0 )
     {
-        return -1;
+        return -1;//TODO;
     }
+    uthread_unsync(tid);
     threads.erase(tid);
-    erase_from_queue[tid] = true;
+    if(threads[tid]._state == ready)
+    {
+        erase_from_queue[tid]++;
+    }
     next_thread.push(tid);
+    if(tid == curr_thread)
+    {
+        return reset_timer();
+    }
     return 0;
 }
 
@@ -210,12 +260,26 @@ int uthread_terminate(int tid)
 */
 int uthread_block(int tid)
 {
-    if(threads.find(tid) == std::map::end() || tid <= 0 )
+    if(threads.find(tid) == threads.end() || tid <= 0 )
     {
-        return -1;
+        return -1;//TODO;
     }
-    threads[tid]._state = waiting;
-    erase_from_queue[tid] = true;
+    if(threads[tid]._state == waiting)
+    {
+        threads[tid]._state = blockedNwaiting;
+    }
+    else
+    {
+        if(threads[tid]._state == ready)
+        {
+            erase_from_queue[tid]++;
+        }
+        threads[tid]._state = blocked;
+    }
+    if(tid == curr_thread)
+    {
+        return reset_timer();
+    }
     return 0;
 }
 
@@ -229,7 +293,20 @@ int uthread_block(int tid)
 */
 int uthread_resume(int tid)
 {
-    threads[tid]._state = ready;
+    if(threads.find(tid) == threads.end() || tid <= 0 || tid == curr_thread)
+    {
+        return -1;//TODO;
+    }
+    if(threads[tid]._state == blockedNwaiting)
+    {
+        threads[tid]._state = waiting;
+    }
+    else if(threads[tid]._state == blocked)
+    {
+        threads[tid]._state = ready;
+        ready_queue.push(tid);
+    }
+    return 0;
 }
 
 
@@ -247,9 +324,21 @@ int uthread_resume(int tid)
 */
 int uthread_sync(int tid)
 {
-
+    if(tid == curr_thread)
+    {
+        return -1;//TODO;
+    }
+    threads[tid]._waiting_for_me.push_back(curr_thread);
+    if (threads[curr_thread]._state == blocked)
+    {
+        threads[curr_thread]._state = blockedNwaiting;
+    }
+    else
+    {
+        threads[curr_thread]._state = waiting;
+    }
+    return reset_timer();
 }
-
 
 /*
  * Description: This function returns the thread ID of the calling thread.
@@ -283,7 +372,11 @@ int uthread_get_total_quantums()
 */
 int uthread_get_quantums(int tid)
 {
-    threads[tid]._num_quantum;
+    if(threads.find(tid) == threads.end())
+    {
+        return -1;//TODO
+    }
+    return threads[tid]._num_quantum;
 }
 
 int main()

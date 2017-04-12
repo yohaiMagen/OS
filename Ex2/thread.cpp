@@ -1,5 +1,7 @@
 #include "thread.h"
 
+thread::thread() : thread(-1 , 0, blockedNwaiting) {}
+
 thread::thread(unsigned int id, address_t pc, threadState state)
 {
     _id = id;
@@ -9,5 +11,7 @@ thread::thread(unsigned int id, address_t pc, threadState state)
     _state = state;
     _num_quantum = 0;
 }
+
+thread::~thread() {}
 
 
