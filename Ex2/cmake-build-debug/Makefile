@@ -123,6 +123,46 @@ Ex2/fast:
 	$(MAKE) -f CMakeFiles/Ex2.dir/build.make CMakeFiles/Ex2.dir/build
 .PHONY : Ex2/fast
 
+#=============================================================================
+# Target rules for targets named itimer
+
+# Build rule for target.
+itimer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 itimer
+.PHONY : itimer
+
+# fast build rule for target.
+itimer/fast:
+	$(MAKE) -f CMakeFiles/itimer.dir/build.make CMakeFiles/itimer.dir/build
+.PHONY : itimer/fast
+
+demo_itimer.o: demo_itimer.c.o
+
+.PHONY : demo_itimer.o
+
+# target to build an object file
+demo_itimer.c.o:
+	$(MAKE) -f CMakeFiles/itimer.dir/build.make CMakeFiles/itimer.dir/demo_itimer.c.o
+.PHONY : demo_itimer.c.o
+
+demo_itimer.i: demo_itimer.c.i
+
+.PHONY : demo_itimer.i
+
+# target to preprocess a source file
+demo_itimer.c.i:
+	$(MAKE) -f CMakeFiles/itimer.dir/build.make CMakeFiles/itimer.dir/demo_itimer.c.i
+.PHONY : demo_itimer.c.i
+
+demo_itimer.s: demo_itimer.c.s
+
+.PHONY : demo_itimer.s
+
+# target to generate assembly for a file
+demo_itimer.c.s:
+	$(MAKE) -f CMakeFiles/itimer.dir/build.make CMakeFiles/itimer.dir/demo_itimer.c.s
+.PHONY : demo_itimer.c.s
+
 thread.o: thread.cpp.o
 
 .PHONY : thread.o
@@ -186,6 +226,10 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Ex2"
+	@echo "... itimer"
+	@echo "... demo_itimer.o"
+	@echo "... demo_itimer.i"
+	@echo "... demo_itimer.s"
 	@echo "... thread.o"
 	@echo "... thread.i"
 	@echo "... thread.s"

@@ -1,3 +1,4 @@
 /home/yohai/CLionProjects/OS/Ex2/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/yohai/CLionProjects/OS/Ex2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /home/yohai/CLionProjects/OS/Ex2/cmake-build-debug/CMakeFiles/Ex2.dir
+/home/yohai/CLionProjects/OS/Ex2/cmake-build-debug/CMakeFiles/itimer.dir

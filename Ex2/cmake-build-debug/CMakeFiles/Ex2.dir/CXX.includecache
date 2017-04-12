@@ -11,6 +11,8 @@ thread.h
 /home/yohai/CLionProjects/OS/Ex2/thread.h
 
 /home/yohai/CLionProjects/OS/Ex2/thread.h
+uthreads.h
+/home/yohai/CLionProjects/OS/Ex2/uthreads.h
 stdio.h
 -
 setjmp.h
@@ -23,8 +25,6 @@ sys/time.h
 -
 vector
 -
-uthreads.h
-/home/yohai/CLionProjects/OS/Ex2/uthreads.h
 
 /home/yohai/CLionProjects/OS/Ex2/uthreads.cpp
 uthreads.h

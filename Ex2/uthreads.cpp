@@ -81,7 +81,7 @@ void switch_threads(int input)
     sigset_t blc_set;
     sigemptyset(&blc_set);
     sigaddset(&blc_set, SIGVTALRM);
-    if(!sigprocmask(SIG_SETMASK, &blc_set, NULL))
+    if(sigprocmask(SIG_SETMASK, &blc_set, NULL) == -1)
     {
         exit(-1);
     }
@@ -121,6 +121,7 @@ void switch_threads(int input)
     threads[curr_thread]._num_quantum++;
     siglongjmp(threads[curr_thread]._env, 1);
 }
+
 
 //void erase_from_queue_func(unsigned int to_erase)
 //{
@@ -167,8 +168,8 @@ int uthread_init(int quantum_usecs)
     }
 
     // Configure the timer to expire
-    int q_time_usec = quantum_usecs / 1000000;
-    int q_time_sec = quantum_usecs % 1000000;
+    int q_time_sec = quantum_usecs / 1000000;
+    int q_time_usec = quantum_usecs % 1000000;
     timer.it_value.tv_usec = q_time_usec;//TODO add time to exit init
     timer.it_value.tv_sec = q_time_sec;
     timer.it_interval.tv_usec = q_time_usec;
@@ -181,10 +182,8 @@ int uthread_init(int quantum_usecs)
     threads[id]._num_quantum++;
     curr_thread = id;
 
-    if (setitimer(ITIMER_VIRTUAL, &timer, NULL))
-    {
-        fprintf(stderr, "setitimer error.");
-        return -1;
+    if (setitimer (ITIMER_VIRTUAL, &timer, NULL)) {
+        printf("setitimer error.");
     }
     return 0;
 }
@@ -209,6 +208,7 @@ int uthread_spawn(void (*f)(void))
     }
     threads[id] = thread(id, (address_t) f);
     ready_queue.push(id);
+    return 0;
 
 }
 
@@ -379,7 +379,42 @@ int uthread_get_quantums(int tid)
     return threads[tid]._num_quantum;
 }
 
-int main()
+void f(void)
 {
-    return 0;
+    int i = 0;
+    while(1){
+        ++i;
+        printf("in f (%d)\n",i);
+//        usleep(10000);
+    }
+}
+
+void g(void)
+{
+    int i = 0;
+    while(1){
+        ++i;
+        printf("in g (%d)\n",i);
+//        usleep(10000);
+    }
+}
+
+
+
+int main(void)
+{
+    uthread_init(100);
+    uthread_spawn(f);
+    uthread_spawn(g);
+    int i = 0;
+    while(1)
+    {
+        ++i;
+        printf("in main (%d)\n",i);
+//        kill(0, SIGVTALRM);
+//        usleep(10000);
+//        uthread_sync(1);
+//        uthread_sync(2);
+    }
+
 }

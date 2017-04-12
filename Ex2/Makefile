@@ -5,7 +5,7 @@ LIBSRC=osm.c dumyFunc.c dumyFunc.h
 LIBOBJ=$(LIBSRC:.c=.o)
 
 INCS=-I.
-CFLAGS = -Wall -g -c std=c++11 # $(INCS)
+CFLAGS = -Wall -Wextra -g -c -std=c++11 # $(INCS)
 LOADLIBES = -L./ 
 
 OSMLIB = libosm.a

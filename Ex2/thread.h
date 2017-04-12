@@ -5,13 +5,14 @@
 #ifndef EX2_THREAD_H
 #define EX2_THREAD_H
 
+#include "uthreads.h"
 #include <stdio.h>
 #include <setjmp.h>
 #include <signal.h>
 #include <unistd.h>
 #include <sys/time.h>
 #include <vector>
-#include "uthreads.h"
+
 
 #ifdef __x86_64__
 /* code for 64 bit Intel arch */
@@ -22,7 +23,7 @@ typedef unsigned long address_t;
 
 /* A translation is required when using an address of a variable.
    Use this as a black box in your code. */
-address_t translate_address(address_t addr)
+inline address_t translate_address(address_t addr)
 {
     address_t ret;
     asm volatile("xor    %%fs:0x30,%0\n"
@@ -33,6 +34,7 @@ address_t translate_address(address_t addr)
 }
 
 #else
+
 /* code for 32 bit Intel arch */
 
 typedef unsigned int address_t;
@@ -41,7 +43,7 @@ typedef unsigned int address_t;
 
 /* A translation is required when using an address of a variable.
    Use this as a black box in your code. */
-address_t translate_address(address_t addr)
+inline address_t translate_address(address_t addr)
 {
     address_t ret;
     asm volatile("xor    %%gs:0x18,%0\n"
@@ -50,7 +52,6 @@ address_t translate_address(address_t addr)
                  : "0" (addr));
     return ret;
 }
-
 #endif
 
 
