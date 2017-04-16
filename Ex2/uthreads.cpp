@@ -86,6 +86,13 @@ void switch_threads(int input)
 //    {
 //        exit(-1);
 //    }
+    if (ready_queue.empty())
+    {
+        threads[curr_thread]._num_quantum++;
+        quanta++;
+        std::cout << "switch" << std::endl;
+        return;
+    }
     int ret_val = sigsetjmp(threads[curr_thread]._env, 1);
     if (ret_val == 1)
     {
@@ -93,12 +100,6 @@ void switch_threads(int input)
 //        {
 //            exit(-1);
 //        }
-        return;
-    }
-    if (ready_queue.empty())
-    {
-        threads[curr_thread]._num_quantum++;
-        quanta++;
         return;
     }
     int next_thread = ready_queue.front();
@@ -164,7 +165,7 @@ int uthread_init(int quantum_usecs)
 
 
     sa.sa_handler = &switch_threads;
-    if (sigaction(SIGVTALRM, &sa, NULL) < 0)
+    if (sigaction(SIGVTALRM, &sa, NULL))
     {
         printf("sigaction error.");
         exit(-1);
@@ -413,8 +414,8 @@ int main(void)
 {
 
     uthread_init(1000);
-    uthread_spawn(f);
-    uthread_spawn(g);
+//    uthread_spawn(f);
+//    uthread_spawn(g);
     int i = 0;
     while(1)
     {
