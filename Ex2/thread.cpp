@@ -12,6 +12,14 @@ thread::thread(unsigned int id, address_t pc, threadState state)
     _num_quantum = 0;
 }
 
+thread::thread(const thread& other)
+{
+    (_env->__jmpbuf)[JB_SP] = other._env->__jmpbuf[JB_SP];
+    (_env->__jmpbuf)[JB_PC] = other._env->__jmpbuf[JB_PC];
+    _state = other._state;
+    _num_quantum = other._num_quantum;
+}
+
 thread::~thread() {}
 
 

@@ -49,6 +49,8 @@ thread.h
 /home/yohai/CLionProjects/OS/Ex2/thread.h
 cstdlib
 -
+iostream
+-
 
 /home/yohai/CLionProjects/OS/Ex2/uthreads.h
 

@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named jmp
+
+# Build rule for target.
+jmp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 jmp
+.PHONY : jmp
+
+# fast build rule for target.
+jmp/fast:
+	$(MAKE) -f CMakeFiles/jmp.dir/build.make CMakeFiles/jmp.dir/build
+.PHONY : jmp/fast
+
+#=============================================================================
 # Target rules for targets named Ex2
 
 # Build rule for target.
@@ -162,6 +175,33 @@ demo_itimer.s: demo_itimer.c.s
 demo_itimer.c.s:
 	$(MAKE) -f CMakeFiles/itimer.dir/build.make CMakeFiles/itimer.dir/demo_itimer.c.s
 .PHONY : demo_itimer.c.s
+
+demo_jmp.o: demo_jmp.c.o
+
+.PHONY : demo_jmp.o
+
+# target to build an object file
+demo_jmp.c.o:
+	$(MAKE) -f CMakeFiles/jmp.dir/build.make CMakeFiles/jmp.dir/demo_jmp.c.o
+.PHONY : demo_jmp.c.o
+
+demo_jmp.i: demo_jmp.c.i
+
+.PHONY : demo_jmp.i
+
+# target to preprocess a source file
+demo_jmp.c.i:
+	$(MAKE) -f CMakeFiles/jmp.dir/build.make CMakeFiles/jmp.dir/demo_jmp.c.i
+.PHONY : demo_jmp.c.i
+
+demo_jmp.s: demo_jmp.c.s
+
+.PHONY : demo_jmp.s
+
+# target to generate assembly for a file
+demo_jmp.c.s:
+	$(MAKE) -f CMakeFiles/jmp.dir/build.make CMakeFiles/jmp.dir/demo_jmp.c.s
+.PHONY : demo_jmp.c.s
 
 thread.o: thread.cpp.o
 
@@ -225,11 +265,15 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... jmp"
 	@echo "... Ex2"
 	@echo "... itimer"
 	@echo "... demo_itimer.o"
 	@echo "... demo_itimer.i"
 	@echo "... demo_itimer.s"
+	@echo "... demo_jmp.o"
+	@echo "... demo_jmp.i"
+	@echo "... demo_jmp.s"
 	@echo "... thread.o"
 	@echo "... thread.i"
 	@echo "... thread.s"

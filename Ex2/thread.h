@@ -74,6 +74,7 @@ struct thread
 
     thread();
     thread(unsigned int id, address_t pc, threadState state = ready);
+    thread(const thread& other);
     ~thread();
 
 }typedef thread;

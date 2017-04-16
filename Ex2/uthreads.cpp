@@ -9,6 +9,7 @@
 #include <queue>
 #include "thread.h"
 #include <cstdlib>
+#include <iostream>
 
 
 //-------------------------------defines----------------------------------------
@@ -66,7 +67,7 @@ unsigned int get_next_thread_id()
 {
     if(next_thread.empty())
     {
-        return threads.size() + 1;
+        return threads.size();
     }
     else
     {
@@ -78,12 +79,21 @@ unsigned int get_next_thread_id()
 
 void switch_threads(int input)
 {
-    sigset_t blc_set;
-    sigemptyset(&blc_set);
-    sigaddset(&blc_set, SIGVTALRM);
-    if(sigprocmask(SIG_SETMASK, &blc_set, NULL) == -1)
+//    sigset_t blc_set;
+//    sigemptyset(&blc_set);
+//    sigaddset(&blc_set, SIGVTALRM);
+//    if(sigprocmask(SIG_SETMASK, &blc_set, NULL) == -1)
+//    {
+//        exit(-1);
+//    }
+    int ret_val = sigsetjmp(threads[curr_thread]._env, 1);
+    if (ret_val == 1)
     {
-        exit(-1);
+//        if(sigprocmask(SIG_UNBLOCK, &blc_set, NULL))
+//        {
+//            exit(-1);
+//        }
+        return;
     }
     if (ready_queue.empty())
     {
@@ -102,16 +112,7 @@ void switch_threads(int input)
         }
         next_thread = ready_queue.front();
     }
-    int ret_val = sigsetjmp(threads[curr_thread]._env, 1);
-    if (ret_val == 1)
-    {
-        if(!sigprocmask(SIG_UNBLOCK, &blc_set, NULL))
-        {
-            exit(-1);
-        }
-        threads[curr_thread]._state = running;
-        return;
-    }
+
     quanta++;
     threads[curr_thread]._state = ready;
     ready_queue.push(curr_thread);
@@ -119,6 +120,7 @@ void switch_threads(int input)
     curr_thread = next_thread;
     ready_queue.pop();
     threads[curr_thread]._num_quantum++;
+    threads[curr_thread]._state = running;
     siglongjmp(threads[curr_thread]._env, 1);
 }
 
@@ -165,6 +167,7 @@ int uthread_init(int quantum_usecs)
     if (sigaction(SIGVTALRM, &sa, NULL) < 0)
     {
         printf("sigaction error.");
+        exit(-1);
     }
 
     // Configure the timer to expire
@@ -181,9 +184,12 @@ int uthread_init(int quantum_usecs)
     quanta++;
     threads[id]._num_quantum++;
     curr_thread = id;
+    int a = setitimer (ITIMER_VIRTUAL, &timer, NULL);
 
-    if (setitimer (ITIMER_VIRTUAL, &timer, NULL)) {
+    if (a)
+    {
         printf("setitimer error.");
+        exit(-1);
     }
     return 0;
 }
@@ -384,7 +390,8 @@ void f(void)
     int i = 0;
     while(1){
         ++i;
-        printf("in f (%d)\n",i);
+        for (int j = 0; j < 99999; ++j) { }
+        std::cout << "in f " << i << std::endl;
 //        usleep(10000);
     }
 }
@@ -394,7 +401,8 @@ void g(void)
     int i = 0;
     while(1){
         ++i;
-        printf("in g (%d)\n",i);
+        for (int j = 0; j < 99999; ++j) { }
+        std::cout << "in g " << i << std::endl;
 //        usleep(10000);
     }
 }
@@ -403,14 +411,16 @@ void g(void)
 
 int main(void)
 {
-    uthread_init(100);
+
+    uthread_init(1000);
     uthread_spawn(f);
     uthread_spawn(g);
     int i = 0;
     while(1)
     {
         ++i;
-        printf("in main (%d)\n",i);
+        for (int j = 0; j < 99999; ++j) { }
+        std::cout << "in main " << i << std::endl;
 //        kill(0, SIGVTALRM);
 //        usleep(10000);
 //        uthread_sync(1);
