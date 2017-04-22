@@ -14,7 +14,20 @@
 
 //-------------------------------defines----------------------------------------
 #define Q_INIT 0
+#define FAIL 1
+#define LONG_JUMP_RETURN 4
+#define MIL 1000000
 
+#define SYS_ERR "system error: "
+#define SIG_MASK_ERR "failed masking vt signal"
+#define SIG_UNMASK_ERR "failed unmasking vt signal"
+#define SET_TIMER_ERR "failed setting the virtual timer"
+#define UTHREAD_ERR "thread library error: "
+#define ILLEGAL_TIME "illegal quanta time, must be positive"
+#define SIG_SET_ERR "could not set a function to vt signal"
+#define MAX_THREAD_ERR "reached maximum number of threads"
+#define ILL_THREAD_NUM "illegal thread number"
+#define SELF_SYNC_ERR " a thread cannot switch itself to wait state"
 //-------------------------------variables-------------------------------------
 // thread handling data structure
 std::map<unsigned int, thread> threads;
@@ -24,7 +37,7 @@ int erase_from_queue[100];
 // current quanta
 unsigned int quanta;
 //min heap next next thread
-std::priority_queue<unsigned int> next_thread;
+std::priority_queue<unsigned int> next_available_thread;
 // current running thread
 unsigned int curr_thread;
 
@@ -39,8 +52,8 @@ void block_signal()
 {
     if(sigprocmask(SIG_SETMASK, &blc_set, NULL))
     {
-        //TODO
-        exit(-1);
+        std::cerr << SYS_ERR << SIG_MASK_ERR << std::endl;
+        exit(FAIL);
     }
 }
 
@@ -48,21 +61,18 @@ void unblock_signal()
 {
     if(sigprocmask(SIG_UNBLOCK, &blc_set, NULL))
     {
-        //TODO
-        exit(-1);
+        std::cerr << SYS_ERR << SIG_UNMASK_ERR << std::endl;
+        exit(FAIL);
     }
 }
 
-int reset_timer()
+void reset_timer()
 {
-    timer.it_value.tv_usec = 0;
-    timer.it_value.tv_sec = 0;
     if (setitimer(ITIMER_VIRTUAL, &timer, NULL))
     {
-        fprintf(stderr, "setitimer error.");
-        return -1;
+        std::cerr << SYS_ERR << SET_TIMER_ERR << std::endl;
+        exit(FAIL);
     }
-    return 0;
 }
 
 
@@ -85,14 +95,14 @@ void uthread_unsync(unsigned int tid)
 
 unsigned int get_next_thread_id()
 {
-    if(next_thread.empty())
+    if(next_available_thread.empty())
     {
         return (unsigned int) threads.size();
     }
     else
     {
-        unsigned int p = next_thread.top();
-        next_thread.pop();
+        unsigned int p = next_available_thread.top();
+        next_available_thread.pop();
         return p;
     }
 }
@@ -101,7 +111,6 @@ void switch_threads(int input)
 {
 
     block_signal();
-//    std::cout << "switch" << std::endl;
     if (ready_queue.empty())
     {
         threads[curr_thread]._num_quantum++;
@@ -110,7 +119,7 @@ void switch_threads(int input)
         return;
     }
     int ret_val = sigsetjmp(threads[curr_thread]._env, 1);
-    if (ret_val == 4)
+    if (ret_val == LONG_JUMP_RETURN)
     {
         unblock_signal();
         return;
@@ -129,37 +138,23 @@ void switch_threads(int input)
     }
 
     quanta++;
-    threads[curr_thread]._state = ready;
-    ready_queue.push(curr_thread);
     uthread_unsync(curr_thread);
+    if(threads[curr_thread]._state != selfTerminated)
+    {
+        ready_queue.push(curr_thread);
+        threads[curr_thread]._state = ready;
+    }
+    else
+    {
+        threads.erase(curr_thread);
+        next_available_thread.push(curr_thread);
+    }
     curr_thread = next_thread;
     ready_queue.pop();
     threads[curr_thread]._num_quantum++;
     threads[curr_thread]._state = running;
-    siglongjmp(threads[curr_thread]._env, 4);
+    siglongjmp(threads[curr_thread]._env, LONG_JUMP_RETURN);
 }
-
-
-//void erase_from_queue_func(unsigned int to_erase)
-//{
-//    std::queue<unsigned int> temp;
-//    while(ready_queue.empty())
-//    {
-//        if(ready_queue.front() == to_erase)
-//        {
-//            ready_queue.pop();
-//            break;
-//        }
-//        temp.push(ready_queue.front());
-//        ready_queue.pop();
-//    }
-//    while(!temp.empty())
-//    {
-//        ready_queue.push(temp.front());
-//        temp.pop();
-//    }
-//}
-
 
 /*
  * Description: This function initializes the thread library.
@@ -173,25 +168,25 @@ int uthread_init(int quantum_usecs)
 {
     if (quantum_usecs <= 0)
     {
-        return -1;//TODO;
+        std::cerr << UTHREAD_ERR << ILLEGAL_TIME << std::endl;
+        return -1;
     }
 
     quanta = Q_INIT;
     sa.sa_handler = &switch_threads;
     sigemptyset(&blc_set);
     sigaddset(&blc_set, SIGVTALRM);
-//    sa.sa_flags = SA_SIGINFO;
     if (sigaction(SIGVTALRM, &sa, NULL) < 0)
     {
-        printf("sigaction error.");
+        std::cerr << SYS_ERR << SIG_SET_ERR << std::endl;
         exit(-1);
     }
 
     // Configure the timer to expire
-    int q_time_sec = quantum_usecs / 1000000;
-    int q_time_usec = quantum_usecs % 1000000;
-    timer.it_value.tv_usec = 0;//TODO add time to exit init
-    timer.it_value.tv_sec = 1;
+    int q_time_sec = quantum_usecs / MIL;
+    int q_time_usec = quantum_usecs % MIL;
+    timer.it_value.tv_usec = q_time_usec;
+    timer.it_value.tv_sec = q_time_sec;
     timer.it_interval.tv_usec = q_time_usec;
     timer.it_interval.tv_sec = q_time_sec;
 
@@ -202,12 +197,7 @@ int uthread_init(int quantum_usecs)
     quanta++;
     threads[id]._num_quantum++;
     curr_thread = id;
-
-    if (setitimer (ITIMER_VIRTUAL, &timer, NULL))
-    {
-        printf("setitimer error.");
-        exit(-1);
-    }
+    reset_timer();
     return 0;
 }
 
@@ -227,9 +217,9 @@ int uthread_spawn(void (*f)(void))
     unsigned int id = get_next_thread_id();
     if (id > MAX_THREAD_NUM)
     {
-        fprintf(stderr, "max thread num reached");
+        std::cerr << UTHREAD_ERR << MAX_THREAD_ERR << std::endl;
         unblock_signal();
-        return -1;//TODO;
+        return -1;
     }
 //    threads[id] = thread(id, (address_t) f);
     threads.insert(std::pair<int, thread>(id, thread(id, (address_t) f)));
@@ -261,20 +251,26 @@ int uthread_terminate(int tid)
     }
     if(threads.find(tid) == threads.end() || tid < 0 )
     {
+        std::cerr << UTHREAD_ERR << ILL_THREAD_NUM << std::endl;
         unblock_signal();
-        return -1;//TODO;
+        return -1;
     }
-    uthread_unsync(tid);
-    if(threads[tid]._state == ready)
+
+    if(threads[tid]._state == running)
     {
-        erase_from_queue[tid]++;
+        threads[tid]._state = selfTerminated;
+        reset_timer();
+        switch_threads(0);
     }
-    next_thread.push(tid);
-    threads.erase(tid);
-    if(tid == curr_thread)
+    else
     {
-        unblock_signal();
-        return reset_timer();
+        uthread_unsync(tid);
+        if(threads[tid]._state == ready)
+        {
+            erase_from_queue[tid]++;
+        }
+        next_available_thread.push(tid);
+        threads.erase(tid);
     }
     unblock_signal();
     return 0;
@@ -295,7 +291,8 @@ int uthread_block(int tid)
     block_signal();
     if(threads.find(tid) == threads.end() || tid <= 0 )
     {
-        return -1;//TODO;
+        std::cerr << UTHREAD_ERR << ILL_THREAD_NUM << std::endl;
+        return -1;
     }
     if(threads[tid]._state == waiting)
     {
@@ -311,8 +308,8 @@ int uthread_block(int tid)
     }
     if(tid == curr_thread)
     {
-        unblock_signal();
-        return reset_timer();
+        reset_timer();
+        switch_threads(0);
     }
     unblock_signal();
     return 0;
@@ -331,7 +328,9 @@ int uthread_resume(int tid)
     block_signal();
     if(threads.find(tid) == threads.end() || tid <= 0 || tid == curr_thread)
     {
-        return -1;//TODO;
+        std::cerr << UTHREAD_ERR << ILL_THREAD_NUM << std::endl;
+        unblock_signal();
+        return -1;
     }
     if(threads[tid]._state == blockedNwaiting)
     {
@@ -364,8 +363,9 @@ int uthread_sync(int tid)
     block_signal();
     if(tid == curr_thread)
     {
+        std::cerr << UTHREAD_ERR << SELF_SYNC_ERR << std::endl;
         unblock_signal();
-        return -1;//TODO;
+        return -1;
     }
     threads[tid]._waiting_for_me.push_back(curr_thread);
     if (threads[curr_thread]._state == blocked)
@@ -376,8 +376,9 @@ int uthread_sync(int tid)
     {
         threads[curr_thread]._state = waiting;
     }
+    reset_timer();
     unblock_signal();
-    return reset_timer();
+    return 0;
 }
 
 /*
@@ -413,148 +414,13 @@ int uthread_get_total_quantums()
 int uthread_get_quantums(int tid)
 {
     block_signal();
-    if(threads.find(tid) == threads.end())
+    if(tid < 0 || threads.find(tid) == threads.end())
     {
+        std::cerr << UTHREAD_ERR << ILL_THREAD_NUM << std::endl;
         unblock_signal();
-        return -1;//TODO
+        return -1;
     }
-//    std::cout << "whay" << std::endl;
+    int quantum = threads[tid]._num_quantum;
     unblock_signal();
-    return threads[tid]._num_quantum;
+    return quantum;
 }
-//
-//void f(void)
-//{
-//    int i = 0;
-//    while(1){
-//        ++i;
-//        for (int j = 0; j < 99999; ++j) { }
-//        std::cout << "in f " << i << std::endl;
-////        usleep(10000);
-//    }
-//}
-//
-//void g(void)
-//{
-//    int i = 0;
-//    while(1){
-//        ++i;
-//        for (int j = 0; j < 99999; ++j) { }
-//        std::cout << "in g " << i << std::endl;
-//        std::cout.flush();
-////        usleep(10000);
-//    }
-//}
-//
-//
-//
-//int main(void)
-//{
-//
-//    uthread_init(1000);
-//    uthread_spawn(f);
-//    uthread_spawn(g);
-//    int i = 0;
-//    while(1)
-//    {
-//        ++i;
-//        for (int j = 0; j < 999999; ++j) { }
-//        std::cout << "in main " << i << std::endl;
-////        kill(0, SIGVTALRM);
-////        usleep(10000);
-////        uthread_sync(1);
-////        uthread_sync(2);
-//    }
-//
-//}
-
-
-
-
-//void switchThreads(int a)
-//{
-//    static int currentThread = 0;
-//
-//    int ret_val = sigsetjmp(test[currentThread]._env,1);
-//    printf("SWITCH: ret_val=%d\n", ret_val);
-//    if (ret_val == 1) {
-//        return;
-//    }
-//    currentThread = 1 - currentThread;
-//    siglongjmp(test[currentThread]._env,1);
-//}
-//
-//void f(void)
-//{
-//    int i = 0;
-//    while(1){
-//        ++i;
-//        printf("in f (%d)\n",i);
-////        if (i % 3 == 0) {
-////            printf("f: switching\n");
-////            switchThreads();
-////        }
-////        usleep(300000);
-//        for (int j = 0; j < 100000; ++j) {
-//
-//        }
-//    }
-//}
-//
-//void g(void)
-//{
-//    int i = 0;
-//    while(1){
-//        ++i;
-//        printf("in g (%d)\n",i);
-////        if (i % 5 == 0) {
-////            printf("g: switching\n");
-////            switchThreads();
-////        }
-////        usleep(300000);
-//        for (int j = 0; j < 100000; ++j) {
-//
-//        }
-//    }
-//}
-//
-//void setup(void)
-//{
-//    address_t sp, pc;
-//
-//    test[0] = thread(0, (address_t)f);
-//
-//
-//
-//    test[1] = thread(1, (address_t)g);
-//
-//    sa.sa_handler = &switchThreads;
-//    sigemptyset(&blc_set);
-//    sigaddset(&blc_set, SIGVTALRM);
-////    sa.sa_flags = SA_SIGINFO;
-//    if (sigaction(SIGVTALRM, &sa, NULL) < 0)
-//    {
-//        printf("sigaction error.");
-//        exit(-1);
-//    }
-//
-//    // Configure the timer to expire
-//    int q_time_sec = 0;
-//    int q_time_usec = 1000;
-//    timer.it_value.tv_usec = 100;//TODO add time to exit init
-//    timer.it_value.tv_sec = 0;
-//    timer.it_interval.tv_usec = q_time_usec;
-//    timer.it_interval.tv_sec = q_time_sec;
-//    if (setitimer (ITIMER_VIRTUAL, &timer, NULL))
-//    {
-//        printf("setitimer error.");
-//        exit(-1);
-//    }
-//}
-//
-//int main(void)
-//{
-//    setup();
-//    f();
-//    return 0;
-//}

@@ -1,23 +1,24 @@
 CC=g++
 RANLIB=ranlib
 
-LIBSRC=osm.c dumyFunc.c dumyFunc.h
-LIBOBJ=$(LIBSRC:.c=.o)
+LIBSRC= uthreads.cpp thread.h thread.cpp
+LIBOBJ=$(LIBSRC:.cpp=.o)
 
 INCS=-I.
 CFLAGS = -Wall -Wextra -g -c -std=c++11 # $(INCS)
 LOADLIBES = -L./ 
 
-OSMLIB = libosm.a
-TARGETS = $(OSMLIB)
+TARGETS = libuthreads.a
 
 TAR=tar
 TARFLAGS=-cvf
-TARNAME=ex1.tar
-TARSRCS=$(LIBSRC) Makefile README
+TARNAME=ex2.tar
+TARSRCS = $(LIBSRC) Makefile README
 
-all: main
+all: uthreads
 
+test.o: uthreads.h
+	$(CC) $(CFLAGS)  test.cpp -o test.o
 
 thread.o: thread.cpp thread.h
 	$(CC) $(CFLAGS) thread.cpp -o thread.o
@@ -25,11 +26,11 @@ thread.o: thread.cpp thread.h
 uthreads.o: uthreads.cpp uthreads.h
 	$(CC) $(CFLAGS) uthreads.cpp -o uthreads.o
 
-main: uthreads.o thread.o
-	$(CC) -o main uthreads.o thread.o 
+main: uthreads.o thread.o test.o
+	$(CC) -o main uthreads.o thread.o test.o
 
-#osm: osm.o dumyFunc.o
-#	ar rcs libosm.a dumyFunc.o osm.o
+uthreads: uthreads.o thread.o
+	ar rcs libuthreads.a uthreads.o thread.o
 
 clean:
 	$(RM) $(TARGETS) $(OSMLIB) $(OBJ) $(LIBOBJ) *~ *core
