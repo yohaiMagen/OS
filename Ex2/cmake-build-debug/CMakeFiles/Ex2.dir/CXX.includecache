@@ -6,7 +6,21 @@
 
 #IncludeRegexTransform: 
 
+/home/yohai/CLionProjects/OS/Ex2/test.cpp
+cstdlib
+-
+cstdio
+-
+cstring
+-
+time.h
+-
+uthreads.h
+/home/yohai/CLionProjects/OS/Ex2/uthreads.h
+
 /home/yohai/CLionProjects/OS/Ex2/thread.cpp
+iostream
+-
 thread.h
 /home/yohai/CLionProjects/OS/Ex2/thread.h
 

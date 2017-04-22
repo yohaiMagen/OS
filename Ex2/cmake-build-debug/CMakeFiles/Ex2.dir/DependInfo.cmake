@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/yohai/CLionProjects/OS/Ex2/test.cpp" "/home/yohai/CLionProjects/OS/Ex2/cmake-build-debug/CMakeFiles/Ex2.dir/test.cpp.o"
   "/home/yohai/CLionProjects/OS/Ex2/thread.cpp" "/home/yohai/CLionProjects/OS/Ex2/cmake-build-debug/CMakeFiles/Ex2.dir/thread.cpp.o"
   "/home/yohai/CLionProjects/OS/Ex2/uthreads.cpp" "/home/yohai/CLionProjects/OS/Ex2/cmake-build-debug/CMakeFiles/Ex2.dir/uthreads.cpp.o"
   )

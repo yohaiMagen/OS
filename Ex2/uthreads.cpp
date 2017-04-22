@@ -27,7 +27,9 @@
 #define SIG_SET_ERR "could not set a function to vt signal"
 #define MAX_THREAD_ERR "reached maximum number of threads"
 #define ILL_THREAD_NUM "illegal thread number"
-#define SELF_SYNC_ERR " a thread cannot switch itself to wait state"
+#define SELF_SYNC_ERR " a thread cannot switch itself to waiting state"
+#define MAIN_SYNC_ERR "main thread cannot be switched to waiting state"
+#define MAIN_BLOCK_ERR "main thread cannot be blocked"
 //-------------------------------variables-------------------------------------
 // thread handling data structure
 std::map<unsigned int, thread> threads;
@@ -37,7 +39,7 @@ int erase_from_queue[100];
 // current quanta
 unsigned int quanta;
 //min heap next next thread
-std::priority_queue<unsigned int> next_available_thread;
+std::priority_queue<unsigned int, std::vector<unsigned int>, std::greater<unsigned int> > next_available_thread;
 // current running thread
 unsigned int curr_thread;
 
@@ -50,7 +52,7 @@ sigset_t blc_set;
 
 void block_signal()
 {
-    if(sigprocmask(SIG_SETMASK, &blc_set, NULL))
+    if(sigprocmask(SIG_BLOCK, &blc_set, NULL))
     {
         std::cerr << SYS_ERR << SIG_MASK_ERR << std::endl;
         exit(FAIL);
@@ -139,15 +141,15 @@ void switch_threads(int input)
 
     quanta++;
     uthread_unsync(curr_thread);
-    if(threads[curr_thread]._state != selfTerminated)
-    {
-        ready_queue.push(curr_thread);
-        threads[curr_thread]._state = ready;
-    }
-    else
+    if(threads[curr_thread]._state == selfTerminated)
     {
         threads.erase(curr_thread);
         next_available_thread.push(curr_thread);
+    }
+    else if(threads[curr_thread]._state == running)
+    {
+        ready_queue.push(curr_thread);
+        threads[curr_thread]._state = ready;
     }
     curr_thread = next_thread;
     ready_queue.pop();
@@ -225,7 +227,7 @@ int uthread_spawn(void (*f)(void))
     threads.insert(std::pair<int, thread>(id, thread(id, (address_t) f)));
     ready_queue.push(id);
     unblock_signal();
-    return 0;
+    return id;
 
 }
 
@@ -289,9 +291,15 @@ int uthread_terminate(int tid)
 int uthread_block(int tid)
 {
     block_signal();
-    if(threads.find(tid) == threads.end() || tid <= 0 )
+    if(threads.find(tid) == threads.end() || tid < 0 )
     {
         std::cerr << UTHREAD_ERR << ILL_THREAD_NUM << std::endl;
+        return -1;
+    }
+    if(tid == 0)
+    {
+        std::cerr << UTHREAD_ERR << MAIN_BLOCK_ERR << std::endl;
+        unblock_signal();
         return -1;
     }
     if(threads[tid]._state == waiting)
@@ -306,7 +314,7 @@ int uthread_block(int tid)
         }
         threads[tid]._state = blocked;
     }
-    if(tid == curr_thread)
+    if((unsigned int) tid == curr_thread)
     {
         reset_timer();
         switch_threads(0);
@@ -326,7 +334,7 @@ int uthread_block(int tid)
 int uthread_resume(int tid)
 {
     block_signal();
-    if(threads.find(tid) == threads.end() || tid <= 0 || tid == curr_thread)
+    if(threads.find(tid) == threads.end() || tid < 0 )
     {
         std::cerr << UTHREAD_ERR << ILL_THREAD_NUM << std::endl;
         unblock_signal();
@@ -361,12 +369,25 @@ int uthread_resume(int tid)
 int uthread_sync(int tid)
 {
     block_signal();
-    if(tid == curr_thread)
+    if(threads.find(tid) == threads.end() || tid < 0)
+    {
+        std::cerr << UTHREAD_ERR << ILL_THREAD_NUM << std::endl;
+        unblock_signal();
+        return -1;
+    }
+    if(curr_thread == 0)
+    {
+        std::cerr << UTHREAD_ERR << MAIN_SYNC_ERR << std::endl;
+        unblock_signal();
+        return -1;
+    }
+    if((unsigned int) tid == curr_thread)
     {
         std::cerr << UTHREAD_ERR << SELF_SYNC_ERR << std::endl;
         unblock_signal();
         return -1;
     }
+
     threads[tid]._waiting_for_me.push_back(curr_thread);
     if (threads[curr_thread]._state == blocked)
     {
@@ -377,7 +398,7 @@ int uthread_sync(int tid)
         threads[curr_thread]._state = waiting;
     }
     reset_timer();
-    unblock_signal();
+    switch_threads(0);
     return 0;
 }
 

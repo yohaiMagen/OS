@@ -1,7 +1,7 @@
 CC=g++
 RANLIB=ranlib
 
-LIBSRC= uthreads.cpp thread.h thread.cpp
+LIBSRC= uthreads.cpp thread.cpp
 LIBOBJ=$(LIBSRC:.cpp=.o)
 
 INCS=-I.
@@ -13,7 +13,7 @@ TARGETS = libuthreads.a
 TAR=tar
 TARFLAGS=-cvf
 TARNAME=ex2.tar
-TARSRCS = $(LIBSRC) Makefile README
+TARSRCS = $(LIBSRC) thread.h Makefile README
 
 all: uthreads
 
@@ -33,7 +33,7 @@ uthreads: uthreads.o thread.o
 	ar rcs libuthreads.a uthreads.o thread.o
 
 clean:
-	$(RM) $(TARGETS) $(OSMLIB) $(OBJ) $(LIBOBJ) *~ *core
+	$(RM) $(TARGETS) $(LIBOBJ) $(TARNAME) *~ *core
 
 
 tar:

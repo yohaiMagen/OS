@@ -75,7 +75,9 @@ struct thread
     thread();
     thread(unsigned int id, address_t pc, threadState state = ready, unsigned int quantum = 0);
     thread(const thread& other);
+//    thread(thread&& other);
     thread operator=(const thread &other);
+
     ~thread();
 
 }typedef thread;
