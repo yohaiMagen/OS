@@ -101,24 +101,18 @@ void switch_threads(int input)
 {
 
     block_signal();
-    std::cout << "switch" << std::endl;
+//    std::cout << "switch" << std::endl;
     if (ready_queue.empty())
     {
         threads[curr_thread]._num_quantum++;
         quanta++;
-        if(sigprocmask(SIG_UNBLOCK, &blc_set, NULL))
-        {
-            exit(-1);
-        }
+        unblock_signal();
         return;
     }
     int ret_val = sigsetjmp(threads[curr_thread]._env, 1);
     if (ret_val == 4)
     {
-        if(sigprocmask(SIG_UNBLOCK, &blc_set, NULL))
-        {
-            exit(-1);
-        }
+        unblock_signal();
         return;
     }
     unsigned int next_thread = ready_queue.front();
@@ -128,6 +122,7 @@ void switch_threads(int input)
         erase_from_queue[next_thread]--;
         if(ready_queue.empty())
         {
+            unblock_signal();
             return;
         }
         next_thread = ready_queue.front();
@@ -195,13 +190,14 @@ int uthread_init(int quantum_usecs)
     // Configure the timer to expire
     int q_time_sec = quantum_usecs / 1000000;
     int q_time_usec = quantum_usecs % 1000000;
-    timer.it_value.tv_usec = q_time_usec;//TODO add time to exit init
-    timer.it_value.tv_sec = q_time_sec;
+    timer.it_value.tv_usec = 0;//TODO add time to exit init
+    timer.it_value.tv_sec = 1;
     timer.it_interval.tv_usec = q_time_usec;
     timer.it_interval.tv_sec = q_time_sec;
 
     unsigned int id = get_next_thread_id();
-    threads[id] = thread(id, 0, running);
+//    threads[id] = thread(id, 0, running);
+    threads.insert(std::pair< int , thread>((int const)id, thread(id, 0, running)) );
 
     quanta++;
     threads[id]._num_quantum++;
@@ -235,7 +231,8 @@ int uthread_spawn(void (*f)(void))
         unblock_signal();
         return -1;//TODO;
     }
-    threads[id] = thread(id, (address_t) f);
+//    threads[id] = thread(id, (address_t) f);
+    threads.insert(std::pair<int, thread>(id, thread(id, (address_t) f)));
     ready_queue.push(id);
     unblock_signal();
     return 0;
@@ -268,12 +265,12 @@ int uthread_terminate(int tid)
         return -1;//TODO;
     }
     uthread_unsync(tid);
-    threads.erase(tid);
     if(threads[tid]._state == ready)
     {
         erase_from_queue[tid]++;
     }
     next_thread.push(tid);
+    threads.erase(tid);
     if(tid == curr_thread)
     {
         unblock_signal();
@@ -387,7 +384,7 @@ int uthread_sync(int tid)
  * Description: This function returns the thread ID of the calling thread.
  * Return value: The ID of the calling thread.
 */
-inline int uthread_get_tid() {
+int uthread_get_tid() {
     return curr_thread;
 }
 
@@ -399,7 +396,7 @@ inline int uthread_get_tid() {
  * should be increased by 1.
  * Return value: The total number of quantums.
 */
-inline int uthread_get_total_quantums()
+int uthread_get_total_quantums()
 {
     return quanta;
 }
@@ -421,51 +418,143 @@ int uthread_get_quantums(int tid)
         unblock_signal();
         return -1;//TODO
     }
+//    std::cout << "whay" << std::endl;
     unblock_signal();
     return threads[tid]._num_quantum;
 }
-
-void f(void)
-{
-    int i = 0;
-    while(1){
+//
+//void f(void)
+//{
+//    int i = 0;
+//    while(1){
 //        ++i;
 //        for (int j = 0; j < 99999; ++j) { }
 //        std::cout << "in f " << i << std::endl;
-//        usleep(10000);
-    }
-}
-
-void g(void)
-{
-    int i = 0;
-    while(1){
-        ++i;
-        for (int j = 0; j < 999999; ++j) { }
-        std::cout << "in g " << i << std::endl;
-        std::cout.flush();
-//        usleep(10000);
-    }
-}
-
-
-
-int main(void)
-{
-
-    uthread_init(1000);
-    uthread_spawn(f);
-//    uthread_spawn(g);
-    int i = 0;
-    while(1)
-    {
+////        usleep(10000);
+//    }
+//}
+//
+//void g(void)
+//{
+//    int i = 0;
+//    while(1){
 //        ++i;
-//        for (int j = 0; j < 9999; ++j) { }
+//        for (int j = 0; j < 99999; ++j) { }
+//        std::cout << "in g " << i << std::endl;
+//        std::cout.flush();
+////        usleep(10000);
+//    }
+//}
+//
+//
+//
+//int main(void)
+//{
+//
+//    uthread_init(1000);
+//    uthread_spawn(f);
+//    uthread_spawn(g);
+//    int i = 0;
+//    while(1)
+//    {
+//        ++i;
+//        for (int j = 0; j < 999999; ++j) { }
 //        std::cout << "in main " << i << std::endl;
-//        kill(0, SIGVTALRM);
-//        usleep(10000);
-//        uthread_sync(1);
-//        uthread_sync(2);
-    }
+////        kill(0, SIGVTALRM);
+////        usleep(10000);
+////        uthread_sync(1);
+////        uthread_sync(2);
+//    }
+//
+//}
 
-}
+
+
+
+//void switchThreads(int a)
+//{
+//    static int currentThread = 0;
+//
+//    int ret_val = sigsetjmp(test[currentThread]._env,1);
+//    printf("SWITCH: ret_val=%d\n", ret_val);
+//    if (ret_val == 1) {
+//        return;
+//    }
+//    currentThread = 1 - currentThread;
+//    siglongjmp(test[currentThread]._env,1);
+//}
+//
+//void f(void)
+//{
+//    int i = 0;
+//    while(1){
+//        ++i;
+//        printf("in f (%d)\n",i);
+////        if (i % 3 == 0) {
+////            printf("f: switching\n");
+////            switchThreads();
+////        }
+////        usleep(300000);
+//        for (int j = 0; j < 100000; ++j) {
+//
+//        }
+//    }
+//}
+//
+//void g(void)
+//{
+//    int i = 0;
+//    while(1){
+//        ++i;
+//        printf("in g (%d)\n",i);
+////        if (i % 5 == 0) {
+////            printf("g: switching\n");
+////            switchThreads();
+////        }
+////        usleep(300000);
+//        for (int j = 0; j < 100000; ++j) {
+//
+//        }
+//    }
+//}
+//
+//void setup(void)
+//{
+//    address_t sp, pc;
+//
+//    test[0] = thread(0, (address_t)f);
+//
+//
+//
+//    test[1] = thread(1, (address_t)g);
+//
+//    sa.sa_handler = &switchThreads;
+//    sigemptyset(&blc_set);
+//    sigaddset(&blc_set, SIGVTALRM);
+////    sa.sa_flags = SA_SIGINFO;
+//    if (sigaction(SIGVTALRM, &sa, NULL) < 0)
+//    {
+//        printf("sigaction error.");
+//        exit(-1);
+//    }
+//
+//    // Configure the timer to expire
+//    int q_time_sec = 0;
+//    int q_time_usec = 1000;
+//    timer.it_value.tv_usec = 100;//TODO add time to exit init
+//    timer.it_value.tv_sec = 0;
+//    timer.it_interval.tv_usec = q_time_usec;
+//    timer.it_interval.tv_sec = q_time_sec;
+//    if (setitimer (ITIMER_VIRTUAL, &timer, NULL))
+//    {
+//        printf("setitimer error.");
+//        exit(-1);
+//    }
+//}
+//
+//int main(void)
+//{
+//    setup();
+//    f();
+//    return 0;
+//}
