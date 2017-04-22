@@ -56,7 +56,7 @@ inline address_t translate_address(address_t addr)
 
 
 // thread state
-enum threadState { ready, running, waiting, blocked, blockedNwaiting };
+enum threadState { ready, running, waiting, blocked, blockedNwaiting, selfTerminated };
 
 /**
  * A simple thread
@@ -73,8 +73,9 @@ struct thread
     unsigned int _num_quantum; // number of quantum run by the thread
 
     thread();
-    thread(unsigned int id, address_t pc, threadState state = ready);
+    thread(unsigned int id, address_t pc, threadState state = ready, unsigned int quantum = 0);
     thread(const thread& other);
+    thread operator=(const thread &other);
     ~thread();
 
 }typedef thread;
