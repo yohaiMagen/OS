@@ -28,11 +28,20 @@ void g (void)
 	int i = 1;
 	while(1)
 	{
+
 		if(i == uthread_get_quantums(tid))
 		{
 			std::cout << "g" << tid << " Quanta:" <<  i << std::endl;
+			if (i==1)
+			{
+				std::cout << "m spawns g at (6) " << uthread_spawn(g) << std::endl;
+				std::cout << "m spawns g at (7) " << uthread_spawn(g) << std::endl;
+				std::cout << "m spawns g at (100) " << uthread_spawn(g) << std::endl;
+			}
+
 			if (i == 5)
 			{
+
 				std::cout << "g END" << std::endl;
 				uthread_terminate(tid);
 			}
@@ -61,6 +70,12 @@ int main(void)
 				{
 					std::cout << "m spawns f at (1) " << uthread_spawn(f) << std::endl;
 					std::cout << "m spawns g at (2) " << uthread_spawn(g) << std::endl;
+					std::cout << "m spawns g at (3) " << uthread_spawn(g) << std::endl;
+					std::cout << "m spawns g at (4) " << uthread_spawn(g) << std::endl;
+					std::cout << "m spawns g at (5) " << uthread_spawn(g) << std::endl;
+					std::cout << "m spawns g at (6) " << uthread_spawn(g) << std::endl;
+					std::cout << "m spawns g at (7) " << uthread_spawn(g) << std::endl;
+					std::cout << "m spawns g at (100) " << uthread_spawn(g) << std::endl;
 				}
 				if (i == 10)
 				{

@@ -6,6 +6,7 @@
 #include <sys/time.h>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <queue>
 #include "thread.h"
 #include <cstdlib>
@@ -155,6 +156,8 @@ void switch_threads(int input)
     ready_queue.pop();
     threads[curr_thread]._num_quantum++;
     threads[curr_thread]._state = running;
+    thread& c = threads[curr_thread];
+
     siglongjmp(threads[curr_thread]._env, LONG_JUMP_RETURN);
 }
 

@@ -66,9 +66,10 @@ struct thread
     std::vector<unsigned int> _waiting_for_me;
     unsigned int _id; // unique number
     char _stack[STACK_SIZE];
+//    char* _stack;
     sigjmp_buf _env; //thread's buffer
-    char* _sp; // stack pointer
-    char* _pc; // program counter
+//    char* _sp; // stack pointer
+//    char* _pc; // program counter
     threadState _state; // thread's state
     unsigned int _num_quantum; // number of quantum run by the thread
 

@@ -222,7 +222,7 @@ int main()
         thread_status[i] = RUN;
     }
 
-    uthread_init(500);
+    uthread_init(50);
 
     int t1 = uthread_spawn(thread1);
     int t2 = uthread_spawn(thread2);
