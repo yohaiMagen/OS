@@ -2,14 +2,12 @@
 #include <stdio.h>
 #include <setjmp.h>
 #include <signal.h>
-#include <unistd.h>
 #include <sys/time.h>
 #include <vector>
 #include <map>
 #include <unordered_map>
 #include <queue>
 #include "thread.h"
-#include <cstdlib>
 #include <iostream>
 
 
@@ -33,7 +31,7 @@
 #define MAIN_BLOCK_ERR "main thread cannot be blocked"
 //-------------------------------variables-------------------------------------
 // thread handling data structure
-std::map<unsigned int, thread> threads;
+std::unordered_map<unsigned int, thread*> threads;
 // round robin thread queue
 std::queue<unsigned int> ready_queue;
 int erase_from_queue[100];
@@ -81,19 +79,19 @@ void reset_timer()
 
 void uthread_unsync(unsigned int tid)
 {
-    for (std::vector<unsigned int>::iterator i = threads[tid]._waiting_for_me.begin(); i != threads[tid]._waiting_for_me.end(); ++i)
+    for (std::vector<unsigned int>::iterator i = threads[tid]->_waiting_for_me.begin(); i != threads[tid]->_waiting_for_me.end(); ++i)
     {
-        if(threads[*i]._state == blockedNwaiting)
+        if(threads[*i]->_state == blockedNwaiting)
         {
-            threads[*i]._state = blocked;
+            threads[*i]->_state = blocked;
         }
         else
         {
-            threads[*i]._state = ready;
+            threads[*i]->_state = ready;
             ready_queue.push(*i);
         }
     }
-    threads[tid]._waiting_for_me.clear();
+    threads[tid]->_waiting_for_me.clear();
 }
 
 unsigned int get_next_thread_id()
@@ -116,12 +114,12 @@ void switch_threads(int input)
     block_signal();
     if (ready_queue.empty())
     {
-        threads[curr_thread]._num_quantum++;
+        threads[curr_thread]->_num_quantum++;
         quanta++;
         unblock_signal();
         return;
     }
-    int ret_val = sigsetjmp(threads[curr_thread]._env, 1);
+    int ret_val = sigsetjmp(threads[curr_thread]->_env, 1);
     if (ret_val == LONG_JUMP_RETURN)
     {
         unblock_signal();
@@ -142,23 +140,23 @@ void switch_threads(int input)
 
     quanta++;
     uthread_unsync(curr_thread);
-    if(threads[curr_thread]._state == selfTerminated)
+    if(threads[curr_thread]->_state == selfTerminated)
     {
+        delete threads[curr_thread];
         threads.erase(curr_thread);
         next_available_thread.push(curr_thread);
     }
-    else if(threads[curr_thread]._state == running)
+    else if(threads[curr_thread]->_state == running)
     {
         ready_queue.push(curr_thread);
-        threads[curr_thread]._state = ready;
+        threads[curr_thread]->_state = ready;
     }
     curr_thread = next_thread;
     ready_queue.pop();
-    threads[curr_thread]._num_quantum++;
-    threads[curr_thread]._state = running;
-    thread& c = threads[curr_thread];
+    threads[curr_thread]->_num_quantum++;
+    threads[curr_thread]->_state = running;
 
-    siglongjmp(threads[curr_thread]._env, LONG_JUMP_RETURN);
+    siglongjmp(threads[curr_thread]->_env, LONG_JUMP_RETURN);
 }
 
 /*
@@ -197,10 +195,10 @@ int uthread_init(int quantum_usecs)
 
     unsigned int id = get_next_thread_id();
 //    threads[id] = thread(id, 0, running);
-    threads.insert(std::pair< int , thread>((int const)id, thread(id, 0, running)) );
+    threads.insert(std::pair< int , thread*>((int const)id, new thread(id, 0, running)) );
 
     quanta++;
-    threads[id]._num_quantum++;
+    threads[id]->_num_quantum++;
     curr_thread = id;
     reset_timer();
     return 0;
@@ -227,7 +225,7 @@ int uthread_spawn(void (*f)(void))
         return -1;
     }
 //    threads[id] = thread(id, (address_t) f);
-    threads.insert(std::pair<int, thread>(id, thread(id, (address_t) f)));
+    threads.insert(std::pair<int, thread*>(id, new thread(id, (address_t) f)));
     ready_queue.push(id);
     unblock_signal();
     return id;
@@ -261,20 +259,21 @@ int uthread_terminate(int tid)
         return -1;
     }
 
-    if(threads[tid]._state == running)
+    if(threads[tid]->_state == running)
     {
-        threads[tid]._state = selfTerminated;
+        threads[tid]->_state = selfTerminated;
         reset_timer();
         switch_threads(0);
     }
     else
     {
         uthread_unsync(tid);
-        if(threads[tid]._state == ready)
+        if(threads[tid]->_state == ready)
         {
             erase_from_queue[tid]++;
         }
         next_available_thread.push(tid);
+        delete threads[tid];
         threads.erase(tid);
     }
     unblock_signal();
@@ -305,17 +304,17 @@ int uthread_block(int tid)
         unblock_signal();
         return -1;
     }
-    if(threads[tid]._state == waiting)
+    if(threads[tid]->_state == waiting)
     {
-        threads[tid]._state = blockedNwaiting;
+        threads[tid]->_state = blockedNwaiting;
     }
     else
     {
-        if(threads[tid]._state == ready)
+        if(threads[tid]->_state == ready)
         {
             erase_from_queue[tid]++;
         }
-        threads[tid]._state = blocked;
+        threads[tid]->_state = blocked;
     }
     if((unsigned int) tid == curr_thread)
     {
@@ -343,13 +342,13 @@ int uthread_resume(int tid)
         unblock_signal();
         return -1;
     }
-    if(threads[tid]._state == blockedNwaiting)
+    if(threads[tid]->_state == blockedNwaiting)
     {
-        threads[tid]._state = waiting;
+        threads[tid]->_state = waiting;
     }
-    else if(threads[tid]._state == blocked)
+    else if(threads[tid]->_state == blocked)
     {
-        threads[tid]._state = ready;
+        threads[tid]->_state = ready;
         ready_queue.push(tid);
     }
     unblock_signal();
@@ -391,14 +390,14 @@ int uthread_sync(int tid)
         return -1;
     }
 
-    threads[tid]._waiting_for_me.push_back(curr_thread);
-    if (threads[curr_thread]._state == blocked)
+    threads[tid]->_waiting_for_me.push_back(curr_thread);
+    if (threads[curr_thread]->_state == blocked)
     {
-        threads[curr_thread]._state = blockedNwaiting;
+        threads[curr_thread]->_state = blockedNwaiting;
     }
     else
     {
-        threads[curr_thread]._state = waiting;
+        threads[curr_thread]->_state = waiting;
     }
     reset_timer();
     switch_threads(0);
@@ -444,7 +443,7 @@ int uthread_get_quantums(int tid)
         unblock_signal();
         return -1;
     }
-    int quantum = threads[tid]._num_quantum;
+    int quantum = threads[tid]->_num_quantum;
     unblock_signal();
     return quantum;
 }
