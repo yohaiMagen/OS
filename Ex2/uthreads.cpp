@@ -7,7 +7,7 @@
 #include <map>
 #include <unordered_map>
 #include <queue>
-#include "thread.h"
+#include "Thread.h"
 #include <iostream>
 
 
@@ -16,6 +16,7 @@
 #define FAIL 1
 #define LONG_JUMP_RETURN 4
 #define MIL 1000000
+#define SELF_TER_BLK 0
 
 #define SYS_ERR "system error: "
 #define SIG_MASK_ERR "failed masking vt signal"
@@ -29,12 +30,14 @@
 #define SELF_SYNC_ERR " a thread cannot switch itself to waiting state"
 #define MAIN_SYNC_ERR "main thread cannot be switched to waiting state"
 #define MAIN_BLOCK_ERR "main thread cannot be blocked"
+
 //-------------------------------variables-------------------------------------
-// thread handling data structure
-std::unordered_map<unsigned int, thread*> threads;
+// Thread handling data structure
+std::unordered_map<unsigned int, Thread*> threads;
 // round robin thread queue
 std::queue<unsigned int> ready_queue;
-int erase_from_queue[100];
+//array of number of time a thread need to be removed when reached the top of the queue
+int remove_from_queue[MAX_THREAD_NUM];
 // current quanta
 unsigned int quanta;
 //min heap next next thread
@@ -49,6 +52,9 @@ sigset_t blc_set;
 
 //-----------------------------------functions----------------------------------
 
+/**
+ * Adds the initialized signal set to the blocked mask.
+ */
 void block_signal()
 {
     if(sigprocmask(SIG_BLOCK, &blc_set, NULL))
@@ -58,6 +64,9 @@ void block_signal()
     }
 }
 
+/**
+ * Removes the initialized signal set from the blocked mask.
+ */
 void unblock_signal()
 {
     if(sigprocmask(SIG_UNBLOCK, &blc_set, NULL))
@@ -67,6 +76,9 @@ void unblock_signal()
     }
 }
 
+/**
+ * Resets (or sets) the virtual timer with the initialized quantum time
+ */
 void reset_timer()
 {
     if (setitimer(ITIMER_VIRTUAL, &timer, NULL))
@@ -76,10 +88,15 @@ void reset_timer()
     }
 }
 
-
+/**
+ * Unsyncs all the threads wainting to the given thread back to ready or blocked mode.
+ * @param tid unsigned int thread's id
+ */
 void uthread_unsync(unsigned int tid)
 {
-    for (std::vector<unsigned int>::iterator i = threads[tid]->_waiting_for_me.begin(); i != threads[tid]->_waiting_for_me.end(); ++i)
+    for (std::vector<unsigned int>::iterator i = threads[tid]->_waiting_for_me.begin();
+         i != threads[tid]->_waiting_for_me.end();
+         ++i)
     {
         if(threads[*i]->_state == blockedNwaiting)
         {
@@ -94,6 +111,10 @@ void uthread_unsync(unsigned int tid)
     threads[tid]->_waiting_for_me.clear();
 }
 
+/**
+ * Determines the next available thread id
+ * @return unsigned int - the next available id
+ */
 unsigned int get_next_thread_id()
 {
     if(next_available_thread.empty())
@@ -108,10 +129,18 @@ unsigned int get_next_thread_id()
     }
 }
 
+/**
+ * Switches the running thread according to the ready queue
+ * @param input int - the signal generated the function call
+ */
 void switch_threads(int input)
 {
-
     block_signal();
+    //unrecognized signal
+    if(input != SELF_TER_BLK && input != SIGVTALRM)
+    {
+        exit(FAIL);
+    }
     if (ready_queue.empty())
     {
         threads[curr_thread]->_num_quantum++;
@@ -119,17 +148,21 @@ void switch_threads(int input)
         unblock_signal();
         return;
     }
+
     int ret_val = sigsetjmp(threads[curr_thread]->_env, 1);
     if (ret_val == LONG_JUMP_RETURN)
     {
         unblock_signal();
         return;
     }
+
     unsigned int next_thread = ready_queue.front();
-    while(erase_from_queue[next_thread] != 0)
+
+    //The thread at the top of the queue was removed from queue
+    while(remove_from_queue[next_thread] != 0)
     {
         ready_queue.pop();
-        erase_from_queue[next_thread]--;
+        remove_from_queue[next_thread]--;
         if(ready_queue.empty())
         {
             unblock_signal();
@@ -140,6 +173,7 @@ void switch_threads(int input)
 
     quanta++;
     uthread_unsync(curr_thread);
+
     if(threads[curr_thread]->_state == selfTerminated)
     {
         delete threads[curr_thread];
@@ -151,6 +185,7 @@ void switch_threads(int input)
         ready_queue.push(curr_thread);
         threads[curr_thread]->_state = ready;
     }
+
     curr_thread = next_thread;
     ready_queue.pop();
     threads[curr_thread]->_num_quantum++;
@@ -195,7 +230,7 @@ int uthread_init(int quantum_usecs)
 
     unsigned int id = get_next_thread_id();
 //    threads[id] = thread(id, 0, running);
-    threads.insert(std::pair< int , thread*>((int const)id, new thread(id, 0, running)) );
+    threads.insert(std::pair< int , Thread*>((int const)id, new Thread(id, 0, running)) );
 
     quanta++;
     threads[id]->_num_quantum++;
@@ -225,7 +260,7 @@ int uthread_spawn(void (*f)(void))
         return -1;
     }
 //    threads[id] = thread(id, (address_t) f);
-    threads.insert(std::pair<int, thread*>(id, new thread(id, (address_t) f)));
+    threads.insert(std::pair<int, Thread*>(id, new Thread(id, (address_t) f)));
     ready_queue.push(id);
     unblock_signal();
     return id;
@@ -270,7 +305,7 @@ int uthread_terminate(int tid)
         uthread_unsync(tid);
         if(threads[tid]->_state == ready)
         {
-            erase_from_queue[tid]++;
+            remove_from_queue[tid]++;
         }
         next_available_thread.push(tid);
         delete threads[tid];
@@ -312,7 +347,7 @@ int uthread_block(int tid)
     {
         if(threads[tid]->_state == ready)
         {
-            erase_from_queue[tid]++;
+            remove_from_queue[tid]++;
         }
         threads[tid]->_state = blocked;
     }

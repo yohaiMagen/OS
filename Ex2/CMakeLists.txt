@@ -3,7 +3,7 @@ project(Ex2)
 
 set(MAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES uthreads.h uthreads.cpp thread.h thread.cpp sanity.cpp)
+set(SOURCE_FILES uthreads.h uthreads.cpp Thread.h Thread.cpp sanity.cpp)
 
 set(ITIMER_FILES demo_itimer.c )
 add_executable(itimer ${ITIMER_FILES})

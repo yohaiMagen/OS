@@ -1,6 +1,7 @@
-//
-// Created by yohai on 3/25/17.
-//
+/**
+ * A Thread is an Object that has its own stack and allows the user to run
+ * the code in "parallel".
+ */
 
 #ifndef EX2_THREAD_H
 #define EX2_THREAD_H
@@ -56,32 +57,35 @@ inline address_t translate_address(address_t addr)
 
 
 // thread state
-enum threadState { ready, running, waiting, blocked, blockedNwaiting, selfTerminated };
+enum threadState { ready,
+                   running,
+                   waiting,
+                   blocked,
+                   blockedNwaiting,
+                   selfTerminated };
 
 /**
- * A simple thread
+ * A simple Thread
  */
-struct thread
+struct Thread
 {
-    std::vector<unsigned int> _waiting_for_me;
     unsigned int _id; // unique number
-    char _stack[STACK_SIZE];
-//    char* _stack;
+    char _stack[STACK_SIZE];// thread's stack
     sigjmp_buf _env; //thread's buffer
-//    char* _sp; // stack pointer
-//    char* _pc; // program counter
     threadState _state; // thread's state
     unsigned int _num_quantum; // number of quantum run by the thread
+    std::vector<unsigned int> _waiting_for_me; // list of threads that are synced with the thread
 
-    thread();
-    thread(unsigned int id, address_t pc, threadState state = ready, unsigned int quantum = 0);
-    thread(const thread& other);
+    Thread();
+    Thread(unsigned int id, address_t pc, threadState state = ready,
+           unsigned int quantum = 0);
+//    Thread(const thread& other);
 //    thread(thread&& other);
-    thread operator=(const thread &other);
+//    thread operator=(const thread &other);
 
-    ~thread();
+    ~Thread();
 
-}typedef thread;
+}typedef Thread;
 
 
 #endif //EX2_THREAD_H
