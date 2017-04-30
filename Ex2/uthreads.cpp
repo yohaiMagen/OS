@@ -229,7 +229,6 @@ int uthread_init(int quantum_usecs)
     timer.it_interval.tv_sec = q_time_sec;
 
     unsigned int id = get_next_thread_id();
-//    threads[id] = thread(id, 0, running);
     threads.insert(std::pair< int , Thread*>((int const)id, new Thread(id, 0, running)) );
 
     quanta++;
@@ -259,7 +258,6 @@ int uthread_spawn(void (*f)(void))
         unblock_signal();
         return -1;
     }
-//    threads[id] = thread(id, (address_t) f);
     threads.insert(std::pair<int, Thread*>(id, new Thread(id, (address_t) f)));
     ready_queue.push(id);
     unblock_signal();

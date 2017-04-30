@@ -14,6 +14,8 @@
 #include <sys/time.h>
 #include <vector>
 
+// A fake adress for default constructor pc
+#define DUMMY_ADRESS 0
 
 #ifdef __x86_64__
 /* code for 64 bit Intel arch */

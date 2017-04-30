@@ -1,1 +1,56 @@
+yohai.magen, nivkeren
+Yohai Magen (30254196), Niv Keren (201478351)
+EX: 2
+
+FILES:
+uthread.cpp -- code file realization for user thread library
+Thread.h -- User Thread object header file
+Thread.cpp -- User Thread object implementation
+Makefile -- build the libuthreads.a ex1.tar and clean
+README -- this file
+
+REMARKS:
+
+to implement the scedualer in an efficient time complexity we used 3 stl containers:
+1. unordered map - stores pointers to Threads, let us reach, add and remove a thread
+   in complexity of O(1)
+2. queue - manges the round robin thread running turn.
+           if a thread loses is place in the queue and needed to be deleted from it.
+           we keep a counter that as long as it not zero, we skip it's turn when it
+           reaches the top of the queue. This way erasing from the queue is in O(1).
+3. priority queue - an min heap to manage the free threads IDs
+
+In every library function (except init) the SIGVTALARM is blocked. This way we ensure
+there wont be a jump in the middle of the functions and they will fully complete
+every time.
+
+
+ANSWERS:
+
+1.
+A program that execute user tasks. using a user level threads a small and easy task
+    would not get stuck behind a long task and would get attention.
+
+2.
+advantages
+    - no shared data structure and address space is need. That way no need for careful
+      programing.
+    - a process can consist multiple threads for complex tasks.
+
+disadvantages
+- threads are easier to create since they do not require a new address space.
+- thread share resources and there for are light weighted compare to a new process.
+
+3.
+    1. keyboard interrupts when typing - handles by the OS
+    2. OS sending a signal to the shell
+    3. shell sending kill signal to OS
+    4. OS kills the process
+
+4.
+real time - the time in the real (human) world acourding to the Greenwich agreement
+ or the computer internal clock. to limit running time of a process before killing it.
+virtual time - runs the clock when a process is executing. handling with threads,
+all threads get the same amount of process time for better equality
+
 
