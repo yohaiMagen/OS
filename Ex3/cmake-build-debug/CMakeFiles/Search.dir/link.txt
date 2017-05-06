@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/Search.dir/Search.cpp.o CMakeFiles/Search.dir/MapReduceFramework.cpp.o  -o Search 

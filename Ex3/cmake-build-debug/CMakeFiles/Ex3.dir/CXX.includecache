@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yohai/CLionProjects/OS/Ex3/MapReduceClient.h
+vector
+-
+
+/home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.cpp
+MapReduceFramework.h
+/home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.h
+
+/home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.h
+MapReduceClient.h
+/home/yohai/CLionProjects/OS/Ex3/MapReduceClient.h
+utility
+-
+
+/home/yohai/CLionProjects/OS/Ex3/main.cpp
+iostream
+-
+string
+-
+
