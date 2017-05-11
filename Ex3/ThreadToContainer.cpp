@@ -8,7 +8,7 @@ ThreadToContainer::ThreadToContainer()
 {
 }
 
-ThreadToContainer::ThreadToContainer(pthread_t *ithread, MAP_ITEM_VEC container, int read_pos, bool thread_done = false):
+ThreadToContainer::ThreadToContainer(pthread_t *ithread, MAP_ITEM_VEC container, int read_pos, bool thread_done):
     _ithread(ithread),
     _container(container),
     _read_pos(read_pos),
@@ -27,4 +27,5 @@ ThreadToContainer& ThreadToContainer::operator=(const ThreadToContainer &other)
     this->_container = other._container;
     this->_read_pos = other._read_pos;
     this->_thread_done = other._thread_done;
+    return *this;
 }

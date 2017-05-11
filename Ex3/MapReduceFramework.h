@@ -4,6 +4,7 @@
 #include "MapReduceClient.h"
 #include <utility>
 
+
 typedef std::pair<k1Base*, v1Base*> IN_ITEM;
 typedef std::pair<k3Base*, v3Base*> OUT_ITEM;
 

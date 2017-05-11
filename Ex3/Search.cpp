@@ -1,5 +1,4 @@
 #include <string>
-#include <sys/stat.h>
 #include <dirent.h>
 #include <iostream>
 #include "MapReduceClient.h"
@@ -16,7 +15,7 @@ public:
     {
         return _dir_name;
     }
-    bool operator<(const k1Base &other)
+    bool operator<(const k1Base &other) const
     {
         return _dir_name.compare(dynamic_cast<const DirName &>(other)._dir_name) < 0;
     }
@@ -71,7 +70,7 @@ public:
         _num_rep++;
         return *this;
     }
-    int operator int() const
+    operator int() const
     {
         return _num_rep;
     }
@@ -80,7 +79,7 @@ class SearchFileName: public MapReduceBase
 {
 
 public:
-    void Map(const k1Base *const key, const v1Base *const val)
+    void Map(const k1Base *const key, const v1Base *const val) const
     {
         std::string path = dynamic_cast<const DirName *>(key)->get_dir_name();
         std::string sub_str = dynamic_cast<const SubFileName *>(val)->_substring;
@@ -98,16 +97,15 @@ public:
             closedir (dir);
         }
     }
-    void Reduce(const k2Base *const key, const V2_VEC &vals)
+    void Reduce(const k2Base *const key, const V2_VEC &vals) const
     {
         Emit3(new FileName(*dynamic_cast< const FileName*>(key)), new RepeatFileName(vals.size()));
-        //TODO fee key
+        //TODO free key
     }
 };
 
 int main (int argc, char **argv)
 {
-
     if(argc < 3)
     {
         //TODO print err
@@ -116,25 +114,31 @@ int main (int argc, char **argv)
     {
         SearchFileName searcher;
         std::string str = argv[1];
-        SubFileName *searched = new SubFileName(str);
+        SubFileName searched = SubFileName(str);
         IN_ITEMS_VEC input;
+
         for (int i = 2; i < argc ; ++i)
         {
             str = argv[i];
-            input.push_back(std::make_pair(new DirName(str), searched));
+            input.push_back(std::make_pair(new DirName(str), &searched));
 
         }
-        OUT_ITEMS_VEC output = RunMapReduceFramework(searcher, input, 0, true);
-        for (int j = 0; j < output.size() ; ++j)
+        OUT_ITEMS_VEC output = RunMapReduceFramework(searcher, input, 4, true);
+        for (unsigned int j = 0; j < output.size() ; ++j)
         {
             for (int i = 0; i < *dynamic_cast<RepeatFileName *>(output[i].second) ; ++i)
             {
                 std::cout << dynamic_cast<FileName *>(output[i].first)->get_file_name()<< " ";
-                //TODO print syntx
-                free(output[i].first);
-                free(output[i].second);
+                //TODO print syntax
+                delete(output[i].first);
+                delete(output[i].second);
             }
-
+        }
+        // free INPUT_VEC
+        for (unsigned int i = 0; i < input.size(); ++i)
+        {
+            delete (input[i].first);
+            delete (input[i].second);
         }
     }
 }
