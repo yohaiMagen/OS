@@ -11,8 +11,24 @@ vector
 -
 
 /home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.cpp
+ThreadToContainer.h
+/home/yohai/CLionProjects/OS/Ex3/ThreadToContainer.h
+pthread.h
+-
 MapReduceFramework.h
 /home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.h
+algorithm
+-
+unordered_map
+-
+semaphore.h
+-
+map
+-
+fstream
+-
+ctime
+-
 
 /home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.h
 MapReduceClient.h
@@ -23,8 +39,6 @@ utility
 /home/yohai/CLionProjects/OS/Ex3/Search.cpp
 string
 -
-sys/stat.h
--
 dirent.h
 -
 iostream
@@ -33,4 +47,14 @@ MapReduceClient.h
 /home/yohai/CLionProjects/OS/Ex3/MapReduceClient.h
 MapReduceFramework.h
 /home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.h
+
+/home/yohai/CLionProjects/OS/Ex3/ThreadToContainer.cpp
+ThreadToContainer.h
+/home/yohai/CLionProjects/OS/Ex3/ThreadToContainer.h
+
+/home/yohai/CLionProjects/OS/Ex3/ThreadToContainer.h
+pthread.h
+-
+MapReduceClient.h
+/home/yohai/CLionProjects/OS/Ex3/MapReduceClient.h
 

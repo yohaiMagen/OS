@@ -193,6 +193,36 @@ Search.cpp.s:
 	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Search.cpp.s
 .PHONY : Search.cpp.s
 
+ThreadToContainer.o: ThreadToContainer.cpp.o
+
+.PHONY : ThreadToContainer.o
+
+# target to build an object file
+ThreadToContainer.cpp.o:
+	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/ThreadToContainer.cpp.o
+	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/ThreadToContainer.cpp.o
+.PHONY : ThreadToContainer.cpp.o
+
+ThreadToContainer.i: ThreadToContainer.cpp.i
+
+.PHONY : ThreadToContainer.i
+
+# target to preprocess a source file
+ThreadToContainer.cpp.i:
+	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/ThreadToContainer.cpp.i
+	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/ThreadToContainer.cpp.i
+.PHONY : ThreadToContainer.cpp.i
+
+ThreadToContainer.s: ThreadToContainer.cpp.s
+
+.PHONY : ThreadToContainer.s
+
+# target to generate assembly for a file
+ThreadToContainer.cpp.s:
+	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/ThreadToContainer.cpp.s
+	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/ThreadToContainer.cpp.s
+.PHONY : ThreadToContainer.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -236,6 +266,9 @@ help:
 	@echo "... Search.o"
 	@echo "... Search.i"
 	@echo "... Search.s"
+	@echo "... ThreadToContainer.o"
+	@echo "... ThreadToContainer.i"
+	@echo "... ThreadToContainer.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

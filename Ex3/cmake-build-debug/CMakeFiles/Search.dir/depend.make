@@ -4,8 +4,13 @@
 CMakeFiles/Search.dir/MapReduceFramework.cpp.o: ../MapReduceClient.h
 CMakeFiles/Search.dir/MapReduceFramework.cpp.o: ../MapReduceFramework.cpp
 CMakeFiles/Search.dir/MapReduceFramework.cpp.o: ../MapReduceFramework.h
+CMakeFiles/Search.dir/MapReduceFramework.cpp.o: ../ThreadToContainer.h
 
 CMakeFiles/Search.dir/Search.cpp.o: ../MapReduceClient.h
 CMakeFiles/Search.dir/Search.cpp.o: ../MapReduceFramework.h
 CMakeFiles/Search.dir/Search.cpp.o: ../Search.cpp
+
+CMakeFiles/Search.dir/ThreadToContainer.cpp.o: ../MapReduceClient.h
+CMakeFiles/Search.dir/ThreadToContainer.cpp.o: ../ThreadToContainer.cpp
+CMakeFiles/Search.dir/ThreadToContainer.cpp.o: ../ThreadToContainer.h
 

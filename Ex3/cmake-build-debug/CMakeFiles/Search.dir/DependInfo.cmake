@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.cpp" "/home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles/Search.dir/MapReduceFramework.cpp.o"
   "/home/yohai/CLionProjects/OS/Ex3/Search.cpp" "/home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles/Search.dir/Search.cpp.o"
+  "/home/yohai/CLionProjects/OS/Ex3/ThreadToContainer.cpp" "/home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles/Search.dir/ThreadToContainer.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

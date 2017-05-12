@@ -145,6 +145,14 @@
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex3/Search.cpp">
 			<Option target="Search"/>
 		</Unit>
+		<Unit filename="/home/yohai/CLionProjects/OS/Ex3/ThreadToContainer.cpp">
+			<Option target="Search"/>
+			<Option target="Ex3"/>
+		</Unit>
+		<Unit filename="/home/yohai/CLionProjects/OS/Ex3/ThreadToContainer.h">
+			<Option target="Search"/>
+			<Option target="Ex3"/>
+		</Unit>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex3/main.cpp">
 			<Option target="Ex3"/>
 		</Unit>

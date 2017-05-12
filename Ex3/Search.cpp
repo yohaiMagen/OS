@@ -89,7 +89,7 @@ public:
             /* print all the files and directories within directory */
             while ((ent = readdir (dir)) != NULL) {
                 std::string file_name(ent->d_name);
-                if(file_name.find(sub_str))
+                if(file_name.find(sub_str) != std::string::npos)
                 {
                     Emit2(new FileName(file_name), new ContainsSubstring());
                 }
@@ -123,22 +123,21 @@ int main (int argc, char **argv)
             input.push_back(std::make_pair(new DirName(str), &searched));
 
         }
-        OUT_ITEMS_VEC output = RunMapReduceFramework(searcher, input, 4, true);
+        OUT_ITEMS_VEC output = RunMapReduceFramework(searcher, input, 1, true);
         for (unsigned int j = 0; j < output.size() ; ++j)
         {
-            for (int i = 0; i < *dynamic_cast<RepeatFileName *>(output[i].second) ; ++i)
+            for (int i = 0; i < *dynamic_cast<RepeatFileName *>(output[j].second) ; ++i)
             {
-                std::cout << dynamic_cast<FileName *>(output[i].first)->get_file_name()<< " ";
-                //TODO print syntax
-                delete(output[i].first);
-                delete(output[i].second);
+                std::cout << dynamic_cast<FileName *>(output[j].first)->get_file_name()<< " ";
+//                //TODO print syntax
             }
+            delete(output[j].first);
+            delete(output[j].second);
         }
         // free INPUT_VEC
         for (unsigned int i = 0; i < input.size(); ++i)
         {
             delete (input[i].first);
-            delete (input[i].second);
         }
     }
 }

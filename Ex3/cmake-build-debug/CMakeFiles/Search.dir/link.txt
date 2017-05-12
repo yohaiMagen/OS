@@ -1,1 +1,1 @@
-/usr/bin/c++   -g   CMakeFiles/Search.dir/Search.cpp.o CMakeFiles/Search.dir/MapReduceFramework.cpp.o  -o Search 
+/usr/bin/c++    -std=c++11 -pthread -Wall -Wextra -g   CMakeFiles/Search.dir/Search.cpp.o CMakeFiles/Search.dir/MapReduceFramework.cpp.o CMakeFiles/Search.dir/ThreadToContainer.cpp.o  -o Search 
