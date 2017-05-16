@@ -44,6 +44,10 @@ pthread_mutex_t pos_map_mutex;
 pthread_mutex_t pos_reduce_mutex;
 
 SHUFFLE_VEC shuffle_prod_vec;
+auto cmpLambda = [](const k2Base const *lhs, const k2Base const *rhs) { return *lhs < *rhs; };
+//You could also use a lambda that is not dependent on local variables, like this:
+//auto cmpLambda = [](const Point &lhs, const Point &rhs) { return lhs.y < rhs.y; };
+std::map<k2Base*, V2_VEC, decltype(cmpLambda)> shuffle_prod(cmpLambda);
 
 std::ofstream slog;
 
@@ -204,7 +208,9 @@ void* f_map(void *arg)
     {
         if(pthread_equal(*pthread2Container[i]->_ithread, pthread_self()))
         {
+            pthread_mutex_lock(&pthread2Container[i]->_cont_mutex);
             pthread2Container[i]->_thread_done = true;
+            pthread_mutex_unlock(&pthread2Container[i]->_cont_mutex);
             break;
         }
     }
@@ -222,8 +228,8 @@ void* f_shuffle(void *arg)
         sem_post(&shuffle_read_sem);
         for (unsigned int i = 0; i < pthread2Container.size() ; ++i)
         {
-            map_complete = map_complete && pthread2Container[i]->_thread_done;
             pthread_mutex_lock(&pthread2Container[i]->_cont_mutex);
+            map_complete = map_complete && pthread2Container[i]->_thread_done;
             int dif  = pthread2Container[i]->_container.size() - pthread2Container[i]->_read_pos;
             pthread_mutex_unlock(&pthread2Container[i]->_cont_mutex);
             if(dif > 0)
@@ -312,13 +318,14 @@ void Emit2 (k2Base* key, v2Base* value)
     sem_post(&shuffle_read_sem);
     for (unsigned int i = 0; i < pthread2Container.size(); ++i)
     {
-       if(pthread_equal(*pthread2Container[i]->_ithread, pthread_self()))
-       {
-           pthread_mutex_lock(&pthread2Container[i]->_cont_mutex);
+        pthread_mutex_lock(&pthread2Container[i]->_cont_mutex);
+        if(pthread_equal(*pthread2Container[i]->_ithread, pthread_self()))
+        {
            pthread2Container[i]->_container.push_back(std::make_pair(key, value));
            pthread_mutex_unlock(&pthread2Container[i]->_cont_mutex);
            break;
-       }
+        }
+        pthread_mutex_unlock(&pthread2Container[i]->_cont_mutex);
     }
 }
 
