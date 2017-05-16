@@ -14,6 +14,7 @@ ThreadToContainer::ThreadToContainer(pthread_t *ithread, MAP_ITEM_VEC container,
     _read_pos(read_pos),
     _thread_done(thread_done)
 {
+    _cont_mutex = PTHREAD_MUTEX_INITIALIZER;
 }
 
 ThreadToContainer::ThreadToContainer(ThreadToContainer &other):
@@ -28,4 +29,12 @@ ThreadToContainer& ThreadToContainer::operator=(const ThreadToContainer &other)
     this->_read_pos = other._read_pos;
     this->_thread_done = other._thread_done;
     return *this;
+}
+
+ThreadToContainer::~ThreadToContainer()
+{
+    if(pthread_mutex_destroy(&_cont_mutex))
+    {
+        //TODO err
+    }
 }

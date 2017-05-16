@@ -1,4 +1,5 @@
 /home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles/test1.dir
 /home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles/Search.dir
 /home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles/Ex3.dir

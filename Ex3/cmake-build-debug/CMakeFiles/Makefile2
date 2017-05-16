@@ -60,6 +60,43 @@ CMAKE_SOURCE_DIR = /home/yohai/CLionProjects/OS/Ex3
 CMAKE_BINARY_DIR = /home/yohai/CLionProjects/OS/Ex3/cmake-build-debug
 
 #=============================================================================
+# Target rules for target CMakeFiles/test1.dir
+
+# All Build rule for target.
+CMakeFiles/test1.dir/all:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/depend
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles --progress-num=9,10,11,12 "Built target test1"
+.PHONY : CMakeFiles/test1.dir/all
+
+# Include target in all.
+all: CMakeFiles/test1.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test1.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test1.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yohai/CLionProjects/OS/Ex3/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/test1.dir/rule
+
+# Convenience name for target.
+test1: CMakeFiles/test1.dir/rule
+
+.PHONY : test1
+
+# clean rule for target.
+CMakeFiles/test1.dir/clean:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/clean
+.PHONY : CMakeFiles/test1.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/test1.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/Search.dir
 
 # All Build rule for target.

@@ -7,6 +7,7 @@
 #include <map>
 #include <fstream>
 #include <ctime>
+#include <iostream>
 
 #define WORK_CHUNCK 5
 
@@ -45,6 +46,9 @@ pthread_mutex_t pos_reduce_mutex;
 SHUFFLE_VEC shuffle_prod_vec;
 
 std::ofstream slog;
+
+int emit2_call_num;//TODO delete
+int emit3_call_num;//TODO delete
 //----------------------------------------------------------------------------------------------------------------
 OUT_ITEMS_VEC MergeReduceArray();
 void shuffleMap2Vec(SHUFFLE_MAP &m, SHUFFLE_VEC &v);
@@ -52,6 +56,7 @@ void* f_map(void *arg);
 void* f_shuffle(void *arg);
 void* f_reduce(void *arg);
 void new_thread_log(std::string);
+bool k3_comperator(OUT_ITEM first, OUT_ITEM second);
 
 
 OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& itemsVec,
@@ -102,6 +107,9 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
             //TODO err
         }
     }
+    std::cout << "################################"<<std::endl;
+    std::cout <<emit2_call_num<<std::endl;
+    std::cout << "################################"<<std::endl;//TODO delete
     sem_post(&shuffle_read_sem);
 
     if(pthread_mutex_destroy(&pos_map_mutex))
@@ -113,18 +121,26 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
     slog << "suff join pass" <<std::endl;
     for (int i = 0; i < multiThreadLevel ; ++i)
     {
+        OUT_ITEMS_VEC temp_vec;
+        reduce_thread2Container.push_back(std::make_pair(&reduce_threads[i], temp_vec));
+
+    }
+    for (int i = 0; i < multiThreadLevel ; ++i)
+    {
         if(pthread_create(&reduce_threads[i], NULL, f_reduce, &mapReduce))
         {
             //TODO err
         }
         new_thread_log("ExacReduce");
-        OUT_ITEMS_VEC temp_vec;
-        reduce_thread2Container.push_back(std::make_pair(&reduce_threads[i], temp_vec));
+
     }
     for (int j = 0; j < multiThreadLevel ; ++j)
     {
         pthread_join(reduce_threads[j], NULL);
     }
+    std::cout << "################################"<<std::endl;
+    std::cout <<emit3_call_num<<std::endl;
+    std::cout << "################################"<<std::endl;//TODO delete
     if(pthread_mutex_destroy(&pos_reduce_mutex))
     {
         //TODO err
@@ -151,7 +167,6 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
 
 void* f_map(void *arg)
 {
-    slog<<"in map"<<std::endl;
     pthread_mutex_lock(&pthread2Container_mutex);
     pthread_mutex_unlock(&pthread2Container_mutex);
 
@@ -197,44 +212,45 @@ void* f_map(void *arg)
             break;
         }
     }
-    slog <<" out map"<< std::endl;
     return NULL;
 }
 
 void* f_shuffle(void *arg)
 {
-    int getval = 0;
-    slog << "in shf" << std::endl;
+
     bool autoDelete = *(bool*)arg;
     bool map_complete = true;
     while(map_complete)
     {
-        sem_getvalue(&shuffle_read_sem, &getval);
         sem_wait(&shuffle_read_sem);
         sem_post(&shuffle_read_sem);
-        sem_getvalue(&shuffle_read_sem, &getval);
-        slog<<"pass sem" << std::endl;
         for (unsigned int i = 0; i < pthread2Container.size() ; ++i)
         {
             map_complete = map_complete && pthread2Container[i]->_thread_done;
+            pthread_mutex_lock(&pthread2Container[i]->_cont_mutex);
             int dif  = pthread2Container[i]->_container.size() - pthread2Container[i]->_read_pos;
+            pthread_mutex_unlock(&pthread2Container[i]->_cont_mutex);
             if(dif > 0)
             {
                 for (int j = pthread2Container[i]->_read_pos; j < pthread2Container[i]->_read_pos + dif ; ++j)
                 {
-//                    shuffle_prod[pthread2Container[i]->_container[j].first].push_back(pthread2Container[i]->_container[j].second);
                     bool found = false;
+                    pthread_mutex_lock(&pthread2Container[i]->_cont_mutex);
+                    k2Base* key = pthread2Container[i]->_container[j].first;
+                    pthread_mutex_unlock(&pthread2Container[i]->_cont_mutex);
                     for (unsigned int k = 0; k < shuffle_prod_vec.size(); ++k)
                     {
-                        k2Base* key = pthread2Container[i]->_container[j].first;
+
                         if (!(*key < *shuffle_prod_vec[k].first) &&
                             !(*shuffle_prod_vec[k].first < *key))
                         {
+                            pthread_mutex_lock(&pthread2Container[i]->_cont_mutex);
                             shuffle_prod_vec[k].second.push_back(pthread2Container[i]->_container[j].second);
                             if(autoDelete)
                             {
                                 delete(key);
                             }
+                            pthread_mutex_unlock(&pthread2Container[i]->_cont_mutex);
                             found = true;
                             break;
                         }
@@ -247,22 +263,18 @@ void* f_shuffle(void *arg)
 //                       temp.push_back(pthread2Container[i]->_container[j].second);
                         shuffle_prod_vec.push_back(std::make_pair(pthread2Container[i]->_container[j].first, temp));
                     }
-                    sem_getvalue(&shuffle_read_sem, &getval);
                     sem_wait(&shuffle_read_sem);
-                    sem_getvalue(&shuffle_read_sem, &getval);
                 }
                 pthread2Container[i]->_read_pos += dif;
             }
         }
         map_complete = !map_complete;
     }
-    slog << "suff out" <<std::endl;
     return NULL;
 }
 
 void* f_reduce(void *arg)
 {
-    slog<<"in reduce"<<std::endl;
     static unsigned int pos = 0;
     MapReduceBase *mapReduceBase = (MapReduceBase*)arg;
     while(true)
@@ -296,18 +308,20 @@ void* f_reduce(void *arg)
             mapReduceBase->Reduce(shuffle_prod_vec[i].first, shuffle_prod_vec[i].second);
         }
     }
-    slog<<"reduce out"<<std::endl;
     return NULL;
 }
 
 void Emit2 (k2Base* key, v2Base* value)
 {
+    emit2_call_num++;
     sem_post(&shuffle_read_sem);
     for (unsigned int i = 0; i < pthread2Container.size(); ++i)
     {
        if(pthread_equal(*pthread2Container[i]->_ithread, pthread_self()))
        {
+           pthread_mutex_lock(&pthread2Container[i]->_cont_mutex);
            pthread2Container[i]->_container.push_back(std::make_pair(key, value));
+           pthread_mutex_unlock(&pthread2Container[i]->_cont_mutex);
            break;
        }
     }
@@ -315,10 +329,12 @@ void Emit2 (k2Base* key, v2Base* value)
 
 void Emit3 (k3Base* key, v3Base* value)
 {
+    emit3_call_num++;
     for (unsigned int i = 0; i < reduce_thread2Container.size(); ++i)
     {
         if(pthread_equal(*reduce_thread2Container[i].first, pthread_self()))
         {
+
             reduce_thread2Container[i].second.push_back(std::make_pair(key, value));
             break;
         }
@@ -333,7 +349,7 @@ OUT_ITEMS_VEC MergeReduceArray()
                                                  reduce_thread2Container[i].second.begin(),
                                                  reduce_thread2Container[i].second.end());
     }
-    std::sort(reduce_thread2Container[0].second.begin(), reduce_thread2Container[0].second.end());
+    std::sort(reduce_thread2Container[0].second.begin(), reduce_thread2Container[0].second.end(), k3_comperator);
     return reduce_thread2Container[0].second;
 }
 
@@ -353,4 +369,9 @@ void new_thread_log(std::string type)
         ltm->tm_mday << "." << ltm->tm_mon + 1 << "." << ltm->tm_year + 1900 << " " <<
         ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << "]" << std::endl;
 
+}
+
+bool k3_comperator(OUT_ITEM first, OUT_ITEM second)
+{
+    return *first.first < *second.first;
 }

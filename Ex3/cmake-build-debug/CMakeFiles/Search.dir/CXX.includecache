@@ -29,6 +29,8 @@ fstream
 -
 ctime
 -
+iostream
+-
 
 /home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.h
 MapReduceClient.h

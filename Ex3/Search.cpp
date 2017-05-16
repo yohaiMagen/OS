@@ -123,7 +123,7 @@ int main (int argc, char **argv)
             input.push_back(std::make_pair(new DirName(str), &searched));
 
         }
-        OUT_ITEMS_VEC output = RunMapReduceFramework(searcher, input, 1, true);
+        OUT_ITEMS_VEC output = RunMapReduceFramework(searcher, input, 15, true);
         for (unsigned int j = 0; j < output.size() ; ++j)
         {
             for (int i = 0; i < *dynamic_cast<RepeatFileName *>(output[j].second) ; ++i)
@@ -134,6 +134,7 @@ int main (int argc, char **argv)
             delete(output[j].first);
             delete(output[j].second);
         }
+        std::cout<<std::endl;
         // free INPUT_VEC
         for (unsigned int i = 0; i < input.size(); ++i)
         {

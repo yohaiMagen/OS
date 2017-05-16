@@ -18,11 +18,14 @@ struct ThreadToContainer
     MAP_ITEM_VEC _container;
     int _read_pos;
     bool _thread_done;
+    pthread_mutex_t _cont_mutex;
 
     ThreadToContainer();
     ThreadToContainer(pthread_t *ithread, MAP_ITEM_VEC container, int read_pos, bool thread_done = false);
     ThreadToContainer(ThreadToContainer& other);
+    ~ThreadToContainer();
     ThreadToContainer& operator=(const ThreadToContainer& other);
+
 
 };
 

@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -pthread -Wall -Wextra -g   CMakeFiles/test2.dir/test2.cpp.o CMakeFiles/test2.dir/MapReduceFramework.cpp.o CMakeFiles/test2.dir/ThreadToContainer.cpp.o  -o test2 

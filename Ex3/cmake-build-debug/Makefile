@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test1
+
+# Build rule for target.
+test1: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test1
+.PHONY : test1
+
+# fast build rule for target.
+test1/fast:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/build
+.PHONY : test1/fast
+
+#=============================================================================
 # Target rules for targets named Search
 
 # Build rule for target.
@@ -142,6 +155,7 @@ MapReduceFramework.o: MapReduceFramework.cpp.o
 
 # target to build an object file
 MapReduceFramework.cpp.o:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/MapReduceFramework.cpp.o
 	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/MapReduceFramework.cpp.o
 	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/MapReduceFramework.cpp.o
 .PHONY : MapReduceFramework.cpp.o
@@ -152,6 +166,7 @@ MapReduceFramework.i: MapReduceFramework.cpp.i
 
 # target to preprocess a source file
 MapReduceFramework.cpp.i:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/MapReduceFramework.cpp.i
 	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/MapReduceFramework.cpp.i
 	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/MapReduceFramework.cpp.i
 .PHONY : MapReduceFramework.cpp.i
@@ -162,6 +177,7 @@ MapReduceFramework.s: MapReduceFramework.cpp.s
 
 # target to generate assembly for a file
 MapReduceFramework.cpp.s:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/MapReduceFramework.cpp.s
 	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/MapReduceFramework.cpp.s
 	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/MapReduceFramework.cpp.s
 .PHONY : MapReduceFramework.cpp.s
@@ -199,6 +215,7 @@ ThreadToContainer.o: ThreadToContainer.cpp.o
 
 # target to build an object file
 ThreadToContainer.cpp.o:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/ThreadToContainer.cpp.o
 	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/ThreadToContainer.cpp.o
 	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/ThreadToContainer.cpp.o
 .PHONY : ThreadToContainer.cpp.o
@@ -209,6 +226,7 @@ ThreadToContainer.i: ThreadToContainer.cpp.i
 
 # target to preprocess a source file
 ThreadToContainer.cpp.i:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/ThreadToContainer.cpp.i
 	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/ThreadToContainer.cpp.i
 	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/ThreadToContainer.cpp.i
 .PHONY : ThreadToContainer.cpp.i
@@ -219,6 +237,7 @@ ThreadToContainer.s: ThreadToContainer.cpp.s
 
 # target to generate assembly for a file
 ThreadToContainer.cpp.s:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/ThreadToContainer.cpp.s
 	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/ThreadToContainer.cpp.s
 	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/ThreadToContainer.cpp.s
 .PHONY : ThreadToContainer.cpp.s
@@ -250,6 +269,33 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+test.o: test.cpp.o
+
+.PHONY : test.o
+
+# target to build an object file
+test.cpp.o:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/test.cpp.o
+.PHONY : test.cpp.o
+
+test.i: test.cpp.i
+
+.PHONY : test.i
+
+# target to preprocess a source file
+test.cpp.i:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/test.cpp.i
+.PHONY : test.cpp.i
+
+test.s: test.cpp.s
+
+.PHONY : test.s
+
+# target to generate assembly for a file
+test.cpp.s:
+	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/test.cpp.s
+.PHONY : test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -258,6 +304,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... test1"
 	@echo "... Search"
 	@echo "... Ex3"
 	@echo "... MapReduceFramework.o"
@@ -272,6 +319,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... test.o"
+	@echo "... test.i"
+	@echo "... test.s"
 .PHONY : help
 
 
