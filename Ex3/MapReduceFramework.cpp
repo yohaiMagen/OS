@@ -47,8 +47,7 @@ SHUFFLE_VEC shuffle_prod_vec;
 
 std::ofstream slog;
 
-int emit2_call_num;//TODO delete
-int emit3_call_num;//TODO delete
+
 //----------------------------------------------------------------------------------------------------------------
 OUT_ITEMS_VEC MergeReduceArray();
 void shuffleMap2Vec(SHUFFLE_MAP &m, SHUFFLE_VEC &v);
@@ -107,9 +106,6 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
             //TODO err
         }
     }
-    std::cout << "################################"<<std::endl;
-    std::cout <<emit2_call_num<<std::endl;
-    std::cout << "################################"<<std::endl;//TODO delete
     sem_post(&shuffle_read_sem);
 
     if(pthread_mutex_destroy(&pos_map_mutex))
@@ -138,9 +134,6 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
     {
         pthread_join(reduce_threads[j], NULL);
     }
-    std::cout << "################################"<<std::endl;
-    std::cout <<emit3_call_num<<std::endl;
-    std::cout << "################################"<<std::endl;//TODO delete
     if(pthread_mutex_destroy(&pos_reduce_mutex))
     {
         //TODO err
@@ -158,7 +151,10 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
     }
     slog.flush();
     slog.close();
-
+    for (int i = 0; i < pthread2Container.size() ; ++i)
+    {
+        delete(pthread2Container[i]);
+    }
     delete[](map_threads);
     delete[](reduce_threads);
 
@@ -313,7 +309,6 @@ void* f_reduce(void *arg)
 
 void Emit2 (k2Base* key, v2Base* value)
 {
-    emit2_call_num++;
     sem_post(&shuffle_read_sem);
     for (unsigned int i = 0; i < pthread2Container.size(); ++i)
     {
@@ -329,7 +324,6 @@ void Emit2 (k2Base* key, v2Base* value)
 
 void Emit3 (k3Base* key, v3Base* value)
 {
-    emit3_call_num++;
     for (unsigned int i = 0; i < reduce_thread2Container.size(); ++i)
     {
         if(pthread_equal(*reduce_thread2Container[i].first, pthread_self()))

@@ -1,0 +1,207 @@
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:17:3]
+Thread ExacMap created [16.5.2017 19:17:3]
+Thread ExacMap created [16.5.2017 19:17:3]
+Thread ExacMap created [16.5.2017 19:17:3]
+Thread ExacMap created [16.5.2017 19:17:3]
+Thread ExacMap created [16.5.2017 19:17:3]
+Thread ExacMap created [16.5.2017 19:17:3]
+Thread ExacMap created [16.5.2017 19:17:3]
+Thread ExacMap created [16.5.2017 19:17:3]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:17:5]
+Thread ExacReduce created [16.5.2017 19:17:5]
+Thread ExacReduce created [16.5.2017 19:17:5]
+Thread ExacReduce created [16.5.2017 19:17:5]
+Thread ExacReduce created [16.5.2017 19:17:5]
+Thread ExacReduce created [16.5.2017 19:17:5]
+Thread ExacReduce created [16.5.2017 19:17:5]
+Thread ExacReduce created [16.5.2017 19:17:5]
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:17:6]
+Thread ExacMap created [16.5.2017 19:17:6]
+Thread ExacMap created [16.5.2017 19:17:6]
+Thread ExacMap created [16.5.2017 19:17:6]
+Thread ExacMap created [16.5.2017 19:17:6]
+Thread ExacMap created [16.5.2017 19:17:6]
+Thread ExacMap created [16.5.2017 19:17:6]
+Thread ExacMap created [16.5.2017 19:17:6]
+Thread ExacMap created [16.5.2017 19:17:6]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:17:7]
+Thread ExacReduce created [16.5.2017 19:17:7]
+Thread ExacReduce created [16.5.2017 19:17:7]
+Thread ExacReduce created [16.5.2017 19:17:7]
+Thread ExacReduce created [16.5.2017 19:17:7]
+Thread ExacReduce created [16.5.2017 19:17:7]
+Thread ExacReduce created [16.5.2017 19:17:7]
+Thread ExacReduce created [16.5.2017 19:17:7]
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:17:7]
+Thread ExacMap created [16.5.2017 19:17:7]
+Thread ExacMap created [16.5.2017 19:17:7]
+Thread ExacMap created [16.5.2017 19:17:7]
+Thread ExacMap created [16.5.2017 19:17:7]
+Thread ExacMap created [16.5.2017 19:17:7]
+Thread ExacMap created [16.5.2017 19:17:7]
+Thread ExacMap created [16.5.2017 19:17:7]
+Thread ExacMap created [16.5.2017 19:17:7]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:17:8]
+Thread ExacReduce created [16.5.2017 19:17:8]
+Thread ExacReduce created [16.5.2017 19:17:8]
+Thread ExacReduce created [16.5.2017 19:17:8]
+Thread ExacReduce created [16.5.2017 19:17:8]
+Thread ExacReduce created [16.5.2017 19:17:8]
+Thread ExacReduce created [16.5.2017 19:17:8]
+Thread ExacReduce created [16.5.2017 19:17:8]
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:18:39]
+Thread ExacMap created [16.5.2017 19:18:39]
+Thread ExacMap created [16.5.2017 19:18:39]
+Thread ExacMap created [16.5.2017 19:18:39]
+Thread ExacMap created [16.5.2017 19:18:39]
+Thread ExacMap created [16.5.2017 19:18:39]
+Thread ExacMap created [16.5.2017 19:18:39]
+Thread ExacMap created [16.5.2017 19:18:39]
+Thread ExacMap created [16.5.2017 19:18:39]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:18:41]
+Thread ExacReduce created [16.5.2017 19:18:41]
+Thread ExacReduce created [16.5.2017 19:18:41]
+Thread ExacReduce created [16.5.2017 19:18:41]
+Thread ExacReduce created [16.5.2017 19:18:41]
+Thread ExacReduce created [16.5.2017 19:18:41]
+Thread ExacReduce created [16.5.2017 19:18:41]
+Thread ExacReduce created [16.5.2017 19:18:41]
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:18:41]
+Thread ExacMap created [16.5.2017 19:18:41]
+Thread ExacMap created [16.5.2017 19:18:41]
+Thread ExacMap created [16.5.2017 19:18:41]
+Thread ExacMap created [16.5.2017 19:18:41]
+Thread ExacMap created [16.5.2017 19:18:41]
+Thread ExacMap created [16.5.2017 19:18:41]
+Thread ExacMap created [16.5.2017 19:18:41]
+Thread ExacMap created [16.5.2017 19:18:41]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:18:43]
+Thread ExacMap created [16.5.2017 19:18:43]
+Thread ExacMap created [16.5.2017 19:18:43]
+Thread ExacMap created [16.5.2017 19:18:43]
+Thread ExacMap created [16.5.2017 19:18:43]
+Thread ExacMap created [16.5.2017 19:18:43]
+Thread ExacMap created [16.5.2017 19:18:43]
+Thread ExacMap created [16.5.2017 19:18:43]
+Thread ExacMap created [16.5.2017 19:18:43]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+Thread ExacReduce created [16.5.2017 19:18:43]
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:18:56]
+Thread ExacMap created [16.5.2017 19:18:56]
+Thread ExacMap created [16.5.2017 19:18:56]
+Thread ExacMap created [16.5.2017 19:18:56]
+Thread ExacMap created [16.5.2017 19:18:56]
+Thread ExacMap created [16.5.2017 19:18:56]
+Thread ExacMap created [16.5.2017 19:18:56]
+Thread ExacMap created [16.5.2017 19:18:56]
+Thread ExacMap created [16.5.2017 19:18:56]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:18:58]
+Thread ExacReduce created [16.5.2017 19:18:58]
+Thread ExacReduce created [16.5.2017 19:18:58]
+Thread ExacReduce created [16.5.2017 19:18:58]
+Thread ExacReduce created [16.5.2017 19:18:58]
+Thread ExacReduce created [16.5.2017 19:18:58]
+Thread ExacReduce created [16.5.2017 19:18:58]
+Thread ExacReduce created [16.5.2017 19:18:58]
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:18:58]
+Thread ExacMap created [16.5.2017 19:18:58]
+Thread ExacMap created [16.5.2017 19:18:58]
+Thread ExacMap created [16.5.2017 19:18:58]
+Thread ExacMap created [16.5.2017 19:18:58]
+Thread ExacMap created [16.5.2017 19:18:58]
+Thread ExacMap created [16.5.2017 19:18:58]
+Thread ExacMap created [16.5.2017 19:18:58]
+Thread ExacMap created [16.5.2017 19:18:58]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:19:0]
+Thread ExacReduce created [16.5.2017 19:19:0]
+Thread ExacReduce created [16.5.2017 19:19:0]
+Thread ExacReduce created [16.5.2017 19:19:0]
+Thread ExacReduce created [16.5.2017 19:19:0]
+Thread ExacReduce created [16.5.2017 19:19:0]
+Thread ExacReduce created [16.5.2017 19:19:0]
+Thread ExacReduce created [16.5.2017 19:19:0]
+################################################
+##########################################
+###############################
+RunMapReduceFramework started with 8 threads
+Thread shuffle created [16.5.2017 19:19:0]
+Thread ExacMap created [16.5.2017 19:19:0]
+Thread ExacMap created [16.5.2017 19:19:0]
+Thread ExacMap created [16.5.2017 19:19:0]
+Thread ExacMap created [16.5.2017 19:19:0]
+Thread ExacMap created [16.5.2017 19:19:0]
+Thread ExacMap created [16.5.2017 19:19:0]
+Thread ExacMap created [16.5.2017 19:19:0]
+Thread ExacMap created [16.5.2017 19:19:0]
+suff join
+suff join pass
+Thread ExacReduce created [16.5.2017 19:19:1]
+Thread ExacReduce created [16.5.2017 19:19:1]
+Thread ExacReduce created [16.5.2017 19:19:1]
+Thread ExacReduce created [16.5.2017 19:19:1]
+Thread ExacReduce created [16.5.2017 19:19:1]
+Thread ExacReduce created [16.5.2017 19:19:1]
+Thread ExacReduce created [16.5.2017 19:19:1]
+Thread ExacReduce created [16.5.2017 19:19:1]

@@ -29,7 +29,7 @@ Search.o: Search.cpp MapReduceFramework.h MapReduceClient.h
 	$(CC) $(CFLAGS) Search.cpp -o Search.o
 
 main: Search.o MapReduceFramework
-	$(CC) -o Search Search.o MapReduceFramework.a
+	$(CC) -pthread -o Search Search.o MapReduceFramework.a
 
 MapReduceFramework: MapReduceFramework.o ThreadToContainer.o
 	ar rcs MapReduceFramework.a MapReduceFramework.o ThreadToContainer.o
