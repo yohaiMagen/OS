@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -pthread -Wall -Wextra -g   CMakeFiles/Ex3.dir/Ex3/main.cpp.o CMakeFiles/Ex3.dir/Ex3/MapReduceFramework.cpp.o CMakeFiles/Ex3.dir/Ex3/ThreadToContainer.cpp.o  -o Ex3 

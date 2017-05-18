@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -pthread -Wall -Wextra -g   CMakeFiles/Search.dir/Ex3/Search.cpp.o CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o  -o Search 

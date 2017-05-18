@@ -1,0 +1,4 @@
+/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/Search.dir
+/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/Ex3.dir

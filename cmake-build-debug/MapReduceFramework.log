@@ -1,0 +1,18 @@
+RunMapReduceFramework started with 4 threads
+Thread shuffle created [11.5.2017 19:56:9]
+Thread ExacMap created [11.5.2017 19:56:9]
+Thread ExacMap created [11.5.2017 19:56:9]
+Thread ExacMap created [11.5.2017 19:56:9]
+Thread ExacMap created [11.5.2017 19:56:9]
+in shf
+Thread ExacReduce created [11.5.2017 19:56:9]
+Thread ExacReduce created [11.5.2017 19:56:9]
+Thread ExacReduce created [11.5.2017 19:56:9]
+Thread ExacReduce created [11.5.2017 19:56:9]
+RunMapReduceFramework started with 4 threads
+in shf
+Thread shuffle created [11.5.2017 19:57:6]
+Thread ExacMap created [11.5.2017 19:57:15]
+Thread ExacMap created [11.5.2017 19:57:18]
+Thread ExacMap created [11.5.2017 19:57:19]
+Thread ExacMap created [11.5.2017 19:57:21]
