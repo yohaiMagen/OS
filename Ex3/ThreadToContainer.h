@@ -17,7 +17,7 @@ struct ThreadToContainer
     pthread_t *_ithread;
     MAP_ITEM_VEC _container;
     int _read_pos;
-    bool _thread_done;
+    bool _thread_complete;
     pthread_mutex_t _cont_mutex;
 
     ThreadToContainer();
