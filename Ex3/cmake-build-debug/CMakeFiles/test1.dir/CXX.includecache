@@ -31,6 +31,10 @@ ctime
 -
 iostream
 -
+time.h
+-
+sys/time.h
+-
 
 /home/yohai/CLionProjects/OS/Ex3/MapReduceFramework.h
 MapReduceClient.h

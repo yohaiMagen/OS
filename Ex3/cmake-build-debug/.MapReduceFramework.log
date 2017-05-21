@@ -1,0 +1,18 @@
+RunMapReduceFramework started with 3 threads
+Thread shuffle created [18.5.2017 18:43:40]
+Thread ExacMap created [18.5.2017 18:43:40]
+Thread ExacMap terminated [18.5.2017 18:43:40]
+Thread ExacMap created [18.5.2017 18:43:40]
+Thread ExacMap terminated [18.5.2017 18:43:40]
+Thread ExacMap created [18.5.2017 18:43:40]
+Thread ExacMap terminated [18.5.2017 18:43:40]
+Thread shuffle terminated [18.5.2017 18:43:40]
+Map and Shuffle took 469000 ns
+Thread ExacReduce created [18.5.2017 18:43:40]
+Thread ExacReduce terminated [18.5.2017 18:43:40]
+Thread ExacReduce created [18.5.2017 18:43:40]
+Thread ExacReduce terminated [18.5.2017 18:43:40]
+Thread ExacReduce created [18.5.2017 18:43:40]
+Thread ExacReduce terminated [18.5.2017 18:43:40]
+Reduce took 112000 ns
+RunMapReduceFramework finished

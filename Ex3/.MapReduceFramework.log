@@ -1,0 +1,36 @@
+RunMapReduceFramework started with 3 threads
+Thread shuffle created [18.5.2017 18:50:39]
+Thread ExacMap created [18.5.2017 18:50:39]
+Thread ExacMap created [18.5.2017 18:50:39]
+Thread ExacMap created [18.5.2017 18:50:39]
+Thread ExacMap terminated [18.5.2017 18:50:39]
+Thread ExacMap terminated [18.5.2017 18:50:39]
+Thread ExacMap terminated [18.5.2017 18:50:39]
+Thread shuffle terminated [18.5.2017 18:50:39]
+Map and Shuffle took 910000 ns
+Thread ExacReduce created [18.5.2017 18:50:39]
+Thread ExacReduce terminated [18.5.2017 18:50:39]
+Thread ExacReduce created [18.5.2017 18:50:39]
+Thread ExacReduce terminated [18.5.2017 18:50:39]
+Thread ExacReduce created [18.5.2017 18:50:39]
+Thread ExacReduce terminated [18.5.2017 18:50:39]
+Reduce took 186000 ns
+RunMapReduceFramework finished
+RunMapReduceFramework started with 3 threads
+Thread shuffle created [18.5.2017 18:50:55]
+Thread ExacMap created [18.5.2017 18:50:55]
+Thread ExacMap created [18.5.2017 18:50:55]
+Thread ExacMap terminated [18.5.2017 18:50:55]
+Thread ExacMap created [18.5.2017 18:50:55]
+Thread ExacMap terminated [18.5.2017 18:50:55]
+Thread ExacMap terminated [18.5.2017 18:50:55]
+Thread shuffle terminated [18.5.2017 18:50:55]
+Map and Shuffle took 1415000 ns
+Thread ExacReduce created [18.5.2017 18:50:55]
+Thread ExacReduce created [18.5.2017 18:50:55]
+Thread ExacReduce terminated [18.5.2017 18:50:55]
+Thread ExacReduce terminated [18.5.2017 18:50:55]
+Thread ExacReduce created [18.5.2017 18:50:55]
+Thread ExacReduce terminated [18.5.2017 18:50:55]
+Reduce took 362000 ns
+RunMapReduceFramework finished

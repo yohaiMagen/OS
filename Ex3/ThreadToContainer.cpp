@@ -2,7 +2,10 @@
 // Created by yohai.magen on 5/9/17.
 //
 
+#include <iostream>
 #include "ThreadToContainer.h"
+
+#define DES_ERR "MapReduceFramework Failure: pthread_destroy failed."
 
 ThreadToContainer::ThreadToContainer()
 {
@@ -35,6 +38,6 @@ ThreadToContainer::~ThreadToContainer()
 {
     if(pthread_mutex_destroy(&_cont_mutex))
     {
-        //TODO err
+        std::cerr << DES_ERR << std::endl;
     }
 }

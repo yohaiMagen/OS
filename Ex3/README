@@ -1,0 +1,190 @@
+yohai.magen, nivkeren
+Yohai Magen (30254196), Niv Keren (201478351)
+EX: 2
+
+FILES:
+Search.cpp README Makefile 
+MapReduceFramework.cpp -- code file implementing the MapReduceFramework library
+ThreadToContainer.cpp -- pthread wrapper for the map threads implementation
+ThreadToContainer.h -- pthread wrapper for the map threads header file
+Search.cpp -- mapReduceClient implementation for serching sub file name
+Makefile -- build the MapReduceFramework.a Search
+README -- this file
+
+REMARKS:
+
+1. In order to read and write in the most efficient way the each thread is wrapped by
+   a struct. The map thread's wraper contains:
+	The pthread
+	<k2Base*, v2Base> vector
+	shuffle thread reading position
+	complete flag
+	mutex object
+
+	when reading from the vector the shuffle thread updates the last position it
+	read from, the next time it will strat reading from the saved position. This
+	way we do not make any unnecessary actions like delete and updating the vector.
+
+2. We used a stl map as the container for the shuffle output. By using the map we
+   optimised the search time to O(log(n)) when shuffling.
+	
+
+
+to implement the scedualer in an efficient time complexity we used 3 stl containers:
+1. unordered map - stores pointers to Threads, let us reach, add and remove a thread
+   in complexity of O(1)
+2. queue - manges the round robin thread running turn.
+           if a thread loses is place in the queue and needed to be deleted from it.
+           we keep a counter that as long as it not zero, we skip it's turn when it
+           reaches the top of the queue. This way erasing from the queue is in O(1).
+3. priority queue - an min heap to manage the free threads IDs
+
+In every library function (except init) the SIGVTALARM is blocked. This way we ensure
+there wont be a jump in the middle of the functions and they will fully complete
+every time.
+
+
+ANSWERS:
+
+Q1
+n mutex  for each map thread
+1 conditional variable cv and mutex cv_mutex
+
+produceFunc -- map thread
+    lock mutex i
+    add (k2, V2) to map i container
+    unlock mutex i
+    notify cv
+
+
+consumerFunc -- shuffle thread
+    while(true)
+        wait(cv, cv_mutex)
+        unlock cv_mutex
+        for i = 1 ... n
+            lock mutex i
+            shuffle the data in map i container
+            unlock mutex i
+         end for
+    end while
+
+The timed wait is needed because there is a scenario where while the shuffle thread
+is running (not waiting), all the map threads will finish and notify the
+shuffle thread. All notifications will be lost and the next time it will reach
+the wait cv it will wait for ever if not timed.
+
+Q2
+multiThreadLevel = 7
+to utilize the map reduce procedure we will need to use all cores.
+when multiThreadLevel = 7, 7 map threads, 1 shuffle thread and the main thread
+will run in parallel. in the map part of the procedure the main thread waits for
+the shuffle to finish and it does not consume any cpu time. This way the 7 map threads and
+the shuffle thread run continuously and no time is waisted on thread switching while all cores
+are working all time.
+
+Q3
+a. Utilizing multi-cores
+Nira - not utilizing at all.
+Moti - good utilization kernel level threads run on different cores
+Danny - the computer does not know there are more then one thread and no utilization
+        is happening
+Galit - good utilization processes run on different cores
+
+
+b. The ability to create a sophisticated scheduler, based on internal data.
+Nira - no scheduling at all
+Moti - OS scheduling not able to modify
+Danny - User level thread anable full control on scheduling
+Galit - OS scheduling not able to modify
+
+c. Communication time (between different threads/processes)
+Nira - no communication needed. no time is waisted
+Moti - slower than Danny. communication through shared data on different cores
+Danny - fast communication. all data with in the same core
+Galit - communication through signals slower than Moti.
+
+d. Ability to progress while a certain thread/process is blocked (e.g. is waiting
+for disk)
+Nira - one process no progress
+Moti - Other threads run in parallel time, they all make progress while one thread
+       is waiting
+Danny - one process no progress
+Galit - Other processes run in parallel time, they all make progrees while one process
+        is waiting
+
+Assuming the frame work has multi-cores cpu like most machines nowadays.
+e. Overall speed
+Nira - saves time on switches and mutex waiting. Best in short tasks.
+        Probably the slowest time of all implementation.
+Moti - Saves time on waiting and utilize a big task by dividing between many threads.
+        The fastest when minimizing the time on waiting for shared data
+Danny - utilize the schedule time. Losses time on waiting time for disk or cpu.
+        Faster than Nira
+Galit - Similar to Moti, losses time on sharing data between processes.
+
+Q4
+Kernel level thread
+Stack - not shared
+Heap - shared, same process
+Global variables - shared, same process
+
+User level thread
+Stack - not shared
+Heap - shared, same process
+Global variables - shared, same process
+
+Process
+Stack - not shared
+Heap - not shared
+Global variables - not shared
+
+Q5
+A deadlock is a scenario where two or more tasks are waiting for each other in a cycle.
+A livelock is a similar to dead lock only the tasks are not in waiting mode. their mode
+changes in way no progress is made.
+
+Deadlock
+thread 1
+    lock mutex a
+    lock mutex b
+    ...code
+    unlock mutex b
+    unlock mutex a
+
+thread 2
+    lock mutex b
+    lock mutex a
+    ...code
+    unlock mutex a
+    unlock mutex b
+
+thread 1 locks mutex a, thread 2 locks mutex b and they both locked forever
+
+Livelock
+
+Thread1
+    while (true)
+        if lock mutex a failed
+            wait 1000
+            continue
+
+        if lock mutex b failed
+             wait 1000
+             continue
+
+         ...code
+
+
+Thread2
+    while (true)
+        if lock mutex b failed
+            wait 1000
+            continue
+
+        if lock mutex a failed
+             wait 1000
+             continue
+
+         ...code
+
+the threads never reach the code

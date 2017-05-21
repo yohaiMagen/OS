@@ -1,6 +1,4 @@
-#include "ThreadToContainer.h"
 #include <pthread.h>
-#include "MapReduceFramework.h"
 #include <algorithm>
 #include <unordered_map>
 #include <semaphore.h>
@@ -8,13 +6,16 @@
 #include <fstream>
 #include <ctime>
 #include <iostream>
+#include <time.h>
+#include <sys/time.h>
+#include "ThreadToContainer.h"
+#include "MapReduceFramework.h"
 
 
 #define WORK_CHUNCK 10
 
 // *********************************** log messages *************************************
-//TODO make hidden
-#define LOG_FILE_NAME "MapReduceFramework.log"
+#define LOG_FILE_NAME ".MapReduceFramework.log"
 #define INTRO_MSG1 "RunMapReduceFramework started with "
 #define INTRO_MSG2 " threads"
 
@@ -22,30 +23,44 @@
 #define MAP_THREAD_NAME "ExacMap"
 #define REDUCE_THREAD_NAME "ExacReduce"
 
+#define NEW_THREAD "created"
+#define DELETE_THREAD "terminated"
+#define MAP_TIME "Map and Shuffle took "
+#define REDUCE_TIME "Reduce took "
+#define END_STATEMENT "RunMapReduceFramework finished"
+#define ERR_MSG "MapReduceFramework Failure: "
+#define ERR_MSG_END " failed."
+
+// *********************************** err functions names ******************************
+#define NEW "new"
+
+#define GETTIMEOFDAY "gettimeofday"
+
+#define SEM_INIT "sem_init"
+#define SEM_WAIT "sem_wait"
+#define SEM_POST "sem_post"
+
+#define PTH_LOCK "pthread_mutex_lock"
+#define PTH_UNLOCK "pthrea_mutex_unlock"
+#define PTH_CREATE "pthread_create"
+#define PTH_JOIN "pthread_join"
+#define PTH_DESTROY "pthread_destroy"
 // *********************************** typedefs *****************************************
 // container of thread and its output container (for shuffle thread) 
 typedef std::pair<pthread_t*, OUT_ITEMS_VEC> REDUCE_THREAD;
-// output item of the shuffle procedure
-typedef std::pair<k2Base*, V2_VEC> SHUFFLE_ITEM;
 
-// container of shuffle procedure product 
-typedef std::map<k2Base*, V2_VEC> SHUFFLE_MAP;
-// shuffle output (container of shuffle items)
-typedef std::vector<SHUFFLE_ITEM> SHUFFLE_VEC;
-
-// container of map threads, it's output container and more features 
+// container of map threads, it's output container and more features
 typedef std::vector<ThreadToContainer*> MAP_THREAD_VEC;
 
 // container of reduce threads it's output container 
 typedef std::vector<REDUCE_THREAD> REDUCE_THREAD_VEC;
 
 // input to the f_map function
-typedef struct MAP_INPUT
+typedef struct F_MAP_INPUT
 {
     IN_ITEMS_VEC *input_vec;
     MapReduceBase *mapReduceBase_object;
-    int thread_num;
-}MAP_INPUT;
+}F_MAP_INPUT;
 
 // ***************************** global vairables ***************************************
 MAP_THREAD_VEC map_thread2Container;
@@ -60,9 +75,9 @@ sem_t shuffle_read_sem;
 
 pthread_mutex_t pos_map_mutex;
 pthread_mutex_t pos_reduce_mutex;
+pthread_mutex_t log_mutex;
 
-SHUFFLE_VEC shuffle_prod_vec;
-auto cmpLambdak2 = [](const k2Base const *lhs, const k2Base const *rhs) { return *lhs < *rhs; };
+auto cmpLambdak2 = [](const k2Base* const lhs, const k2Base* const rhs) { return *lhs < *rhs;  };
 //You could also use a lambda that is not dependent on local variables, like this:
 //auto cmpLambda = [](const Point &lhs, const Point &rhs) { return lhs.y < rhs.y; };
 std::map<k2Base*, V2_VEC, decltype(cmpLambdak2)> shuffle_prod(cmpLambdak2);
@@ -73,15 +88,20 @@ std::ofstream slog;
 // ***************************** function declarations **********************************
 
 OUT_ITEMS_VEC merge_reduce_vec();
-void shuffleMap2Vec(std::map<k2Base*, V2_VEC, decltype(cmpLambdak2)> &m, SHUFFLE_VEC &v);
 void* f_map(void *arg);
 void* f_shuffle(void *arg);
 void* f_reduce(void *arg);
-void new_thread_log(std::string);
 bool k3_comperator(OUT_ITEM first, OUT_ITEM second);
-
+void thread_log(std::string type, std::string CorD);
+void delete_thread_log(std::string type);
+void new_thread_log(std::string);
+long thread_time(timeval start, timeval end);
 
 // **************************** function implementations ********************************
+
+
+void err_msg(std::string gettimeofday);
+
 /**
  * runs the map reduce procedure in multi thread parallel mode
  * @param mapReduce - the class that implemented the map and reduce functions
@@ -94,71 +114,104 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
                                     int multiThreadLevel, bool autoDeleteV2K2)
 {
 
+    timeval map_start;
+    if(gettimeofday(&map_start, NULL))
+    {
+        err_msg(GETTIMEOFDAY);
+    }
+
     slog = std::ofstream(LOG_FILE_NAME, std::ios_base::app);
     slog << INTRO_MSG1 << multiThreadLevel << INTRO_MSG2 << std::endl;
 
-    // initialize map & reduce threads; 
-    map_threads = new pthread_t[multiThreadLevel];
-    reduce_threads = new pthread_t[multiThreadLevel];
+    // initialize map & reduce threads;
+    try
+    {
+        map_threads = new pthread_t[multiThreadLevel];
+        reduce_threads = new pthread_t[multiThreadLevel];
+    }
+    catch(std::bad_alloc)
+    {
+        err_msg(NEW);
+    }
 
     // initialize mutex protectors;
+    log_mutex = PTHREAD_MUTEX_INITIALIZER;
     pos_map_mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread2Container_mutex = PTHREAD_MUTEX_INITIALIZER;
     pos_reduce_mutex = PTHREAD_MUTEX_INITIALIZER;
 
     // initialize read semaphore
-    sem_init(&shuffle_read_sem, 0, 0);
+    if(sem_init(&shuffle_read_sem, 0, 0))
+    {
+        err_msg(SEM_INIT);
+    }
 
     // initialize the f_map function input
-    MAP_INPUT map_input;
-    map_input.input_vec = &itemsVec;
-    map_input.mapReduceBase_object = &mapReduce;
+    F_MAP_INPUT f_map_input;
+    f_map_input.input_vec = &itemsVec;
+    f_map_input.mapReduceBase_object = &mapReduce;
     
     // lock the map and shuffle threads from start running before all are initialized
-    pthread_mutex_lock(&pthread2Container_mutex);
+    if(pthread_mutex_lock(&pthread2Container_mutex))
+    {
+        err_msg(PTH_LOCK);
+    }
 
     //creates shuffle threads
     if(pthread_create(&shuffle_th, NULL, f_shuffle, &autoDeleteV2K2))
     {
-        //TODO err
+        err_msg(PTH_CREATE);
     }
-    new_thread_log(SHUFFLE_THREAD_NAME);
 
     // creates map threads
     for (int i = 0; i < multiThreadLevel ; ++i)
     {
-        map_input.thread_num = i;
-        if(pthread_create(&map_threads[i], NULL, f_map, (void*) &map_input))
+        if(pthread_create(&map_threads[i], NULL, f_map, (void*) &f_map_input))
         {
-            //TODO err
+            err_msg(PTH_CREATE);
         }
-        new_thread_log(MAP_THREAD_NAME);
         MAP_ITEM_VEC temp_vec;
-        map_thread2Container.push_back(new ThreadToContainer(&map_threads[i], temp_vec, 0, false));
+        try
+        {
+            map_thread2Container.push_back(new ThreadToContainer(&map_threads[i], temp_vec, 0, false));
+        }
+        catch(std::bad_alloc)
+        {
+            err_msg(NEW);
+        }
+
     }
-    pthread_mutex_unlock(&pthread2Container_mutex);
+    if(pthread_mutex_unlock(&pthread2Container_mutex))
+    {
+        err_msg(PTH_UNLOCK);
+    }
 
     // finish mapping
     for (int i = 0; i <  multiThreadLevel; ++i)
     {
         if(pthread_join(map_threads[i], NULL))
         {
-            //TODO err
+            err_msg(PTH_JOIN);
         }
     }
 
     //increase semaphore to release shuffle thread
-    sem_post(&shuffle_read_sem);
-    shuffleMap2Vec(shuffle_prod ,shuffle_prod_vec);
+    if(sem_post(&shuffle_read_sem))
+    {
+        err_msg(SEM_POST);
+    }
 
     // deletes mutex
     if(pthread_mutex_destroy(&pos_map_mutex))
     {
-        //TODO err
+        err_msg(PTH_DESTROY);
     }
 
     // finish shuffling
-    pthread_join(shuffle_th, NULL);
+    if(pthread_join(shuffle_th, NULL))
+    {
+        err_msg(PTH_JOIN);
+    }
 
     // creates reduce threads
     // 2 different loops to ensure initializing before threads start running
@@ -167,53 +220,70 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
         OUT_ITEMS_VEC temp_vec;
         reduce_thread2Container.push_back(std::make_pair(&reduce_threads[i], temp_vec));
     }
+    timeval map_end;
+    if(gettimeofday(&map_end, NULL))
+    {
+        err_msg(GETTIMEOFDAY);
+    }
+    slog << MAP_TIME << thread_time(map_start, map_end) << " ns" <<  std::endl;
+
     for (int i = 0; i < multiThreadLevel ; ++i)
     {
         if(pthread_create(&reduce_threads[i], NULL, f_reduce, &mapReduce))
         {
-            //TODO err
+            err_msg(PTH_CREATE);
         }
-        new_thread_log(REDUCE_THREAD_NAME);
-
     }
 
     //finish reducing
     for (int j = 0; j < multiThreadLevel ; ++j)
     {
-        pthread_join(reduce_threads[j], NULL);
+        if(pthread_join(reduce_threads[j], NULL))
+        {
+            err_msg(PTH_JOIN);
+        }
     }
 
     // destroy reduce mutex
     if(pthread_mutex_destroy(&pos_reduce_mutex))
     {
-        //TODO err
+        err_msg(PTH_DESTROY);
     }
 
     //deletes map procedure output
     if(autoDeleteV2K2)
     {
-        for (unsigned int i = 0; i < shuffle_prod_vec.size(); ++i)
+        for (auto it = shuffle_prod.begin(); it != shuffle_prod.end(); ++it)
         {
-            for (unsigned int j = 0; j < shuffle_prod_vec[i].second.size(); ++j)
+            for (unsigned int j = 0; j < it->second.size(); ++j)
             {
-                delete(shuffle_prod_vec[i].second[j]);
+                delete(it->second[j]);
             }
-            delete(shuffle_prod_vec[i].first);
+           delete(it->first);
+
         }
     }
 
     // deletes all locked pointers
-    slog.flush();
-    slog.close();
-    for (int i = 0; i < map_thread2Container.size() ; ++i)
+    for (unsigned int i = 0; i < map_thread2Container.size() ; ++i)
     {
         delete(map_thread2Container[i]);
     }
     delete[](map_threads);
     delete[](reduce_threads);
 
+    timeval end_reduce;
+    gettimeofday(&end_reduce, NULL);
+    slog << REDUCE_TIME << thread_time(map_end, end_reduce) << " ns" << std::endl;
+
+    slog << END_STATEMENT << std::endl;
+
+    slog.flush();
+    slog.close();
+
     return merge_reduce_vec();
 }
+
 
 /**
  * map thread function - runs the map procedure for each thread
@@ -222,50 +292,64 @@ OUT_ITEMS_VEC RunMapReduceFramework(MapReduceBase& mapReduce, IN_ITEMS_VEC& item
  */
 void* f_map(void *arg)
 {
+    if(pthread_mutex_lock(&log_mutex))
+    {
+        err_msg(PTH_LOCK);
+    }
+    new_thread_log(MAP_THREAD_NAME);
+    if(pthread_mutex_unlock(&log_mutex))
+    {
+        err_msg(PTH_UNLOCK);
+    }
     //lock & unlock to ensure no thread is map thread is running before all  map and
     // shuffle are initialized
-    pthread_mutex_lock(&pthread2Container_mutex);
-    pthread_mutex_unlock(&pthread2Container_mutex);
+    if(pthread_mutex_lock(&pthread2Container_mutex))
+    {
+        err_msg(PTH_LOCK);
+    }
+    if(pthread_mutex_unlock(&pthread2Container_mutex))
+    {
+        err_msg(PTH_UNLOCK);
+    }
 
     // position on map input
-    static unsigned int pos = 0;
-    MAP_INPUT *map_input = (MAP_INPUT*)arg;
+    static unsigned long pos = 0;
+    F_MAP_INPUT *map_input = (F_MAP_INPUT*)arg;
 
     while(true)
     {
         // protects the position place holder
         if(pthread_mutex_lock(&pos_map_mutex))
         {
-            //TODO err
+            err_msg(PTH_LOCK);
         }
         // finished mapping all input
         if(pos >= map_input->input_vec->size())
         {
             if(pthread_mutex_unlock(&pos_map_mutex))
             {
-                //TODO err
+                err_msg(PTH_UNLOCK);
             }
             break;
         }
 
-        unsigned int start_point = pos;
+        unsigned long start_point = pos;
         pos += WORK_CHUNCK;
 
         if(pthread_mutex_unlock(&pos_map_mutex))
         {
-            //TODO err
+            err_msg(PTH_UNLOCK);
         }
 
-        unsigned int end_point = start_point + WORK_CHUNCK;
+        unsigned long end_point = start_point + WORK_CHUNCK;
 
         if(end_point >= map_input->input_vec->size())
         {
             end_point = map_input->input_vec->size();
         }
 
-        for (unsigned int i = start_point; i < end_point; ++i)
+        for (unsigned long i = start_point; i < end_point; ++i)
         {
-
             map_input->mapReduceBase_object->Map(map_input->input_vec->at(i).first, map_input->input_vec->at(i).second);
         }
 
@@ -282,6 +366,16 @@ void* f_map(void *arg)
             break;
         }
     }
+
+    if(pthread_mutex_lock(&log_mutex))
+    {
+        err_msg(PTH_LOCK);
+    }
+    delete_thread_log(MAP_THREAD_NAME);
+    if(pthread_mutex_unlock(&log_mutex))
+    {
+        err_msg(PTH_UNLOCK);
+    }
     return NULL;
 }
 
@@ -292,6 +386,15 @@ void* f_map(void *arg)
  */
 void* f_shuffle(void *arg)
 {
+    if(pthread_mutex_lock(&log_mutex))
+    {
+        err_msg(PTH_LOCK);
+    }
+    new_thread_log(SHUFFLE_THREAD_NAME);
+    if(pthread_mutex_unlock(&log_mutex))
+    {
+        err_msg(PTH_UNLOCK);
+    }
     bool autoDelete = *(bool*)arg;
 
     // all map threads complete flag
@@ -299,65 +402,75 @@ void* f_shuffle(void *arg)
     while(map_complete)
     {
         // waits until mapped item is available
-        sem_wait(&shuffle_read_sem);
-        sem_post(&shuffle_read_sem);
+        if(sem_wait(&shuffle_read_sem))
+        {
+            err_msg(SEM_WAIT);
+        }
+        if(sem_post(&shuffle_read_sem))
+        {
+            err_msg(SEM_POST);
+        }
 
         for (unsigned int i = 0; i < map_thread2Container.size() ; ++i)
         {
             //protects from reading and writing at the same time
-            pthread_mutex_lock(&map_thread2Container[i]->_cont_mutex);
+            if(pthread_mutex_lock(&map_thread2Container[i]->_cont_mutex))
+            {
+                err_msg(PTH_LOCK);
+            }
             //all map threads are complete
             map_complete = map_complete && map_thread2Container[i]->_thread_complete;
-            int dif  = map_thread2Container[i]->_container.size() - map_thread2Container[i]->_read_pos;
-            pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex);
+            long dif  = map_thread2Container[i]->_container.size() - map_thread2Container[i]->_read_pos;
+            if(pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex))
+            {
+                err_msg(PTH_UNLOCK);
+            }
 
             //available item in the thread's container
             if(dif > 0)
             {
-                for (int j = map_thread2Container[i]->_read_pos;
+                for (long j = map_thread2Container[i]->_read_pos;
                      j < map_thread2Container[i]->_read_pos + dif;
                      ++j)
                 {
 
-                    bool found = false;
-                    pthread_mutex_lock(&map_thread2Container[i]->_cont_mutex);
+                    if(pthread_mutex_lock(&map_thread2Container[i]->_cont_mutex))
+                    {
+                        err_msg(PTH_LOCK);
+                    }
                     k2Base* key = map_thread2Container[i]->_container[j].first;
                     v2Base* val = map_thread2Container[i]->_container[j].second;
-                    pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex);
+                    if(pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex))
+                    {
+                        err_msg(PTH_UNLOCK);
+                    }
+
                     V2_VEC *val2_vec = &shuffle_prod[key];
+
+                    if(autoDelete && val2_vec->size() > 0)
+                    {
+                        delete(key);
+                    }
                     val2_vec->push_back(val);
 
-//                    for (unsigned int k = 0; k < shuffle_prod_vec.size(); ++k)
-//                    {
-//
-//                        if (!(*key < *shuffle_prod_vec[k].first) &&
-//                            !(*shuffle_prod_vec[k].first < *key))
-//                        {
-//                            pthread_mutex_lock(&map_thread2Container[i]->_cont_mutex);
-//                            shuffle_prod_vec[k].second.push_back(map_thread2Container[i]->_container[j].second);
-//                            if(autoDelete)
-//                            {
-//                                delete(key);
-//                            }
-//                            pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex);
-//                            found = true;
-//                            break;
-//                        }
-//                    }
-//                    if(!found)
-//                    {
-//                        V2_VEC temp;
-//                        v2Base *val = map_thread2Container[i]->_container[j].second;
-//                        temp.push_back(val);
-////                       temp.push_back(map_thread2Container[i]->_container[j].second);
-//                        shuffle_prod_vec.push_back(std::make_pair(map_thread2Container[i]->_container[j].first, temp));
-//                    }
-                    sem_wait(&shuffle_read_sem);
+                    if(sem_wait(&shuffle_read_sem))
+                    {
+                        err_msg(SEM_WAIT);
+                    }
                 }
                 map_thread2Container[i]->_read_pos += dif;
             }
         }
         map_complete = !map_complete;
+    }
+    if(pthread_mutex_lock(&log_mutex))
+    {
+        err_msg(PTH_LOCK);
+    }
+    delete_thread_log(SHUFFLE_THREAD_NAME);
+    if(pthread_mutex_unlock(&log_mutex))
+    {
+        err_msg(PTH_UNLOCK);
     }
     return NULL;
 }
@@ -369,8 +482,18 @@ void* f_shuffle(void *arg)
  */
 void* f_reduce(void *arg)
 {
-    // position on shuffle product vector output
-    static unsigned int pos = 0;
+    if(pthread_mutex_lock(&log_mutex))
+    {
+        err_msg(PTH_LOCK);
+    }
+    new_thread_log(REDUCE_THREAD_NAME);
+    if(pthread_mutex_unlock(&log_mutex))
+    {
+        err_msg((PTH_UNLOCK));
+    }
+
+    // position on shuffle product
+    static auto pos1 = shuffle_prod.begin();
     MapReduceBase *mapReduceBase = (MapReduceBase*)arg;
 
     while(true)
@@ -378,33 +501,43 @@ void* f_reduce(void *arg)
         //protect the position
         if(pthread_mutex_lock(&pos_reduce_mutex))
         {
-            //TODO err
+            err_msg(PTH_LOCK);
         }
-        if(pos >= shuffle_prod_vec.size())
+        if(pos1 == shuffle_prod.end())
         {
             if(pthread_mutex_unlock(&pos_reduce_mutex))
             {
-                //TODO err
+                err_msg(PTH_UNLOCK);
             }
             break;
         }
-        unsigned int start_point = pos;
-        pos += WORK_CHUNCK;
+
+        auto  start_point1 = pos1;
+        for (int i = 0; i < WORK_CHUNCK && pos1 != shuffle_prod.end() ; ++i)
+        {
+            pos1++;
+        }
+        auto end_point1 = pos1;
+
         if(pthread_mutex_unlock(&pos_reduce_mutex))
         {
-            //TODO err
-        }
-        unsigned int end_point = start_point + WORK_CHUNCK;
-        if(end_point >= shuffle_prod_vec.size())
-        {
-            end_point = shuffle_prod_vec.size();
+            err_msg(PTH_LOCK);
         }
 
-        for (unsigned int i = start_point; i < end_point; ++i)
+        for (; start_point1 != end_point1; ++start_point1)
         {
-
-            mapReduceBase->Reduce(shuffle_prod_vec[i].first, shuffle_prod_vec[i].second);
+            mapReduceBase->Reduce(start_point1->first, start_point1->second);
         }
+
+    }
+    if(pthread_mutex_lock(&log_mutex))
+    {
+        err_msg(PTH_LOCK);
+    }
+    delete_thread_log(REDUCE_THREAD_NAME);
+    if(pthread_mutex_unlock(&log_mutex))
+    {
+        err_msg(PTH_UNLOCK);
     }
     return NULL;
 }
@@ -417,18 +550,30 @@ void* f_reduce(void *arg)
 void Emit2 (k2Base* key, v2Base* value)
 {
     // increase the semaphore by 1
-    sem_post(&shuffle_read_sem);
+    if(sem_post(&shuffle_read_sem))
+    {
+        err_msg(SEM_POST);
+    }
 
     for (unsigned int i = 0; i < map_thread2Container.size(); ++i)
     {
-        pthread_mutex_lock(&map_thread2Container[i]->_cont_mutex);
+        if(pthread_mutex_lock(&map_thread2Container[i]->_cont_mutex))
+        {
+            err_msg(PTH_LOCK);
+        }
         if(pthread_equal(*map_thread2Container[i]->_ithread, pthread_self()))
         {
            map_thread2Container[i]->_container.push_back(std::make_pair(key, value));
-           pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex);
+           if(pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex))
+           {
+               err_msg(PTH_UNLOCK);
+           }
            break;
         }
-        pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex);
+        if(pthread_mutex_unlock(&map_thread2Container[i]->_cont_mutex))
+        {
+            err_msg(PTH_UNLOCK);
+        }
     }
 }
 
@@ -465,19 +610,21 @@ OUT_ITEMS_VEC merge_reduce_vec()
     return reduce_thread2Container[0].second;
 }
 
-void shuffleMap2Vec(std::map<k2Base*, V2_VEC, decltype(cmpLambdak2)> &m, SHUFFLE_VEC &v)
+void new_thread_log(std::string type)
 {
-    for (SHUFFLE_MAP::const_iterator it = m.begin(); it != m.end(); ++it)
-    {
-        v.push_back(std::make_pair(it->first, it->second));
-    }
+    thread_log(type, NEW_THREAD);
 }
 
-void new_thread_log(std::string type)
+void delete_thread_log(std::string type)
+{
+    thread_log(type, DELETE_THREAD);
+}
+
+void thread_log(std::string type, std::string CorD)
 {
     time_t now =  time(0);
     tm *ltm = localtime(&now);
-    slog << "Thread " << type << " created [" <<
+    slog << "Thread " << type << " " << CorD << " [" <<
         ltm->tm_mday << "." << ltm->tm_mon + 1 << "." << ltm->tm_year + 1900 << " " <<
         ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << "]" << std::endl;
 
@@ -486,4 +633,15 @@ void new_thread_log(std::string type)
 bool k3_comperator(OUT_ITEM first, OUT_ITEM second)
 {
     return *first.first < *second.first;
+}
+
+void err_msg(std::string func_name)
+{
+    std::cerr << ERR_MSG << func_name << ERR_MSG_END << std::endl;
+    exit(1);
+}
+
+long thread_time(timeval start, timeval end)
+{
+    return  ((end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec) * 1000;
 }

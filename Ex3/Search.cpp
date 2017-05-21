@@ -5,7 +5,9 @@
 #include "MapReduceFramework.h"
 
 
-class DirName:public k1Base
+#define NEW_ERR "MapReduceFramework Failure: new failed."
+
+class DirName: public k1Base
 {
 
     std::string _dir_name;
@@ -91,7 +93,15 @@ public:
                 std::string file_name(ent->d_name);
                 if(file_name.find(sub_str) != std::string::npos)
                 {
-                    Emit2(new FileName(file_name), new ContainsSubstring());
+                    try
+                    {
+                        Emit2(new FileName(file_name), new ContainsSubstring());
+                    }
+                    catch(std::bad_alloc)
+                    {
+                        std::cerr << NEW_ERR << std::endl;
+                    }
+
                 }
             }
             closedir (dir);
@@ -99,8 +109,14 @@ public:
     }
     void Reduce(const k2Base *const key, const V2_VEC &vals) const
     {
-        Emit3(new FileName(*dynamic_cast< const FileName*>(key)), new RepeatFileName(vals.size()));
-        //TODO free key
+        try
+        {
+            Emit3(new FileName(*dynamic_cast< const FileName*>(key)), new RepeatFileName(vals.size()));
+        }
+        catch(std::bad_alloc)
+        {
+            std::cerr << NEW_ERR << std::endl;
+        }
     }
 };
 
@@ -120,10 +136,16 @@ int main (int argc, char **argv)
         for (int i = 2; i < argc ; ++i)
         {
             str = argv[i];
-            input.push_back(std::make_pair(new DirName(str), &searched));
-
+            try
+            {
+                input.push_back(std::make_pair(new DirName(str), &searched));
+            }
+            catch(std::bad_alloc)
+            {
+                std::cerr << NEW_ERR << std::endl;
+            }
         }
-        OUT_ITEMS_VEC output = RunMapReduceFramework(searcher, input, 15, true);
+        OUT_ITEMS_VEC output = RunMapReduceFramework(searcher, input, 3, true);
         for (unsigned int j = 0; j < output.size() ; ++j)
         {
             for (int i = 0; i < *dynamic_cast<RepeatFileName *>(output[j].second) ; ++i)

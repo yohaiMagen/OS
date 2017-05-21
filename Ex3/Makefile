@@ -12,13 +12,14 @@ TARGETS = apReduceFramework.a MapReduceFramework.o ThreadToContainer.o Search.o 
 
 TAR=tar
 TARFLAGS=-cvf
-TARNAME=ex2.tar
-TARSRCS = $(LIBSRC) Thread.h Makefile README
+TARNAME=ex3.tar
+TARSRCS = MapReduceFramework.cpp ThreadToContainer.cpp ThreadToContainer.h Search.cpp README Makefile
 
-all: MapReduceFramework
+all: MapReduceFramework Search
 
 test.o: uthreads.h
 	$(CC) $(CFLAGS)  test.cpp -o test.o
+
 ThreadToContainer.o: ThreadToContainer.cpp ThreadToContainer.h MapReduceClient.h
 	$(CC) $(CFLAGS) ThreadToContainer.cpp -o ThreadToContainer.o
 
@@ -28,7 +29,7 @@ MapReduceFramework.o: MapReduceFramework.cpp MapReduceFramework.h MapReduceClien
 Search.o: Search.cpp MapReduceFramework.h MapReduceClient.h
 	$(CC) $(CFLAGS) Search.cpp -o Search.o
 
-main: Search.o MapReduceFramework
+Search: Search.o MapReduceFramework
 	$(CC) -pthread -o Search Search.o MapReduceFramework.a
 
 MapReduceFramework: MapReduceFramework.o ThreadToContainer.o
