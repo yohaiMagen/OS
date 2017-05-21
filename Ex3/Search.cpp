@@ -6,6 +6,7 @@
 
 
 #define NEW_ERR "MapReduceFramework Failure: new failed."
+#define BAD_INPUT_ERR "Usage: <substring to search> <folders, separated by space>"
 
 class DirName: public k1Base
 {
@@ -124,7 +125,7 @@ int main (int argc, char **argv)
 {
     if(argc < 3)
     {
-        //TODO print err
+        std::cerr << BAD_INPUT_ERR << std::endl;
     }
     else
     {
@@ -151,7 +152,6 @@ int main (int argc, char **argv)
             for (int i = 0; i < *dynamic_cast<RepeatFileName *>(output[j].second) ; ++i)
             {
                 std::cout << dynamic_cast<FileName *>(output[j].first)->get_file_name()<< " ";
-//                //TODO print syntax
             }
             delete(output[j].first);
             delete(output[j].second);
