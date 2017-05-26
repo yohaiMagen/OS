@@ -1,0 +1,4 @@
+/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/main.dir
+/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir
