@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/niv/Documents/clion-2017.1.1/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/nivkeren/Documents/clion-2017.1.2/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/niv/Documents/clion-2017.1.1/bin/cmake/bin/cmake -E remove -f
+RM = /home/nivkeren/Documents/clion-2017.1.2/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/niv/CLionProjects/OS1
+CMAKE_SOURCE_DIR = /home/nivkeren/CLionProjects/OS
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/niv/CLionProjects/OS1/cmake-build-debug
+CMAKE_BINARY_DIR = /home/nivkeren/CLionProjects/OS/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/niv/CLionProjects/OS1/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/niv/Documents/clion-2017.1.1/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/nivkeren/Documents/clion-2017.1.2/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/niv/Documents/clion-2017.1.1/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/nivkeren/Documents/clion-2017.1.2/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles /home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles /home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,144 +111,195 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Search
+# Target rules for targets named main
 
 # Build rule for target.
-Search: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Search
-.PHONY : Search
+main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main
+.PHONY : main
 
 # fast build rule for target.
-Search/fast:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/build
-.PHONY : Search/fast
+main/fast:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
 
 #=============================================================================
-# Target rules for targets named Ex3
+# Target rules for targets named Ex4
 
 # Build rule for target.
-Ex3: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Ex3
-.PHONY : Ex3
+Ex4: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Ex4
+.PHONY : Ex4
 
 # fast build rule for target.
-Ex3/fast:
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/build
-.PHONY : Ex3/fast
+Ex4/fast:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/build
+.PHONY : Ex4/fast
 
-Ex3/MapReduceFramework.o: Ex3/MapReduceFramework.cpp.o
+Ex4/CacheAlg.o: Ex4/CacheAlg.cpp.o
 
-.PHONY : Ex3/MapReduceFramework.o
-
-# target to build an object file
-Ex3/MapReduceFramework.cpp.o:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/MapReduceFramework.cpp.o
-.PHONY : Ex3/MapReduceFramework.cpp.o
-
-Ex3/MapReduceFramework.i: Ex3/MapReduceFramework.cpp.i
-
-.PHONY : Ex3/MapReduceFramework.i
-
-# target to preprocess a source file
-Ex3/MapReduceFramework.cpp.i:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.i
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/MapReduceFramework.cpp.i
-.PHONY : Ex3/MapReduceFramework.cpp.i
-
-Ex3/MapReduceFramework.s: Ex3/MapReduceFramework.cpp.s
-
-.PHONY : Ex3/MapReduceFramework.s
-
-# target to generate assembly for a file
-Ex3/MapReduceFramework.cpp.s:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.s
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/MapReduceFramework.cpp.s
-.PHONY : Ex3/MapReduceFramework.cpp.s
-
-Ex3/Search.o: Ex3/Search.cpp.o
-
-.PHONY : Ex3/Search.o
+.PHONY : Ex4/CacheAlg.o
 
 # target to build an object file
-Ex3/Search.cpp.o:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/Search.cpp.o
-.PHONY : Ex3/Search.cpp.o
+Ex4/CacheAlg.cpp.o:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheAlg.cpp.o
+.PHONY : Ex4/CacheAlg.cpp.o
 
-Ex3/Search.i: Ex3/Search.cpp.i
+Ex4/CacheAlg.i: Ex4/CacheAlg.cpp.i
 
-.PHONY : Ex3/Search.i
+.PHONY : Ex4/CacheAlg.i
 
 # target to preprocess a source file
-Ex3/Search.cpp.i:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/Search.cpp.i
-.PHONY : Ex3/Search.cpp.i
+Ex4/CacheAlg.cpp.i:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheAlg.cpp.i
+.PHONY : Ex4/CacheAlg.cpp.i
 
-Ex3/Search.s: Ex3/Search.cpp.s
+Ex4/CacheAlg.s: Ex4/CacheAlg.cpp.s
 
-.PHONY : Ex3/Search.s
+.PHONY : Ex4/CacheAlg.s
 
 # target to generate assembly for a file
-Ex3/Search.cpp.s:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/Search.cpp.s
-.PHONY : Ex3/Search.cpp.s
+Ex4/CacheAlg.cpp.s:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheAlg.cpp.s
+.PHONY : Ex4/CacheAlg.cpp.s
 
-Ex3/ThreadToContainer.o: Ex3/ThreadToContainer.cpp.o
+Ex4/CacheFS.o: Ex4/CacheFS.cpp.o
 
-.PHONY : Ex3/ThreadToContainer.o
+.PHONY : Ex4/CacheFS.o
 
 # target to build an object file
-Ex3/ThreadToContainer.cpp.o:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/ThreadToContainer.cpp.o
-.PHONY : Ex3/ThreadToContainer.cpp.o
+Ex4/CacheFS.cpp.o:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheFS.cpp.o
+.PHONY : Ex4/CacheFS.cpp.o
 
-Ex3/ThreadToContainer.i: Ex3/ThreadToContainer.cpp.i
+Ex4/CacheFS.i: Ex4/CacheFS.cpp.i
 
-.PHONY : Ex3/ThreadToContainer.i
+.PHONY : Ex4/CacheFS.i
 
 # target to preprocess a source file
-Ex3/ThreadToContainer.cpp.i:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.i
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/ThreadToContainer.cpp.i
-.PHONY : Ex3/ThreadToContainer.cpp.i
+Ex4/CacheFS.cpp.i:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheFS.cpp.i
+.PHONY : Ex4/CacheFS.cpp.i
 
-Ex3/ThreadToContainer.s: Ex3/ThreadToContainer.cpp.s
+Ex4/CacheFS.s: Ex4/CacheFS.cpp.s
 
-.PHONY : Ex3/ThreadToContainer.s
+.PHONY : Ex4/CacheFS.s
 
 # target to generate assembly for a file
-Ex3/ThreadToContainer.cpp.s:
-	$(MAKE) -f CMakeFiles/Search.dir/build.make CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.s
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/ThreadToContainer.cpp.s
-.PHONY : Ex3/ThreadToContainer.cpp.s
+Ex4/CacheFS.cpp.s:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheFS.cpp.s
+.PHONY : Ex4/CacheFS.cpp.s
 
-Ex3/main.o: Ex3/main.cpp.o
+Ex4/Fbr.o: Ex4/Fbr.cpp.o
 
-.PHONY : Ex3/main.o
+.PHONY : Ex4/Fbr.o
 
 # target to build an object file
-Ex3/main.cpp.o:
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/main.cpp.o
-.PHONY : Ex3/main.cpp.o
+Ex4/Fbr.cpp.o:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Fbr.cpp.o
+.PHONY : Ex4/Fbr.cpp.o
 
-Ex3/main.i: Ex3/main.cpp.i
+Ex4/Fbr.i: Ex4/Fbr.cpp.i
 
-.PHONY : Ex3/main.i
+.PHONY : Ex4/Fbr.i
 
 # target to preprocess a source file
-Ex3/main.cpp.i:
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/main.cpp.i
-.PHONY : Ex3/main.cpp.i
+Ex4/Fbr.cpp.i:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Fbr.cpp.i
+.PHONY : Ex4/Fbr.cpp.i
 
-Ex3/main.s: Ex3/main.cpp.s
+Ex4/Fbr.s: Ex4/Fbr.cpp.s
 
-.PHONY : Ex3/main.s
+.PHONY : Ex4/Fbr.s
 
 # target to generate assembly for a file
-Ex3/main.cpp.s:
-	$(MAKE) -f CMakeFiles/Ex3.dir/build.make CMakeFiles/Ex3.dir/Ex3/main.cpp.s
-.PHONY : Ex3/main.cpp.s
+Ex4/Fbr.cpp.s:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Fbr.cpp.s
+.PHONY : Ex4/Fbr.cpp.s
+
+Ex4/Lfu.o: Ex4/Lfu.cpp.o
+
+.PHONY : Ex4/Lfu.o
+
+# target to build an object file
+Ex4/Lfu.cpp.o:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lfu.cpp.o
+.PHONY : Ex4/Lfu.cpp.o
+
+Ex4/Lfu.i: Ex4/Lfu.cpp.i
+
+.PHONY : Ex4/Lfu.i
+
+# target to preprocess a source file
+Ex4/Lfu.cpp.i:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lfu.cpp.i
+.PHONY : Ex4/Lfu.cpp.i
+
+Ex4/Lfu.s: Ex4/Lfu.cpp.s
+
+.PHONY : Ex4/Lfu.s
+
+# target to generate assembly for a file
+Ex4/Lfu.cpp.s:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lfu.cpp.s
+.PHONY : Ex4/Lfu.cpp.s
+
+Ex4/Lru.o: Ex4/Lru.cpp.o
+
+.PHONY : Ex4/Lru.o
+
+# target to build an object file
+Ex4/Lru.cpp.o:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lru.cpp.o
+.PHONY : Ex4/Lru.cpp.o
+
+Ex4/Lru.i: Ex4/Lru.cpp.i
+
+.PHONY : Ex4/Lru.i
+
+# target to preprocess a source file
+Ex4/Lru.cpp.i:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lru.cpp.i
+.PHONY : Ex4/Lru.cpp.i
+
+Ex4/Lru.s: Ex4/Lru.cpp.s
+
+.PHONY : Ex4/Lru.s
+
+# target to generate assembly for a file
+Ex4/Lru.cpp.s:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lru.cpp.s
+.PHONY : Ex4/Lru.cpp.s
+
+Ex4/main.o: Ex4/main.cpp.o
+
+.PHONY : Ex4/main.o
+
+# target to build an object file
+Ex4/main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex4/main.cpp.o
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/main.cpp.o
+.PHONY : Ex4/main.cpp.o
+
+Ex4/main.i: Ex4/main.cpp.i
+
+.PHONY : Ex4/main.i
+
+# target to preprocess a source file
+Ex4/main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex4/main.cpp.i
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/main.cpp.i
+.PHONY : Ex4/main.cpp.i
+
+Ex4/main.s: Ex4/main.cpp.s
+
+.PHONY : Ex4/main.s
+
+# target to generate assembly for a file
+Ex4/main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex4/main.cpp.s
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/main.cpp.s
+.PHONY : Ex4/main.cpp.s
 
 # Help Target
 help:
@@ -258,20 +309,26 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... Search"
-	@echo "... Ex3"
-	@echo "... Ex3/MapReduceFramework.o"
-	@echo "... Ex3/MapReduceFramework.i"
-	@echo "... Ex3/MapReduceFramework.s"
-	@echo "... Ex3/Search.o"
-	@echo "... Ex3/Search.i"
-	@echo "... Ex3/Search.s"
-	@echo "... Ex3/ThreadToContainer.o"
-	@echo "... Ex3/ThreadToContainer.i"
-	@echo "... Ex3/ThreadToContainer.s"
-	@echo "... Ex3/main.o"
-	@echo "... Ex3/main.i"
-	@echo "... Ex3/main.s"
+	@echo "... main"
+	@echo "... Ex4"
+	@echo "... Ex4/CacheAlg.o"
+	@echo "... Ex4/CacheAlg.i"
+	@echo "... Ex4/CacheAlg.s"
+	@echo "... Ex4/CacheFS.o"
+	@echo "... Ex4/CacheFS.i"
+	@echo "... Ex4/CacheFS.s"
+	@echo "... Ex4/Fbr.o"
+	@echo "... Ex4/Fbr.i"
+	@echo "... Ex4/Fbr.s"
+	@echo "... Ex4/Lfu.o"
+	@echo "... Ex4/Lfu.i"
+	@echo "... Ex4/Lfu.s"
+	@echo "... Ex4/Lru.o"
+	@echo "... Ex4/Lru.i"
+	@echo "... Ex4/Lru.s"
+	@echo "... Ex4/main.o"
+	@echo "... Ex4/main.i"
+	@echo "... Ex4/main.s"
 .PHONY : help
 
 

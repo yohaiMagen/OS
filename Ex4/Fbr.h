@@ -10,7 +10,8 @@
 
 class Fbr: public CacheAlg
 {
-
+public:
+    Fbr(int blocks_num );
 };
 
 

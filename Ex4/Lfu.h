@@ -11,6 +11,11 @@
 class Lfu: public CacheAlg
 {
 
+
+public:
+    Lfu(int blocks_num);
+    ~Lfu();
+
 };
 
 

@@ -10,6 +10,12 @@
 
 class Lru: public CacheAlg
 {
+private:
+    std::map<char*,timeval> _least_recent;
+public:
+    Lru(int blocks_num);
+    ~Lru();
+    char* get_next_block();
 
 };
 

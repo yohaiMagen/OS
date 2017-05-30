@@ -1,1 +1,0 @@
-/usr/bin/c++   -g   CMakeFiles/Ex2.dir/Ex2/uthreads.cpp.o CMakeFiles/Ex2.dir/Ex2/Thread.cpp.o CMakeFiles/Ex2.dir/Ex2/test1430.cpp.o  -o Ex2 

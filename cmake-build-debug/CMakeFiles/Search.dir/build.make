@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/niv/Documents/clion-2017.1.1/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/nivkeren/Documents/clion-2017.1.2/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/niv/Documents/clion-2017.1.1/bin/cmake/bin/cmake -E remove -f
+RM = /home/nivkeren/Documents/clion-2017.1.2/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/niv/CLionProjects/OS1
+CMAKE_SOURCE_DIR = /home/nivkeren/CLionProjects/OS
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/niv/CLionProjects/OS1/cmake-build-debug
+CMAKE_BINARY_DIR = /home/nivkeren/CLionProjects/OS/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Search.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/Search.dir/flags.make
 
 CMakeFiles/Search.dir/Ex3/Search.cpp.o: CMakeFiles/Search.dir/flags.make
 CMakeFiles/Search.dir/Ex3/Search.cpp.o: ../Ex3/Search.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Search.dir/Ex3/Search.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Search.dir/Ex3/Search.cpp.o -c /home/niv/CLionProjects/OS1/Ex3/Search.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Search.dir/Ex3/Search.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Search.dir/Ex3/Search.cpp.o -c /home/nivkeren/CLionProjects/OS/Ex3/Search.cpp
 
 CMakeFiles/Search.dir/Ex3/Search.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Search.dir/Ex3/Search.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niv/CLionProjects/OS1/Ex3/Search.cpp > CMakeFiles/Search.dir/Ex3/Search.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nivkeren/CLionProjects/OS/Ex3/Search.cpp > CMakeFiles/Search.dir/Ex3/Search.cpp.i
 
 CMakeFiles/Search.dir/Ex3/Search.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Search.dir/Ex3/Search.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niv/CLionProjects/OS1/Ex3/Search.cpp -o CMakeFiles/Search.dir/Ex3/Search.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nivkeren/CLionProjects/OS/Ex3/Search.cpp -o CMakeFiles/Search.dir/Ex3/Search.cpp.s
 
 CMakeFiles/Search.dir/Ex3/Search.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/Search.dir/Ex3/Search.cpp.o.provides.build: CMakeFiles/Search.dir/Ex3
 
 CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o: CMakeFiles/Search.dir/flags.make
 CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o: ../Ex3/MapReduceFramework.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o -c /home/niv/CLionProjects/OS1/Ex3/MapReduceFramework.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o -c /home/nivkeren/CLionProjects/OS/Ex3/MapReduceFramework.cpp
 
 CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niv/CLionProjects/OS1/Ex3/MapReduceFramework.cpp > CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nivkeren/CLionProjects/OS/Ex3/MapReduceFramework.cpp > CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.i
 
 CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niv/CLionProjects/OS1/Ex3/MapReduceFramework.cpp -o CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nivkeren/CLionProjects/OS/Ex3/MapReduceFramework.cpp -o CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.s
 
 CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o.provides.build: CMakeFiles/Se
 
 CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o: CMakeFiles/Search.dir/flags.make
 CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o: ../Ex3/ThreadToContainer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o -c /home/niv/CLionProjects/OS1/Ex3/ThreadToContainer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o -c /home/nivkeren/CLionProjects/OS/Ex3/ThreadToContainer.cpp
 
 CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niv/CLionProjects/OS1/Ex3/ThreadToContainer.cpp > CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/nivkeren/CLionProjects/OS/Ex3/ThreadToContainer.cpp > CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.i
 
 CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niv/CLionProjects/OS1/Ex3/ThreadToContainer.cpp -o CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/nivkeren/CLionProjects/OS/Ex3/ThreadToContainer.cpp -o CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.s
 
 CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o.requires:
 
@@ -143,7 +143,7 @@ Search: CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o
 Search: CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o
 Search: CMakeFiles/Search.dir/build.make
 Search: CMakeFiles/Search.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable Search"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable Search"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Search.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -162,6 +162,6 @@ CMakeFiles/Search.dir/clean:
 .PHONY : CMakeFiles/Search.dir/clean
 
 CMakeFiles/Search.dir/depend:
-	cd /home/niv/CLionProjects/OS1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/niv/CLionProjects/OS1 /home/niv/CLionProjects/OS1 /home/niv/CLionProjects/OS1/cmake-build-debug /home/niv/CLionProjects/OS1/cmake-build-debug /home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/Search.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/nivkeren/CLionProjects/OS/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/nivkeren/CLionProjects/OS /home/nivkeren/CLionProjects/OS /home/nivkeren/CLionProjects/OS/cmake-build-debug /home/nivkeren/CLionProjects/OS/cmake-build-debug /home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles/Search.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Search.dir/depend
 

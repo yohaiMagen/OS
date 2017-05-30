@@ -64,11 +64,11 @@ int CacheFS_init(int blocks_num, cache_algo_t cache_algo,
             case LFU :
                 cacher  = new Lfu(blocks_num);
                 break;
-            case LRU:
-                cacher = new Lru(blocks_num);
-                break;
-            case FBR :
-                cacher = new Fbr(blocks_num);
+//            case LRU:
+//                cacher = new Lru(blocks_num);
+//                break;
+//            case FBR :
+//                cacher = new Fbr(blocks_num);
         }
     }
     catch (std::bad_alloc e)
@@ -97,7 +97,10 @@ int CacheFS_init(int blocks_num, cache_algo_t cache_algo,
     0 in case of success, negative value in case of failure.
 	The function will fail if a system call or a library function fails.
 */
-int CacheFS_destroy();
+int CacheFS_destroy()
+{
+    delete(cacher);
+}
 
 
 /**
@@ -120,7 +123,7 @@ int CacheFS_destroy();
     In case of success:
 		Non negative value represents the id of the file.
 		This may be the file descriptor, or any id number that you wish to create.
-		This id will be used later to read from the file and to close it.
+		This id will be used later to reunsigned intad from the file and to close it.
 
  	In case of failure:
 		Negative number.
@@ -129,7 +132,10 @@ int CacheFS_destroy();
 			2. Invalid pathname. Pay attention that we support only files under
 			   "/tmp" due to the use of NFS in the Aquarium.
  */
-int CacheFS_open(const char *pathname);
+int CacheFS_open(const char *pathname)
+{
+    cacher->CacheFS_open(pathname);
+}
 
 
 /**
@@ -143,7 +149,10 @@ int CacheFS_open(const char *pathname);
 		2. invalid file_id. file_id is valid if"f it was returned by
 		CacheFS_open, and it is not already closed.
  */
-int CacheFS_close(int file_id);
+int CacheFS_close(int file_id)
+{
+    cacher->CacheFS_close(file_id);
+}
 
 /**
    Read data from an open file.
@@ -176,7 +185,10 @@ int CacheFS_close(int file_id);
 				    like posix's pread does.]
 				[Note: any value of count is valid.]
  */
-int CacheFS_pread(int file_id, void *buf, size_t count, off_t offset);
+int CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
+{
+    cacher->CacheFS_pread(file_id, buf, count, offset);
+}
 
 
 /**
@@ -213,7 +225,10 @@ Notes:
 		1. system call or library function fails (e.g. open, write).
 		2. log_path is invalid.
  */
-int CacheFS_print_cache (const char *log_path);
+int CacheFS_print_cache (const char *log_path)
+{
+    cacher->CacheFS_print_cache(log_path);
+}
 
 
 /**
@@ -247,4 +262,7 @@ Notes:
 		1. system call or library function fails (e.g. open, write).
 		2. log_path is invalid.
  */
-int CacheFS_print_stat (const char *log_path);
+int CacheFS_print_stat (const char *log_path)
+{
+    cacher->CacheFS_print_stat(log_path);
+}

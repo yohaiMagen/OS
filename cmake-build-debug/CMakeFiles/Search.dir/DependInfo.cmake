@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/niv/CLionProjects/OS1/Ex3/MapReduceFramework.cpp" "/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o"
-  "/home/niv/CLionProjects/OS1/Ex3/Search.cpp" "/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/Search.dir/Ex3/Search.cpp.o"
-  "/home/niv/CLionProjects/OS1/Ex3/ThreadToContainer.cpp" "/home/niv/CLionProjects/OS1/cmake-build-debug/CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o"
+  "/home/nivkeren/CLionProjects/OS/Ex3/MapReduceFramework.cpp" "/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles/Search.dir/Ex3/MapReduceFramework.cpp.o"
+  "/home/nivkeren/CLionProjects/OS/Ex3/Search.cpp" "/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles/Search.dir/Ex3/Search.cpp.o"
+  "/home/nivkeren/CLionProjects/OS/Ex3/ThreadToContainer.cpp" "/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles/Search.dir/Ex3/ThreadToContainer.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.6)
-project(Ex3)
+project(Ex4)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -Wall -Wextra")
+set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES Ex3/main.cpp Ex3/MapReduceFramework.cpp Ex3/MapReduceFramework.h Ex3/MapReduceClient.h Ex3/ThreadToContainer.cpp Ex3/ThreadToContainer.h)
-add_executable(Ex3 ${SOURCE_FILES})
+set(SOURCE_FILES Ex4/main.cpp Ex4/CacheFS.h Ex4/CacheAlg.cpp Ex4/CacheAlg.h Ex4/Lru.cpp Ex4/Lru.h Ex4/Lfu.cpp Ex4/Lfu.h Ex4/Fbr.cpp
+        Ex4/Fbr.h Ex4/CacheFS.cpp)
+add_executable(Ex4 ${SOURCE_FILES})
 
-set(SOURCE_FILES1 Ex3/Search.cpp Ex3/MapReduceFramework.cpp Ex3/MapReduceFramework.h Ex3/MapReduceClient.h Ex3/ThreadToContainer.cpp Ex3/ThreadToContainer.h)
-add_executable(Search ${SOURCE_FILES1})
+set(SOURCE_FILES1 Ex4/main.cpp)
+add_executable(main ${SOURCE_FILES1})
