@@ -6,12 +6,31 @@
 #define EX4_FBR_H
 
 
+#include <ctime>
 #include "CacheAlg.h"
+
+enum POS
+{
+    OLD,
+    NEW,
+    MIDDLE
+};
 
 class Fbr: public CacheAlg
 {
+private:
+    std::time_t _last_usage[];
+    unsigned int _ref_count[];
+    POS _pos[];
+    int _blocks_num;
+    unsigned int _old, _new, _middle;
+    std::map<time_t, char*> _oldMap, _newMap, _middleMap;
 public:
-    Fbr(int blocks_num );
+    Fbr(int blocks_num, double f_old, double f_new);
+    ~Fbr();
+    char* get_next_block();
+    void update_usage(char* it);
+    bool cmp(const blc_data &a, const blc_data &b);
 };
 
 

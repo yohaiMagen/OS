@@ -3,13 +3,13 @@
 
 Lfu::Lfu(int blocks_num) : CacheAlg(blocks_num)
 {
-    _num_usage = new unsigned int[blocks_num];
+    _ref_count = new unsigned int[blocks_num];
     _blocks_num = blocks_num;
 }
 
 Lfu::~Lfu()
 {
-    delete[] _num_usage;
+    delete[] _ref_count;
 }
 
 char* Lfu::get_next_block()
@@ -23,22 +23,22 @@ char* Lfu::get_next_block()
     else
     {
         next_block = _buf +
-                (std::min_element(_num_usage, _num_usage + _blocks_num) - _num_usage);
+                (std::min_element(_ref_count, _ref_count + _blocks_num) - _ref_count);
     }
-    _num_usage[next_block - _buf] = 0;
+    _ref_count[next_block - _buf] = 0;
     return next_block;
 }
 
 void Lfu::update_usage(char *it)
 {
-    _num_usage[it - _buf]++;
+    _ref_count[it - _buf]++;
 }
 
 bool Lfu::cmp(const blc_data &a, const blc_data &b)
 {
-    if(_num_usage[std::get<3>(a) - _buf] == _num_usage[std::get<3>(b) - _buf])
+    if(_ref_count[std::get<3>(a) - _buf] == _ref_count[std::get<3>(b) - _buf])
     {
         return std::get<3>(a)  < std::get<3>(b);
     }
-    return _num_usage[std::get<3>(a) - _buf] > _num_usage[std::get<3>(b) - _buf];
+    return _ref_count[std::get<3>(a) - _buf] > _ref_count[std::get<3>(b) - _buf];
 }
