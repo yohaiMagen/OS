@@ -12,14 +12,19 @@
 class Lru: public CacheAlg
 {
 private:
-    std::time_t _last_usage[];
+    static std::time_t* _last_usage;
     int _blocks_num;
+    struct lru_blc_data : public blc_data
+    {
+        std::time_t last_use;
+    };
 public:
     Lru(int blocks_num);
     ~Lru();
     char* get_next_block();
     void update_usage(char* it);
-    bool cmp(const blc_data &a, const blc_data &b);
+    bool cmp(const lru_blc_data &a, const lru_blc_data &b);
+    std::vector<blc_data*> sort_all_blocks();
 };
 
 

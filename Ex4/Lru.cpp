@@ -4,6 +4,7 @@
 
 #include "Lru.h"
 
+
 Lru::Lru(int blocks_num) : CacheAlg(blocks_num)
 {
     _last_usage = new std::time_t[blocks_num];
@@ -37,13 +38,32 @@ void Lru::update_usage(char *it)
     _last_usage[it - _buf] = std::time(nullptr);
 }
 
-bool Lru::cmp(const blc_data &a, const blc_data &b)
+bool Lru::cmp(const lru_blc_data &a, const lru_blc_data &b)
 {
     //TODO check if possible
-    if(_last_usage[std::get<3>(a) - _buf] == _last_usage[std::get<3>(b) - _buf])
+    if(a.last_use == b.last_use)
     {
-        return std::get<3>(a)  < std::get<3>(b);
+        return a.cache_p  < b.cache_p;
     }
-    return _last_usage[std::get<3>(a) - _buf] < _last_usage[std::get<3>(b) - _buf];
+    return a.last_use < b.last_use;
+}
+
+std::vector<blc_data&> Lru::sort_all_blocks()
+{
+    std::vector<blc_data&> all_blocks;
+    for(auto it1 = _fd_allocator.begin(); it1 != _fd_allocator.end(); ++it1)
+    {
+        for(auto it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
+        {
+            lru_blc_data tmp;
+            tmp.path = it1->first;
+            tmp.blc_num_in_file = it2->first;
+            tmp.cache_p = it2->second;
+            tmp.last_use = _last_usage[it2->second - _buf];
+            all_blocks.push_back(tmp);
+        }
+    }
+    std::sort(all_blocks.begin(), all_blocks.end(), cmp);
+    return all_blocks;
 }
 

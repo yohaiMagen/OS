@@ -96,40 +96,60 @@ void Fbr::update_usage(char *it)
 
 }
 
-bool Fbr::cmp(const blc_data &a, const blc_data &b)
+bool Fbr::cmp(const fbr_blc_data &a, const fbr_blc_data &b)
 {
-    POS a_pos = _pos[std::get<3>(a) - _buf];
-    POS b_pos = _pos[std::get<3>(b) - _buf];
-    switch (a_pos)
+
+    switch (a.pos)
     {
         case NEW:
-            switch (b_pos)
+            switch (b.pos)
             {
                 case OLD:
                 case MIDDLE:
                     return true;
                 case NEW:
-                    return _last_usage[std::get<3>(a) - _buf] >= _last_usage[std::get<3>(b) - _buf];
+                    return a.last_usage >= b.last_usage;
             }
         case MIDDLE:
-            switch (b_pos)
+            switch (b.pos)
             {
                 case OLD:
                     return true;
                 case MIDDLE:
-                    return _last_usage[std::get<3>(a) - _buf] >= _last_usage[std::get<3>(b) - _buf];
+                    return a.last_usage >= b.last_usage;
                 case NEW:
                     return false;
             }
         case OLD:
-            switch (b_pos)
+            switch (b.pos)
             {
                 case OLD:
-                    return _ref_count[std::get<3>(a) - _buf] >= _ref_count[std::get<3>(b) - _buf];
+                    return a.ref_count >= b.ref_count;
                 case MIDDLE:
                 case NEW:
                     return false;
             }
     }
+}
+
+std::vector<blc_data&> Fbr::sort_all_blocks()
+{
+    std::vector<blc_data&> all_blocks;
+    for(auto it1 = _fd_allocator.begin(); it1 != _fd_allocator.end(); ++it1)
+    {
+        for(auto it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
+        {
+            fbr_blc_data tmp;
+            tmp.path = it1->first;
+            tmp.blc_num_in_file = it2->first;
+            tmp.cache_p = it2->second;
+            tmp.ref_count = _ref_count[it2->second - _buf];
+            tmp.last_usage = _last_usage[it2->second - _buf];
+            tmp.pos = _pos[it2->second - _buf];
+            all_blocks.push_back(tmp);
+        }
+    }
+    std::sort(all_blocks.begin(), all_blocks.end(), cmp);
+    return all_blocks;
 }
 

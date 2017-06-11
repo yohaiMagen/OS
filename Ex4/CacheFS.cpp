@@ -7,7 +7,6 @@
 #include "Lru.h"
 #include "Fbr.h"
 
-#define ERR -1
 
 CacheAlg* cacher;
 
@@ -64,11 +63,11 @@ int CacheFS_init(int blocks_num, cache_algo_t cache_algo,
             case LFU :
                 cacher  = new Lfu(blocks_num);
                 break;
-            case LRU:
-                cacher = new Lru(blocks_num);
-                break;
-            case FBR :
-                cacher = new Fbr(blocks_num, f_old, f_new);
+//            case LRU:
+//                cacher = new Lru(blocks_num);
+//                break;
+//            case FBR :
+//                cacher = new Fbr(blocks_num, f_old, f_new);
         }
     }
     catch (std::bad_alloc e)

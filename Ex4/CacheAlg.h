@@ -16,15 +16,20 @@
 #include <unistd.h>
 #include <fstream>
 
-#define ERR -1;
+
+
+#define ERR -1
+
 
 #define STAT(a ,b) "Hits number: " << a << ".\nMisses number: " << b << "."
 
-typedef std::tuple<std::string, int, char*> blc_data;
+//typedef std::tuple<std::string, int, char*> blc_data;
+//typedef bool (*func)(const blc_data &a, const blc_data &b);
 
 class CacheAlg
 {
 protected:
+    //map <path, map <block num in file, block in cache>
     std::map<std::string , std::map<unsigned int, char*>> _fd_allocator;
 //    std::map<std::string, unsigned int> _path2fd;
     std::map<int, std::string> _fd2path;
@@ -35,7 +40,11 @@ protected:
     size_t _buf_size;
     unsigned int _cash_hit;
     unsigned int _cash_miss;
+
+
 public:
+
+
     CacheAlg(int blocks_num );
 
     ~CacheAlg();
@@ -46,7 +55,7 @@ public:
 
     int CacheFS_pread(int file_id, void *buf, size_t count, off_t offset);
 
-    int CacheFS_print_cache (const char *log_path);
+    virtual int CacheFS_print_cache (const char *log_path) =0;
 
     int CacheFS_print_stat (const char *log_path);
 
@@ -54,7 +63,7 @@ public:
 
     virtual void update_usage(char* it) = 0;
 
-    virtual bool cmp(const blc_data &a, const blc_data &b) = 0;
+
 };
 
 

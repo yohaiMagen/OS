@@ -5,6 +5,7 @@
 
 
 
+
 #include "CacheAlg.h"
 
 
@@ -16,7 +17,7 @@ CacheAlg::CacheAlg(int blocks_num): _cash_hit(0), _cash_miss(0)
     _block_size = fi.st_blksize;
 
     _buf_size = _block_size * blocks_num;
-    if(_buf = (char*)aligned_alloc(_block_size, sizeof(char) * _buf_size))
+    if((_buf = (char*)aligned_alloc(_block_size, sizeof(char) * _buf_size)))
     {
         throw std::bad_alloc();
     }
@@ -116,8 +117,8 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
         {
             _cash_hit++;
         }
-        // block in buf
 
+        // block in buf
         char* off = it->second;
         size_t n = real_block_size[(it->second-_buf)/_block_size];
         //update margins to read from buf
@@ -136,7 +137,8 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
         }
         else if(i == last_blk)
         {
-            int n = std::min(n, (offset + count)%_block_size);
+            //TODO remove casting
+            int n = std::min(n, (int)((offset + count)%_block_size));
         }
         // add to final string
         memcpy(acc_str_p, off, n);
@@ -144,7 +146,7 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
         acc_str_size += n;
 
         update_usage(it->second);
-        if(read == 0 || real_block_size[(it->second-_buf)/_block_size] < _block_size)
+        if(read == 0 || real_block_size[(it->second-_buf)/_block_size] < (int)_block_size)
         {
             break;
         }
@@ -154,33 +156,7 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
 }
 
 
-int CacheAlg::CacheFS_print_cache(const char *log_path)
-{
-    std::ofstream slog = std::ofstream(log_path, std::ios_base::app);
-    if(slog.fail())
-    {
-        return ERR;
-    }
-   std::vector<blc_data> all_blocks;
-    for(auto it1 = _fd_allocator.begin(); it1 != _fd_allocator.end(); ++it1)
-    {
-        for(auto it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
-        {
-            all_blocks.push_back(std::make_tuple(it1->first, it2->first, it2->second));
-        }
-    }
-    std::sort(all_blocks.begin(), all_blocks.end(), cmp);
-    for(auto it = all_blocks.begin(); it != all_blocks.end(); ++it)
-    {
-        slog << std::get<0>(*it) << " " <<  std::get<1>(*it) << std::endl;
-        if(slog.fail())
-        {
-            return ERR;
-        }
-    }
-    slog.close();
-    return 0;
-}
+
 
 int CacheAlg::CacheFS_print_stat(const char *log_path)
 {
@@ -197,6 +173,9 @@ int CacheAlg::CacheFS_print_stat(const char *log_path)
     }
     return 0;
 }
+
+
+
 
 
 
