@@ -12,7 +12,8 @@
 class Lru: public CacheAlg
 {
 private:
-    std::time_t _last_usage[];
+    unsigned long _usage_count;
+    unsigned long* _last_usage;
     int _blocks_num;
 public:
     Lru(int blocks_num);

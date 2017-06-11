@@ -21,9 +21,19 @@
 #define STAT(a ,b) "Hits number: " << a << ".\nMisses number: " << b << "."
 
 typedef std::tuple<std::string, int, char*> blc_data;
+typedef std::vector<blc_data> blc_data_vec;
+typedef std::vector<blc_data>::iterator blc_data_it;
+
+typedef std::pair<std::string, unsigned int> pathNblc;
 
 class CacheAlg
 {
+private:
+    pathNblc* buf_block2file_block;
+
+    blc_data_vec merge(blc_data_vec& left, blc_data_vec& right);
+    blc_data_vec merge_sort(blc_data_it begin, blc_data_it end);
+
 protected:
     std::map<std::string , std::map<unsigned int, char*>> _fd_allocator;
 //    std::map<std::string, unsigned int> _path2fd;

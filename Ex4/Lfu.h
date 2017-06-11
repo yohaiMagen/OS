@@ -7,7 +7,7 @@ class Lfu: public CacheAlg
 {
 
 private:
-    unsigned int _ref_count[];
+    unsigned int* _ref_count;
     int _blocks_num;
 public:
     Lfu(int blocks_num);

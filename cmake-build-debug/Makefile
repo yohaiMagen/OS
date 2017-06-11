@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test5
+
+# Build rule for target.
+test5: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test5
+.PHONY : test5
+
+# fast build rule for target.
+test5/fast:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/build
+.PHONY : test5/fast
+
+#=============================================================================
 # Target rules for targets named main
 
 # Build rule for target.
@@ -142,6 +155,7 @@ Ex4/CacheAlg.o: Ex4/CacheAlg.cpp.o
 
 # target to build an object file
 Ex4/CacheAlg.cpp.o:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/CacheAlg.cpp.o
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheAlg.cpp.o
 .PHONY : Ex4/CacheAlg.cpp.o
 
@@ -151,6 +165,7 @@ Ex4/CacheAlg.i: Ex4/CacheAlg.cpp.i
 
 # target to preprocess a source file
 Ex4/CacheAlg.cpp.i:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/CacheAlg.cpp.i
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheAlg.cpp.i
 .PHONY : Ex4/CacheAlg.cpp.i
 
@@ -160,6 +175,7 @@ Ex4/CacheAlg.s: Ex4/CacheAlg.cpp.s
 
 # target to generate assembly for a file
 Ex4/CacheAlg.cpp.s:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/CacheAlg.cpp.s
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheAlg.cpp.s
 .PHONY : Ex4/CacheAlg.cpp.s
 
@@ -169,6 +185,7 @@ Ex4/CacheFS.o: Ex4/CacheFS.cpp.o
 
 # target to build an object file
 Ex4/CacheFS.cpp.o:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/CacheFS.cpp.o
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheFS.cpp.o
 .PHONY : Ex4/CacheFS.cpp.o
 
@@ -178,6 +195,7 @@ Ex4/CacheFS.i: Ex4/CacheFS.cpp.i
 
 # target to preprocess a source file
 Ex4/CacheFS.cpp.i:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/CacheFS.cpp.i
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheFS.cpp.i
 .PHONY : Ex4/CacheFS.cpp.i
 
@@ -187,6 +205,7 @@ Ex4/CacheFS.s: Ex4/CacheFS.cpp.s
 
 # target to generate assembly for a file
 Ex4/CacheFS.cpp.s:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/CacheFS.cpp.s
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/CacheFS.cpp.s
 .PHONY : Ex4/CacheFS.cpp.s
 
@@ -196,6 +215,7 @@ Ex4/Fbr.o: Ex4/Fbr.cpp.o
 
 # target to build an object file
 Ex4/Fbr.cpp.o:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Fbr.cpp.o
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Fbr.cpp.o
 .PHONY : Ex4/Fbr.cpp.o
 
@@ -205,6 +225,7 @@ Ex4/Fbr.i: Ex4/Fbr.cpp.i
 
 # target to preprocess a source file
 Ex4/Fbr.cpp.i:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Fbr.cpp.i
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Fbr.cpp.i
 .PHONY : Ex4/Fbr.cpp.i
 
@@ -214,6 +235,7 @@ Ex4/Fbr.s: Ex4/Fbr.cpp.s
 
 # target to generate assembly for a file
 Ex4/Fbr.cpp.s:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Fbr.cpp.s
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Fbr.cpp.s
 .PHONY : Ex4/Fbr.cpp.s
 
@@ -223,6 +245,7 @@ Ex4/Lfu.o: Ex4/Lfu.cpp.o
 
 # target to build an object file
 Ex4/Lfu.cpp.o:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Lfu.cpp.o
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lfu.cpp.o
 .PHONY : Ex4/Lfu.cpp.o
 
@@ -232,6 +255,7 @@ Ex4/Lfu.i: Ex4/Lfu.cpp.i
 
 # target to preprocess a source file
 Ex4/Lfu.cpp.i:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Lfu.cpp.i
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lfu.cpp.i
 .PHONY : Ex4/Lfu.cpp.i
 
@@ -241,6 +265,7 @@ Ex4/Lfu.s: Ex4/Lfu.cpp.s
 
 # target to generate assembly for a file
 Ex4/Lfu.cpp.s:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Lfu.cpp.s
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lfu.cpp.s
 .PHONY : Ex4/Lfu.cpp.s
 
@@ -250,6 +275,7 @@ Ex4/Lru.o: Ex4/Lru.cpp.o
 
 # target to build an object file
 Ex4/Lru.cpp.o:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Lru.cpp.o
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lru.cpp.o
 .PHONY : Ex4/Lru.cpp.o
 
@@ -259,6 +285,7 @@ Ex4/Lru.i: Ex4/Lru.cpp.i
 
 # target to preprocess a source file
 Ex4/Lru.cpp.i:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Lru.cpp.i
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lru.cpp.i
 .PHONY : Ex4/Lru.cpp.i
 
@@ -268,8 +295,36 @@ Ex4/Lru.s: Ex4/Lru.cpp.s
 
 # target to generate assembly for a file
 Ex4/Lru.cpp.s:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/Lru.cpp.s
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/Lru.cpp.s
 .PHONY : Ex4/Lru.cpp.s
+
+Ex4/TEST.o: Ex4/TEST.cpp.o
+
+.PHONY : Ex4/TEST.o
+
+# target to build an object file
+Ex4/TEST.cpp.o:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/TEST.cpp.o
+.PHONY : Ex4/TEST.cpp.o
+
+Ex4/TEST.i: Ex4/TEST.cpp.i
+
+.PHONY : Ex4/TEST.i
+
+# target to preprocess a source file
+Ex4/TEST.cpp.i:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/TEST.cpp.i
+.PHONY : Ex4/TEST.cpp.i
+
+Ex4/TEST.s: Ex4/TEST.cpp.s
+
+.PHONY : Ex4/TEST.s
+
+# target to generate assembly for a file
+Ex4/TEST.cpp.s:
+	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/Ex4/TEST.cpp.s
+.PHONY : Ex4/TEST.cpp.s
 
 Ex4/main.o: Ex4/main.cpp.o
 
@@ -309,6 +364,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... test5"
 	@echo "... main"
 	@echo "... Ex4"
 	@echo "... Ex4/CacheAlg.o"
@@ -326,6 +382,9 @@ help:
 	@echo "... Ex4/Lru.o"
 	@echo "... Ex4/Lru.i"
 	@echo "... Ex4/Lru.s"
+	@echo "... Ex4/TEST.o"
+	@echo "... Ex4/TEST.i"
+	@echo "... Ex4/TEST.s"
 	@echo "... Ex4/main.o"
 	@echo "... Ex4/main.i"
 	@echo "... Ex4/main.s"

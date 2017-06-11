@@ -20,7 +20,7 @@ int main()
 //    char* c = &b[4096];
 //    char* d = &b[4096*2];
     std::time_t result = std::time(nullptr);
-    std::cout << std::asctime(std::localtime(&result))
+    std::cout << std::
               << result << " seconds since the Epoch\n";
 
     return 0;

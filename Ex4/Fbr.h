@@ -19,12 +19,13 @@ enum POS
 class Fbr: public CacheAlg
 {
 private:
-    std::time_t _last_usage[];
-    unsigned int _ref_count[];
-    POS _pos[];
+    unsigned long _usage_count;
+    unsigned long* _last_usage;
+    unsigned int* _ref_count;
+    POS* _pos;
     int _blocks_num;
     unsigned int _old, _new, _middle;
-    std::map<time_t, char*> _oldMap, _newMap, _middleMap;
+    std::map<unsigned long, char*> _oldMap, _newMap, _middleMap;
 public:
     Fbr(int blocks_num, double f_old, double f_new);
     ~Fbr();
