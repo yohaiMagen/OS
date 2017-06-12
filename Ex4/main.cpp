@@ -19,9 +19,12 @@ int main()
 //    char b[4096*4];
 //    char* c = &b[4096];
 //    char* d = &b[4096*2];
-    std::time_t result = std::time(nullptr);
-    std::cout << std::
-              << result << " seconds since the Epoch\n";
+    int fd1 = open("/home/yohai/CLionProjects/OS/Ex4/test.txt", O_RDONLY);
+    char a[2];
+     int x = pread(fd1, a , 10 , 0);
+     char* b = a + x;
+      x = pread(fd1, b , 10 , x);
+    std::cout << x << std::endl;
 
     return 0;
 }

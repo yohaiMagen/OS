@@ -23,6 +23,6 @@ CMakeFiles/Ex4.dir/Lru.cpp.o: ../CacheAlg.h
 CMakeFiles/Ex4.dir/Lru.cpp.o: ../Lru.cpp
 CMakeFiles/Ex4.dir/Lru.cpp.o: ../Lru.h
 
-CMakeFiles/Ex4.dir/TEST.cpp.o: ../CacheFS.h
-CMakeFiles/Ex4.dir/TEST.cpp.o: ../TEST.cpp
+CMakeFiles/Ex4.dir/Test1.cpp.o: ../CacheFS.h
+CMakeFiles/Ex4.dir/Test1.cpp.o: ../Test1.cpp
 

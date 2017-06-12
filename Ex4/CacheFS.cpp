@@ -75,9 +75,7 @@ int CacheFS_init(int blocks_num, cache_algo_t cache_algo,
     {
         return ERR;
     }
-
-
-
+    return EXIT_SUCCESS;
 
 }
 
@@ -99,7 +97,8 @@ int CacheFS_init(int blocks_num, cache_algo_t cache_algo,
 */
 int CacheFS_destroy()
 {
-    delete(cacher);
+    //TODO
+    delete cacher;
 }
 
 
@@ -134,7 +133,7 @@ int CacheFS_destroy()
  */
 int CacheFS_open(const char *pathname)
 {
-    cacher->CacheFS_open(pathname);
+    return cacher->CacheFS_open(pathname);
 }
 
 
@@ -151,7 +150,7 @@ int CacheFS_open(const char *pathname)
  */
 int CacheFS_close(int file_id)
 {
-    cacher->CacheFS_close(file_id);
+    return cacher->CacheFS_close(file_id);
 }
 
 /**
@@ -187,7 +186,7 @@ int CacheFS_close(int file_id)
  */
 int CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
 {
-    cacher->CacheFS_pread(file_id, buf, count, offset);
+    return cacher->CacheFS_pread(file_id, buf, count, offset);
 }
 
 

@@ -29,7 +29,7 @@ char* Lru::get_next_block()
         next_block = _buf +
                 ((std::min_element(_last_usage, _last_usage + _blocks_num) - _last_usage) * _block_size);
     }
-    update_usage(next_block);
+//    update_usage(next_block);
     return next_block;
 }
 

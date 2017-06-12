@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Ex4.dir/TEST.cpp.o"
+  "CMakeFiles/Ex4.dir/Test1.cpp.o"
   "CMakeFiles/Ex4.dir/CacheAlg.cpp.o"
   "CMakeFiles/Ex4.dir/Lru.cpp.o"
   "CMakeFiles/Ex4.dir/Lfu.cpp.o"

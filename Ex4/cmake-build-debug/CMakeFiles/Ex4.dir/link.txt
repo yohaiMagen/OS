@@ -1,1 +1,1 @@
-/usr/bin/c++   -g   CMakeFiles/Ex4.dir/TEST.cpp.o CMakeFiles/Ex4.dir/CacheAlg.cpp.o CMakeFiles/Ex4.dir/Lru.cpp.o CMakeFiles/Ex4.dir/Lfu.cpp.o CMakeFiles/Ex4.dir/Fbr.cpp.o CMakeFiles/Ex4.dir/CacheFS.cpp.o  -o Ex4 
+/usr/bin/c++   -g   CMakeFiles/Ex4.dir/Test1.cpp.o CMakeFiles/Ex4.dir/CacheAlg.cpp.o CMakeFiles/Ex4.dir/Lru.cpp.o CMakeFiles/Ex4.dir/Lfu.cpp.o CMakeFiles/Ex4.dir/Fbr.cpp.o CMakeFiles/Ex4.dir/CacheFS.cpp.o  -o Ex4 

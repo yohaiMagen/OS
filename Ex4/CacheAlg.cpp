@@ -77,6 +77,10 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
     {
         return ERR;
     }
+    if(count == 0)
+    {
+        return count;
+    }
     // final string and pointer
     char acc_str[count];
     char* acc_str_p = acc_str;
@@ -84,49 +88,59 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
     int acc_str_size = 0;
     // blocks margins
     int first_blk = offset /_block_size;
-    int last_blk = (offset+count) /_block_size;
+    int last_blk = (offset + count - 1) /_block_size;
 
     for (unsigned int i = first_blk; i <= last_blk ; ++i)
     {
         // number of characters read from fd in the last chunk
         int read = -1;
+        char* blc_start;
         // iterator to block in buffer
         auto it = _fd_allocator[_fd2path[file_id]].find(i);
 
         // block is not in buf
         if(it ==  _fd_allocator[_fd2path[file_id]].end())
         {
-            _cash_miss++;
-            char* blc_start = get_next_block();
+            blc_start = get_next_block();
             char* next = blc_start;
             // translate to position on buf
-            int buf_block_num =(blc_start - _buf) / _block_size;
+            int buf_block_num = (blc_start - _buf) / _block_size;
 
             // fill the buffer
             int to_read = _block_size;
-            while(to_read > 0 && read != 0)
+            read = pread(file_id, blc_start, (size_t)to_read, (i  * _block_size));
+            to_read -= read;
+//            while(to_read > 0 && read != 0)
+//            {
+//                read = pread(file_id, next, (size_t)to_read, (((i + 1) * _block_size) - to_read));
+//                if(read < 0)
+//                {
+//                    printf("Oh dear, something went wrong with read()! %s\n", strerror(errno));
+//                    return ERR;
+//                }
+//                next = next + read;
+//                to_read = to_read - read ;
+//            }
+            if(read != 0)
             {
-                read = pread(file_id, next, (size_t)to_read, (i + 1) * _block_size - to_read);
-                if(read < 0)
+                _cash_miss++;
+                update_usage(blc_start);
+                for (auto it1 = _fd_allocator.begin();
+                     it1 != _fd_allocator.end(); ++it1)
                 {
-                    return ERR;
-                }
-                next = next + read;
-                to_read = to_read - read;
-            }
-            for(auto it1 = _fd_allocator.begin(); it1 != _fd_allocator.end(); ++it1)
-            {
-                for(auto it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
-                {
-                    if (it2->second == blc_start)
+                    for (auto it2 = it1->second.begin();
+                         it2 != it1->second.end(); ++it2)
                     {
-                        it1->second.erase(it2);
+                        if (it2->second == blc_start)
+                        {
+                            it1->second.erase(it2);
+                        }
                     }
                 }
+                _fd_allocator[_fd2path[file_id]][i] = blc_start;
+                // update real block size
+                real_block_size[buf_block_num] = _block_size - to_read;
             }
-            _fd_allocator[_fd2path[file_id]][i] = blc_start;
-            // update real block size
-            real_block_size[buf_block_num] = _block_size - to_read;
 
             it = _fd_allocator[_fd2path[file_id]].find(i);
         }
@@ -135,18 +149,30 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
         else
         {
             _cash_hit++;
+            blc_start = it->second;
+            read = real_block_size[(blc_start - _buf) / _block_size];
+            update_usage(blc_start);
         }
 
-
-        char* off = it->second;
-        size_t n = real_block_size[(it->second -_buf) / _block_size];
+        char* off = blc_start;
+//        char* off = it->second;
+        size_t n = read;
+//        size_t n = real_block_size[(it->second -_buf) / _block_size];
         //update margins to read from buf
         if ( i == first_blk)
         {
             off += offset % _block_size;
             if(i == last_blk)
             {
-                n = std::min(count, n-(offset % _block_size));
+                if(n  > offset % _block_size)
+                {
+                    n = std::min(count, n - (offset % _block_size));
+                }
+                else
+                {
+                    n = 0;
+                }
+
             }
             // get end of block
             else
@@ -156,16 +182,16 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
         }
         else if(i == last_blk)
         {
-            n = std::min((unsigned long)n, (offset + count)%_block_size);
+            n = std::min((unsigned long)n, ((offset + count - 1) % _block_size) + 1);
         }
 
         // add to final string
         memcpy(acc_str_p, off, n);
         acc_str_p += n;
         acc_str_size += n;
-
-        update_usage(it->second);
-        if(read == 0 || real_block_size[(it->second-_buf)/_block_size] < _block_size)
+        if(read == 0 || real_block_size[(blc_start-_buf)/_block_size] < _block_size)
+//        update_usage(it->second);
+//        if(read == 0 || real_block_size[(it->second-_buf)/_block_size] < _block_size)
         {
             break;
         }

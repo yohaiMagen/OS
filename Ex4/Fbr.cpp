@@ -40,7 +40,7 @@ char* Fbr::get_next_block()
         auto min_it = _oldMap.begin();
         for (auto it = _oldMap.begin(); it != _oldMap.end() ; ++it)
         {
-            if(min_it->first.second < it->first.second)
+            if(_ref_count[(it->second - _buf) / _block_size] < _ref_count[(min_it->second - _buf) / _block_size])
             {
                 min_it = it;
             }
@@ -72,7 +72,9 @@ void Fbr::update_usage(char *it)
                 _middleMap.erase(map_it);
             }
        }
-       _newMap[_usage_count] = it;
+
+        _ref_count[it_block]++;
+        _newMap[_usage_count] = it;
         _pos[it_block] = NEW;
     }
     else

@@ -18,7 +18,7 @@
 
 #define ERR -1;
 
-#define STAT(a ,b) "Hits number: " << a << ".\nMisses number: " << b << "."
+#define STAT(a ,b) "Hits number: " << a << "\nMisses number: " << b //<< "."
 
 typedef std::tuple<std::string, int, char*> blc_data;
 typedef std::vector<blc_data> blc_data_vec;

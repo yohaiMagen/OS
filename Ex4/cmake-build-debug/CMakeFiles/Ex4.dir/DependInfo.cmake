@@ -9,7 +9,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/yohai/CLionProjects/OS/Ex4/Fbr.cpp" "/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/Fbr.cpp.o"
   "/home/yohai/CLionProjects/OS/Ex4/Lfu.cpp" "/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/Lfu.cpp.o"
   "/home/yohai/CLionProjects/OS/Ex4/Lru.cpp" "/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/Lru.cpp.o"
-  "/home/yohai/CLionProjects/OS/Ex4/TEST.cpp" "/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/TEST.cpp.o"
+  "/home/yohai/CLionProjects/OS/Ex4/Test1.cpp" "/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/Test1.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

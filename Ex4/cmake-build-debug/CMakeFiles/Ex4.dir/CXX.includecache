@@ -82,14 +82,14 @@ ctime
 CacheAlg.h
 /home/yohai/CLionProjects/OS/Ex4/CacheAlg.h
 
-/home/yohai/CLionProjects/OS/Ex4/TEST.cpp
-fstream
--
+/home/yohai/CLionProjects/OS/Ex4/Test1.cpp
 iostream
 -
-sys/stat.h
+fstream
 -
 cstring
+-
+string
 -
 CacheFS.h
 /home/yohai/CLionProjects/OS/Ex4/CacheFS.h
