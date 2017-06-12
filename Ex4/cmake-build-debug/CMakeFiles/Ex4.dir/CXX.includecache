@@ -11,10 +11,44 @@ CacheAlg.h
 /home/yohai/CLionProjects/OS/Ex4/CacheAlg.h
 
 /home/yohai/CLionProjects/OS/Ex4/CacheAlg.h
+vector
+-
+algorithm
+-
+map
+-
+sys/stat.h
+-
+stdlib.h
+-
+new
+-
+fcntl.h
+-
+cstring
+-
+unistd.h
+-
+fstream
+-
 
 /home/yohai/CLionProjects/OS/Ex4/CacheFS.cpp
+sys/stat.h
+-
+stdlib.h
+-
+new
+-
 CacheFS.h
 /home/yohai/CLionProjects/OS/Ex4/CacheFS.h
+CacheAlg.h
+/home/yohai/CLionProjects/OS/Ex4/CacheAlg.h
+Lfu.h
+/home/yohai/CLionProjects/OS/Ex4/Lfu.h
+Lru.h
+/home/yohai/CLionProjects/OS/Ex4/Lru.h
+Fbr.h
+/home/yohai/CLionProjects/OS/Ex4/Fbr.h
 
 /home/yohai/CLionProjects/OS/Ex4/CacheFS.h
 
@@ -23,10 +57,14 @@ Fbr.h
 /home/yohai/CLionProjects/OS/Ex4/Fbr.h
 
 /home/yohai/CLionProjects/OS/Ex4/Fbr.h
+ctime
+-
 CacheAlg.h
 /home/yohai/CLionProjects/OS/Ex4/CacheAlg.h
 
 /home/yohai/CLionProjects/OS/Ex4/Lfu.cpp
+algorithm
+-
 Lfu.h
 /home/yohai/CLionProjects/OS/Ex4/Lfu.h
 
@@ -39,12 +77,20 @@ Lru.h
 /home/yohai/CLionProjects/OS/Ex4/Lru.h
 
 /home/yohai/CLionProjects/OS/Ex4/Lru.h
+ctime
+-
 CacheAlg.h
 /home/yohai/CLionProjects/OS/Ex4/CacheAlg.h
 
-/home/yohai/CLionProjects/OS/Ex4/main.cpp
+/home/yohai/CLionProjects/OS/Ex4/TEST.cpp
+fstream
+-
 iostream
 -
 sys/stat.h
 -
+cstring
+-
+CacheFS.h
+/home/yohai/CLionProjects/OS/Ex4/CacheFS.h
 

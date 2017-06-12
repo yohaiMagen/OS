@@ -156,7 +156,7 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
         }
         else if(i == last_blk)
         {
-            int n = std::min((unsigned long)n, (offset + count)%_block_size);
+            n = std::min((unsigned long)n, (offset + count)%_block_size);
         }
 
         // add to final string

@@ -271,6 +271,33 @@ Lru.cpp.s:
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Lru.cpp.s
 .PHONY : Lru.cpp.s
 
+TEST.o: TEST.cpp.o
+
+.PHONY : TEST.o
+
+# target to build an object file
+TEST.cpp.o:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/TEST.cpp.o
+.PHONY : TEST.cpp.o
+
+TEST.i: TEST.cpp.i
+
+.PHONY : TEST.i
+
+# target to preprocess a source file
+TEST.cpp.i:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/TEST.cpp.i
+.PHONY : TEST.cpp.i
+
+TEST.s: TEST.cpp.s
+
+.PHONY : TEST.s
+
+# target to generate assembly for a file
+TEST.cpp.s:
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/TEST.cpp.s
+.PHONY : TEST.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -278,7 +305,6 @@ main.o: main.cpp.o
 # target to build an object file
 main.cpp.o:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
-	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -288,7 +314,6 @@ main.i: main.cpp.i
 # target to preprocess a source file
 main.cpp.i:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
-	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -298,7 +323,6 @@ main.s: main.cpp.s
 # target to generate assembly for a file
 main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
-	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -326,6 +350,9 @@ help:
 	@echo "... Lru.o"
 	@echo "... Lru.i"
 	@echo "... Lru.s"
+	@echo "... TEST.o"
+	@echo "... TEST.i"
+	@echo "... TEST.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -160,9 +160,11 @@
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex4/Lru.h">
 			<Option target="Ex4"/>
 		</Unit>
+		<Unit filename="/home/yohai/CLionProjects/OS/Ex4/TEST.cpp">
+			<Option target="Ex4"/>
+		</Unit>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex4/main.cpp">
 			<Option target="main"/>
-			<Option target="Ex4"/>
 		</Unit>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex4/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

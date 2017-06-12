@@ -14,7 +14,10 @@ Fbr::Fbr(int blocks_num, double f_old, double f_new):CacheAlg(blocks_num)
     _ref_count = new unsigned int[blocks_num];
     _last_usage = new unsigned long[blocks_num];
     _pos = new POS[blocks_num];
-
+    for (int i = 0; i  < blocks_num ; ++i)
+    {
+        _pos[i] = NONE;
+    }
 }
 
 Fbr::~Fbr()
@@ -34,70 +37,79 @@ char* Fbr::get_next_block()
     }
     else
     {
-
-        next_block = _oldMap.lower_bound(0)->second;
+        auto min_it = _oldMap.begin();
+        for (auto it = _oldMap.begin(); it != _oldMap.end() ; ++it)
+        {
+            if(min_it->first.second < it->first.second)
+            {
+                min_it = it;
+            }
+        }
+        next_block = min_it->second;
     }
-    _ref_count[(next_block - _buf) / _block_size] = 0;
+    _ref_count[(next_block - _buf) / _block_size] = -1;
     return next_block;
 }
 
 void Fbr::update_usage(char *it)
 {
+    auto it_block = (it-_buf) / _block_size;
 
-   if(_oldMap.size() < _old)
-   {
-       if(_newMap.size() == _new)
-       {
-           auto map_it = _newMap.lower_bound(0);
+    // available free blocks
+    if(_oldMap.size() < _old && _pos[it_block] == NONE)
+    {
+        if(_newMap.size() == _new)
+        {
+            auto map_it = _newMap.lower_bound(0);
             _middleMap[map_it->first] = map_it->second;
             _pos[(map_it->second- _buf) / _block_size] = MIDDLE;
             _newMap.erase(map_it);
-           if(_middleMap.size() == _middle)
-           {
-               map_it = _middleMap.lower_bound(0);
-               _oldMap[map_it->first] = map_it->second;
-               _pos[(map_it->second - _buf) / _block_size] = OLD;
-               _middleMap.erase(map_it);
-           }
+            if(_middleMap.size() == _middle + 1)
+            {
+                map_it = _middleMap.lower_bound(0);
+                _oldMap[std::make_pair(map_it->first, _ref_count[(map_it->second - _buf) / _block_size])] = map_it->second;
+                _pos[(map_it->second - _buf) / _block_size] = OLD;
+                _middleMap.erase(map_it);
+            }
        }
        _newMap[_usage_count] = it;
-        _pos[(it-_buf) / _block_size] = NEW;
-   }
+        _pos[it_block] = NEW;
+    }
     else
     {
         auto map_it =_newMap.find(_last_usage[(it - _buf) / _block_size]);
         //deletes fro old or middle
-        if(_pos[(it-_buf) / _block_size] == NEW)
+        if(_pos[it_block] == NEW)
         {
-            _newMap.erase(_last_usage[(it-_buf) / _block_size]);
+            _newMap.erase(_last_usage[it_block]);
         }
         else
         {
-            _ref_count[(it-_buf) / _block_size]++;
+            _ref_count[it_block]++;
 
             map_it = _newMap.lower_bound(0);
             _middleMap[map_it->first] = map_it->second;
             _pos[(map_it->second- _buf) / _block_size] = MIDDLE;
             _newMap.erase(map_it);
 
-            if(_pos[(it-_buf) / _block_size] != MIDDLE)
+            if(_pos[it_block] != MIDDLE)
             {
-                _oldMap.erase(_last_usage[(it-_buf) / _block_size]);
+                _oldMap.erase(std::make_pair(_last_usage[it_block], _ref_count[it_block]));
                 map_it = _middleMap.lower_bound(0);
-                _oldMap[map_it->first] = map_it->second;
+                _oldMap[std::make_pair(map_it->first, _ref_count[(map_it->second - _buf) / _block_size])] = map_it->second;
                 _pos[(map_it->second - _buf) / _block_size] = OLD;
                 _middleMap.erase(map_it);
             }
             else
             {
-                _middleMap.erase(_last_usage[(it-_buf) / _block_size]);
+                _middleMap.erase(_last_usage[it_block]);
             }
         }
         _newMap[_usage_count] = it;
         _pos[(it - _buf) / _block_size] = NEW;
     }
 
-    _last_usage[(it-_buf) /_block_size] = _usage_count;
+    _last_usage[it_block] = _usage_count;
     _usage_count++;
 }
 
@@ -137,4 +149,6 @@ bool Fbr::cmp(const blc_data &a, const blc_data &b)
             }
     }
 }
+
+
 

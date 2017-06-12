@@ -57,28 +57,28 @@ include CMakeFiles/Ex4.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Ex4.dir/flags.make
 
-CMakeFiles/Ex4.dir/main.cpp.o: CMakeFiles/Ex4.dir/flags.make
-CMakeFiles/Ex4.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Ex4.dir/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Ex4.dir/main.cpp.o -c /home/yohai/CLionProjects/OS/Ex4/main.cpp
+CMakeFiles/Ex4.dir/TEST.cpp.o: CMakeFiles/Ex4.dir/flags.make
+CMakeFiles/Ex4.dir/TEST.cpp.o: ../TEST.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yohai/CLionProjects/OS/Ex4/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Ex4.dir/TEST.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Ex4.dir/TEST.cpp.o -c /home/yohai/CLionProjects/OS/Ex4/TEST.cpp
 
-CMakeFiles/Ex4.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Ex4.dir/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yohai/CLionProjects/OS/Ex4/main.cpp > CMakeFiles/Ex4.dir/main.cpp.i
+CMakeFiles/Ex4.dir/TEST.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Ex4.dir/TEST.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yohai/CLionProjects/OS/Ex4/TEST.cpp > CMakeFiles/Ex4.dir/TEST.cpp.i
 
-CMakeFiles/Ex4.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Ex4.dir/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yohai/CLionProjects/OS/Ex4/main.cpp -o CMakeFiles/Ex4.dir/main.cpp.s
+CMakeFiles/Ex4.dir/TEST.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Ex4.dir/TEST.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yohai/CLionProjects/OS/Ex4/TEST.cpp -o CMakeFiles/Ex4.dir/TEST.cpp.s
 
-CMakeFiles/Ex4.dir/main.cpp.o.requires:
+CMakeFiles/Ex4.dir/TEST.cpp.o.requires:
 
-.PHONY : CMakeFiles/Ex4.dir/main.cpp.o.requires
+.PHONY : CMakeFiles/Ex4.dir/TEST.cpp.o.requires
 
-CMakeFiles/Ex4.dir/main.cpp.o.provides: CMakeFiles/Ex4.dir/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/main.cpp.o.provides.build
-.PHONY : CMakeFiles/Ex4.dir/main.cpp.o.provides
+CMakeFiles/Ex4.dir/TEST.cpp.o.provides: CMakeFiles/Ex4.dir/TEST.cpp.o.requires
+	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/TEST.cpp.o.provides.build
+.PHONY : CMakeFiles/Ex4.dir/TEST.cpp.o.provides
 
-CMakeFiles/Ex4.dir/main.cpp.o.provides.build: CMakeFiles/Ex4.dir/main.cpp.o
+CMakeFiles/Ex4.dir/TEST.cpp.o.provides.build: CMakeFiles/Ex4.dir/TEST.cpp.o
 
 
 CMakeFiles/Ex4.dir/CacheAlg.cpp.o: CMakeFiles/Ex4.dir/flags.make
@@ -203,7 +203,7 @@ CMakeFiles/Ex4.dir/CacheFS.cpp.o.provides.build: CMakeFiles/Ex4.dir/CacheFS.cpp.
 
 # Object files for target Ex4
 Ex4_OBJECTS = \
-"CMakeFiles/Ex4.dir/main.cpp.o" \
+"CMakeFiles/Ex4.dir/TEST.cpp.o" \
 "CMakeFiles/Ex4.dir/CacheAlg.cpp.o" \
 "CMakeFiles/Ex4.dir/Lru.cpp.o" \
 "CMakeFiles/Ex4.dir/Lfu.cpp.o" \
@@ -213,7 +213,7 @@ Ex4_OBJECTS = \
 # External object files for target Ex4
 Ex4_EXTERNAL_OBJECTS =
 
-Ex4: CMakeFiles/Ex4.dir/main.cpp.o
+Ex4: CMakeFiles/Ex4.dir/TEST.cpp.o
 Ex4: CMakeFiles/Ex4.dir/CacheAlg.cpp.o
 Ex4: CMakeFiles/Ex4.dir/Lru.cpp.o
 Ex4: CMakeFiles/Ex4.dir/Lfu.cpp.o
@@ -229,7 +229,7 @@ CMakeFiles/Ex4.dir/build: Ex4
 
 .PHONY : CMakeFiles/Ex4.dir/build
 
-CMakeFiles/Ex4.dir/requires: CMakeFiles/Ex4.dir/main.cpp.o.requires
+CMakeFiles/Ex4.dir/requires: CMakeFiles/Ex4.dir/TEST.cpp.o.requires
 CMakeFiles/Ex4.dir/requires: CMakeFiles/Ex4.dir/CacheAlg.cpp.o.requires
 CMakeFiles/Ex4.dir/requires: CMakeFiles/Ex4.dir/Lru.cpp.o.requires
 CMakeFiles/Ex4.dir/requires: CMakeFiles/Ex4.dir/Lfu.cpp.o.requires

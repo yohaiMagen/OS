@@ -13,7 +13,8 @@ enum POS
 {
     OLD,
     NEW,
-    MIDDLE
+    MIDDLE,
+    NONE
 };
 
 class Fbr: public CacheAlg
@@ -25,7 +26,17 @@ private:
     POS* _pos;
     int _blocks_num;
     unsigned int _old, _new, _middle;
-    std::map<unsigned long, char*> _oldMap, _newMap, _middleMap;
+    std::map<unsigned long, char*> _newMap, _middleMap;
+    struct oldMap_cmp
+    {
+        bool operator()(const std::pair<unsigned long, unsigned int>& l, const std::pair<unsigned long, unsigned int>& r)
+        {
+            return l.first < r.first;
+        }
+    };
+    std::map<std::pair<unsigned long, unsigned int>, char*, oldMap_cmp> _oldMap;
+
+
 public:
     Fbr(int blocks_num, double f_old, double f_new);
     ~Fbr();

@@ -4,8 +4,12 @@
 CMakeFiles/Ex4.dir/CacheAlg.cpp.o: ../CacheAlg.cpp
 CMakeFiles/Ex4.dir/CacheAlg.cpp.o: ../CacheAlg.h
 
+CMakeFiles/Ex4.dir/CacheFS.cpp.o: ../CacheAlg.h
 CMakeFiles/Ex4.dir/CacheFS.cpp.o: ../CacheFS.cpp
 CMakeFiles/Ex4.dir/CacheFS.cpp.o: ../CacheFS.h
+CMakeFiles/Ex4.dir/CacheFS.cpp.o: ../Fbr.h
+CMakeFiles/Ex4.dir/CacheFS.cpp.o: ../Lfu.h
+CMakeFiles/Ex4.dir/CacheFS.cpp.o: ../Lru.h
 
 CMakeFiles/Ex4.dir/Fbr.cpp.o: ../CacheAlg.h
 CMakeFiles/Ex4.dir/Fbr.cpp.o: ../Fbr.cpp
@@ -19,5 +23,6 @@ CMakeFiles/Ex4.dir/Lru.cpp.o: ../CacheAlg.h
 CMakeFiles/Ex4.dir/Lru.cpp.o: ../Lru.cpp
 CMakeFiles/Ex4.dir/Lru.cpp.o: ../Lru.h
 
-CMakeFiles/Ex4.dir/main.cpp.o: ../main.cpp
+CMakeFiles/Ex4.dir/TEST.cpp.o: ../CacheFS.h
+CMakeFiles/Ex4.dir/TEST.cpp.o: ../TEST.cpp
 
