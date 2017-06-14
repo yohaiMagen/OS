@@ -15,23 +15,26 @@
 #include <cstring>
 #include <unistd.h>
 #include <fstream>
-
+//returned when exit in error
 #define ERR -1
+//returned when exit in success
 #define EXIT_SUCCESS 0
 
+// macro for printing format of cache misses and hits
 #define STAT(a ,b) "Hits number: " << a << "\nMisses number: " << b //<< "."
 
+// tuple that contain all the data needed for a specific block
 typedef std::tuple<std::string, int, char*> blc_data;
 typedef std::vector<blc_data> blc_data_vec;
 typedef std::vector<blc_data>::iterator blc_data_it;
 
-typedef std::pair<std::string, unsigned int> pathNblc;
 
 class CacheAlg
 {
 private:
-    pathNblc* buf_block2file_block;
-
+    /**
+     * implimitation of merge sort that can sort withe the non static comperators cmp(not like std::sort)
+     */
     blc_data_vec merge(blc_data_vec& left, blc_data_vec& right);
     blc_data_vec merge_sort(blc_data_it begin, blc_data_it end);
 
@@ -51,9 +54,13 @@ protected:
     char* _buf;
     //pointer to the beginning of the cache for filling up the cache in the first time
     char* _num_writen_blocks;
+    // block size of the running system
     size_t _block_size;
+    // suze of the cache
     size_t _buf_size;
+    // counter for the cache hit
     unsigned int _cash_hit;
+    // counter for the cache miss
     unsigned int _cash_miss;
 public:
 /**

@@ -24,7 +24,7 @@ int main()
      int x = pread(fd1, a , 10 , 0);
      char* b = a + x;
       x = pread(fd1, b , 10 , x);
-    std::cout << x << std::endl;
+    std::cout << sizeof(unsigned long) << std::endl;
 
     return 0;
 }
