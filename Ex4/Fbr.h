@@ -6,7 +6,7 @@
 #define EX4_FBR_H
 
 
-#include <ctime>
+#include <stdlib.h>
 #include "CacheAlg.h"
 
 enum POS
@@ -26,15 +26,7 @@ private:
     POS* _pos;
     int _blocks_num;
     unsigned int _old, _new, _middle;
-    std::map<unsigned long, char*> _newMap, _middleMap;
-    struct oldMap_cmp
-    {
-        bool operator()(const std::pair<unsigned long, unsigned int>& l, const std::pair<unsigned long, unsigned int>& r)
-        {
-            return l.first < r.first;
-        }
-    };
-    std::map<std::pair<unsigned long, unsigned int>, char*, oldMap_cmp> _oldMap;
+    std::map<unsigned long, char*> _oldMap, _newMap, _middleMap;
 
 
 public:

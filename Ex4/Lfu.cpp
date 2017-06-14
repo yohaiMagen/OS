@@ -15,7 +15,7 @@ Lfu::~Lfu()
 char* Lfu::get_next_block()
 {
     char* next_block;
-    if ((_num_writen_blocks - _buf)/ _block_size < _blocks_num)
+    if ((_num_writen_blocks - _buf)/ (int)_block_size < _blocks_num)
     {
         next_block = _num_writen_blocks;
         _num_writen_blocks += _block_size;

@@ -87,8 +87,8 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
     // how many character read from buffer - real count
     int acc_str_size = 0;
     // blocks margins
-    int first_blk = offset /_block_size;
-    int last_blk = (offset + count - 1) /_block_size;
+    unsigned int first_blk = offset /_block_size;
+    unsigned int last_blk = (offset + count - 1) /_block_size;
 
     for (unsigned int i = first_blk; i <= last_blk ; ++i)
     {
@@ -102,7 +102,6 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
         if(it ==  _fd_allocator[_fd2path[file_id]].end())
         {
             blc_start = get_next_block();
-            char* next = blc_start;
             // translate to position on buf
             int buf_block_num = (blc_start - _buf) / _block_size;
 
@@ -189,7 +188,7 @@ int CacheAlg::CacheFS_pread(int file_id, void *buf, size_t count, off_t offset)
         memcpy(acc_str_p, off, n);
         acc_str_p += n;
         acc_str_size += n;
-        if(read == 0 || real_block_size[(blc_start-_buf)/_block_size] < _block_size)
+        if(read == 0 || real_block_size[(blc_start-_buf)/_block_size] < (int)_block_size)
 //        update_usage(it->second);
 //        if(read == 0 || real_block_size[(it->second-_buf)/_block_size] < _block_size)
         {

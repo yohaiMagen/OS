@@ -7,7 +7,7 @@
 #include "Lru.h"
 #include "Fbr.h"
 
-#define ERR -1
+
 
 CacheAlg* cacher;
 
@@ -99,6 +99,7 @@ int CacheFS_destroy()
 {
     //TODO
     delete cacher;
+    return EXIT_SUCCESS;
 }
 
 
@@ -226,7 +227,7 @@ Notes:
  */
 int CacheFS_print_cache (const char *log_path)
 {
-    cacher->CacheFS_print_cache(log_path);
+    return cacher->CacheFS_print_cache(log_path);
 }
 
 
@@ -263,5 +264,5 @@ Notes:
  */
 int CacheFS_print_stat (const char *log_path)
 {
-    cacher->CacheFS_print_stat(log_path);
+    return cacher->CacheFS_print_stat(log_path);
 }
