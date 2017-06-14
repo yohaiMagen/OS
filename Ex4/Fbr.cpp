@@ -43,7 +43,8 @@ char* Fbr::get_next_block()
         auto min_it = _oldMap.begin();
         for (auto it = _oldMap.begin(); it != _oldMap.end() ; ++it)
         {
-            if(_ref_count[(it->second - _buf) / _block_size] < _ref_count[(min_it->second - _buf) / _block_size])
+            if(_ref_count[(it->second - _buf) / _block_size] <
+                    _ref_count[(min_it->second - _buf) / _block_size])
             {
                 min_it = it;
             }
@@ -131,7 +132,8 @@ bool Fbr::cmp(const blc_data &a, const blc_data &b)
                 case MIDDLE:
                     return true;
                 case NEW:
-                    return _last_usage[(std::get<2>(a) - _buf) / _block_size] >= _last_usage[(std::get<2>(b) - _buf) / _block_size];
+                    return _last_usage[(std::get<2>(a) - _buf) / _block_size] >=
+                           _last_usage[(std::get<2>(b) - _buf) / _block_size];
                 case NONE:
                     exit(ERR);
             }
@@ -141,7 +143,8 @@ bool Fbr::cmp(const blc_data &a, const blc_data &b)
                 case OLD:
                     return true;
                 case MIDDLE:
-                    return _last_usage[(std::get<2>(a) - _buf) / _block_size] >= _last_usage[(std::get<2>(b) - _buf) / _block_size];
+                    return _last_usage[(std::get<2>(a) - _buf) / _block_size] >=
+                           _last_usage[(std::get<2>(b) - _buf) / _block_size];
                 case NEW:
                     return false;
                 case NONE:
@@ -151,7 +154,8 @@ bool Fbr::cmp(const blc_data &a, const blc_data &b)
             switch (b_pos)
             {
                 case OLD:
-                    return _ref_count[(std::get<2>(a) - _buf) / _block_size] >= _ref_count[(std::get<2>(b) - _buf) / _block_size];
+                    return _ref_count[(std::get<2>(a) - _buf) / _block_size] >=
+                           _ref_count[(std::get<2>(b) - _buf) / _block_size];
                 case MIDDLE:
                 case NEW:
                     return false;

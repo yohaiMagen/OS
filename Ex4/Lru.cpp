@@ -27,7 +27,8 @@ char* Lru::get_next_block()
     else
     {
         next_block = _buf +
-                ((std::min_element(_last_usage, _last_usage + _blocks_num) - _last_usage) * _block_size);
+                ((std::min_element(_last_usage, _last_usage + _blocks_num) - _last_usage) *
+                        _block_size);
     }
 //    update_usage(next_block);
     return next_block;
@@ -43,10 +44,12 @@ void Lru::update_usage(char *it)
 bool Lru::cmp(const blc_data &a, const blc_data &b)
 {
     //TODO check if possible
-    if(_last_usage[(std::get<2>(a) - _buf) / _block_size] == _last_usage[(std::get<2>(b) - _buf) / _block_size])
+    if(_last_usage[(std::get<2>(a) - _buf) / _block_size] ==
+       _last_usage[(std::get<2>(b) - _buf) / _block_size])
     {
         return std::get<2>(a) < std::get<2>(b);
     }
-    return _last_usage[(std::get<2>(a) - _buf) / _block_size] > _last_usage[(std::get<2>(b) - _buf) / _block_size];
+    return _last_usage[(std::get<2>(a) - _buf) / _block_size] >
+           _last_usage[(std::get<2>(b) - _buf) / _block_size];
 }
 

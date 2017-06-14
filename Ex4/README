@@ -36,7 +36,7 @@ Lru - To keep track of the last recent used block we save an incremented variabl
 that evey time a block has been accessed that variable is incremented by 1. The
 variable bigger the the number the more resent usage.
 The variable si long long int type. to overflow the variable it would
-needed to accesses the memory 1.9e19 times that will take at least 584942 years
+needed to access the memory 1.9e19 times that will take at least 584942 years
 to menage all of the blocks in an array in each cell we save the last time we read
 from the block with the incremented variable.
 
