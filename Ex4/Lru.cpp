@@ -7,7 +7,7 @@
 Lru::Lru(int blocks_num) : CacheAlg(blocks_num)
 {
     _usage_count = 0;
-    _last_usage = new unsigned long[blocks_num];
+    _last_usage = new unsigned long long int[blocks_num];
     _blocks_num = blocks_num;
 }
 

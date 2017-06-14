@@ -15,7 +15,7 @@ Fbr::Fbr(int blocks_num, double f_old, double f_new):CacheAlg(blocks_num)
     _middle = blocks_num - _new - _old;
     _blocks_num = blocks_num;
     _ref_count = new unsigned int[blocks_num];
-    _last_usage = new unsigned long[blocks_num];
+    _last_usage = new unsigned long long int[blocks_num];
     _pos = new POS[blocks_num];
     for (int i = 0; i  < blocks_num ; ++i)
     {
