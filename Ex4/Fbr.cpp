@@ -2,6 +2,9 @@
 // Created by yohai on 5/26/17.
 //
 
+
+
+
 #include "Fbr.h"
 
 Fbr::Fbr(int blocks_num, double f_old, double f_new):CacheAlg(blocks_num)
@@ -30,7 +33,7 @@ Fbr::~Fbr()
 char* Fbr::get_next_block()
 {
     char* next_block;
-    if ((_num_writen_blocks - _buf) / _block_size < _blocks_num)
+    if ((_num_writen_blocks - _buf) / (int)_block_size < _blocks_num)
     {
         next_block = _num_writen_blocks;
         _num_writen_blocks += _block_size;
@@ -67,7 +70,7 @@ void Fbr::update_usage(char *it)
             if(_middleMap.size() == _middle + 1)
             {
                 map_it = _middleMap.lower_bound(0);
-                _oldMap[std::make_pair(map_it->first, _ref_count[(map_it->second - _buf) / _block_size])] = map_it->second;
+                _oldMap[map_it->first] = map_it->second;
                 _pos[(map_it->second - _buf) / _block_size] = OLD;
                 _middleMap.erase(map_it);
             }
@@ -96,9 +99,9 @@ void Fbr::update_usage(char *it)
 
             if(_pos[it_block] != MIDDLE)
             {
-                _oldMap.erase(std::make_pair(_last_usage[it_block], _ref_count[it_block]));
+                _oldMap.erase(_last_usage[it_block]);
                 map_it = _middleMap.lower_bound(0);
-                _oldMap[std::make_pair(map_it->first, _ref_count[(map_it->second - _buf) / _block_size])] = map_it->second;
+                _oldMap[map_it->first] = map_it->second;
                 _pos[(map_it->second - _buf) / _block_size] = OLD;
                 _middleMap.erase(map_it);
             }
@@ -129,6 +132,8 @@ bool Fbr::cmp(const blc_data &a, const blc_data &b)
                     return true;
                 case NEW:
                     return _last_usage[(std::get<2>(a) - _buf) / _block_size] >= _last_usage[(std::get<2>(b) - _buf) / _block_size];
+                case NONE:
+                    exit(ERR);
             }
         case MIDDLE:
             switch (b_pos)
@@ -139,6 +144,8 @@ bool Fbr::cmp(const blc_data &a, const blc_data &b)
                     return _last_usage[(std::get<2>(a) - _buf) / _block_size] >= _last_usage[(std::get<2>(b) - _buf) / _block_size];
                 case NEW:
                     return false;
+                case NONE:
+                    exit(ERR);
             }
         case OLD:
             switch (b_pos)
@@ -148,7 +155,11 @@ bool Fbr::cmp(const blc_data &a, const blc_data &b)
                 case MIDDLE:
                 case NEW:
                     return false;
+                case NONE:
+                    exit(ERR);
             }
+        default:
+            exit(ERR);
     }
 }
 
