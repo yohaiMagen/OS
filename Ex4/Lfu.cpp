@@ -15,7 +15,7 @@ Lfu::~Lfu()
 char* Lfu::get_next_block()
 {
     char* next_block;
-    if ((_num_writen_blocks - _buf)/ _block_size < _blocks_num)
+    if ((_num_writen_blocks - _buf)/ (int)_block_size < _blocks_num)
     {
         next_block = _num_writen_blocks;
         _num_writen_blocks += _block_size;
@@ -23,7 +23,8 @@ char* Lfu::get_next_block()
     else
     {
         next_block = _buf +
-                (std::min_element(_ref_count, _ref_count + _blocks_num) - _ref_count) * _block_size;
+                ((std::min_element(_ref_count, _ref_count + _blocks_num) - _ref_count) *
+                _block_size);
     }
     _ref_count[(next_block - _buf) / _block_size] = 0;
     return next_block;
@@ -36,9 +37,11 @@ void Lfu::update_usage(char *it)
 
 bool Lfu::cmp(const blc_data &a, const blc_data &b)
 {
-    if(_ref_count[(std::get<2>(a) - _buf) / _block_size] == _ref_count[(std::get<2>(b) - _buf) / _block_size])
+    if(_ref_count[(std::get<2>(a) - _buf) / _block_size] == _ref_count[(std::get<2>(b) - _buf) /
+                                                            _block_size])
     {
         return std::get<2>(a) < std::get<2>(b);
     }
-    return _ref_count[(std::get<2>(a) - _buf) / _block_size] > _ref_count[(std::get<2>(b) - _buf) / _block_size];
+    return _ref_count[(std::get<2>(a) - _buf) / _block_size] > _ref_count[(std::get<2>(b) - _buf) /
+                                                               _block_size];
 }

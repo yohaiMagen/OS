@@ -1,0 +1,50 @@
+yohai.magen, nivkeren
+Yohai Magen (30254196), Niv Keren (201478351)
+EX: 4
+
+FILES:
+CacherFs.cpp -- code file implementing the CacherFs library
+CacheAlg.h -- an abstract object of memory management algorithm header
+CacheAlg.cpp -- an abstract object of memory management algorithm implementation
+                to non virtual pictures
+Lfu.h -- less frequent used algorithm header file
+Lfu.cpp -- less frequent used algorithm implementation
+Lru.h -- last recent used algorithm header file
+Lru.cpp -- last recent used algorithm implementation
+Fbr.h -- Frequency-Based Replacement algorithm header file
+Fbr.cpp -- Frequency-Based Replacement algorithm implementation
+Makefile -- build the CacheFS.a
+README -- this file
+
+REMARKS:
+
+1. to implement the library we used a simple design of phasade and polymorphism
+the library creates an internal CacheAlg obfect according to the init input and every
+function is a simple call to the object identical function (phasade).
+ChaceAlg is an abstract class an the three algorithms (Lfu, Lru, Fbr) inherent the
+ChaceAlg and implement the virtual (=0) function according to the specific algorithm
+
+2. Data structures to implement the cacherFS library
+All blocks are saved in a map for each file where the key is the pass to the file
+and the value is a second map of the block number as key and the a pointer to the
+block of the buffer as value.
+To connect the fd to pass we used a map
+
+
+3. Algorithms
+Lru - To keep track of the last recent used block we save an incremented variable
+that evey time a block has been accessed that variable is incremented by 1. The
+variable bigger the the number the more resent usage.
+The variable si long long int type. to overflow the variable it would
+needed to access the memory 1.9e19 times that will take at least 584942 years
+to menage all of the blocks in an array in each cell we save the last time we read
+from the block with the incremented variable.
+
+Lfu - similar to Lru, in each cell of the array we save the number of times we
+read from each block.
+
+Fbr - the management of the last time and the frequency we read from the block is
+implemented the same way as in the Lru and Lfu. The blocks are also managed in three
+maps old, middle and new to divide them according to the algorithm.
+
+ANSWERS:
