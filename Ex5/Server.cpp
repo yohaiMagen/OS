@@ -3,7 +3,6 @@
 //
 
 
-#include <zconf.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <vector>
@@ -11,6 +10,7 @@
 #include <cstring>
 #include <stdlib.h>
 #include <unordered_map>
+#include <unistd.h>
 
 
 #define MAX_HOST_NAME 30
@@ -89,6 +89,7 @@ int accept_client()
     FD_SET(client_fd, &clientsfds);
     return 0;
 }
+
 int readFromfd(int fd, char* buf)
 {
     char* buf_p = buf;
@@ -148,11 +149,19 @@ void split(const std::string &s, std::vector<std::string>& result, unsigned int 
     }
     else
     {
+        int pos = 0;
         for (unsigned int i = 0; i < num_seg; ++i)
         {
-            std::getline(ss, item, SPACE_CHAR);
-            result.push_back(item);
-        }
+            int next = s.find(' ', pos);
+            int len = 0;
+            if ( i == (num_seg - 1))
+                len = s.length() - pos;
+            else
+            {
+                len = next - pos;
+            }
+            result.push_back(s.substr(pos, len));
+            pos = next + 1;
     }
 }
 
@@ -168,26 +177,29 @@ int client_operation(int fd)
     readFromfd(fd, buf);
     std::vector<std::string> split_msg;
     split(buf, split_msg, 3);
-    switch (split_msg[0])
+    if(split_msg[0] == CLIENT_NAME)
     {
-        case CLIENT_NAME:
-            int x = cname(split_msg[1], fd);
-            break;
-        case CREATE_GROUP:
-            create_group(split_msg[1], split_msg[2]);
-            break;
-        case SEND:
-            send_msg(split_msg[1], split_msg[2]);
-            break;
-        case WHO:
-            who();
-            break;
-        case EXIT:
-            terminate_client(fd);
-            break;
-        default:
-            // TODO ERR
-            break;
+        int x = cname(split_msg[1], fd);
+    }
+    else if(split_msg[0] == CREATE_GROUP)
+    {
+        create_group(split_msg[1], split_msg[2]);
+    }
+    else if(split_msg[0] ==  SEND)
+    {
+        send_msg(split_msg[1], split_msg[2]);
+    }
+    else if(split_msg[0] ==  WHO)
+    {
+        who();
+    }
+    else if(split_msg[0] ==  EXIT)
+    {
+        terminate_client(fd);
+    }
+    else
+    {
+        // TODO ERR
     }
 
 }

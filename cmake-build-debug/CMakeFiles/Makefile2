@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /home/nivkeren/CLionProjects/OS/cmake-build-debug
 CMakeFiles/test5.dir/all:
 	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/depend
 	$(MAKE) -f CMakeFiles/test5.dir/build.make CMakeFiles/test5.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles --progress-num=10,11,12,13,14,15,16 "Built target test5"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles --progress-num=12,13,14,15,16,17,18 "Built target test5"
 .PHONY : CMakeFiles/test5.dir/all
 
 # Include target in all.
@@ -93,6 +93,43 @@ CMakeFiles/test5.dir/clean:
 
 # clean rule for target.
 clean: CMakeFiles/test5.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/server.dir
+
+# All Build rule for target.
+CMakeFiles/server.dir/all:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/depend
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles --progress-num=10,11 "Built target server"
+.PHONY : CMakeFiles/server.dir/all
+
+# Include target in all.
+all: CMakeFiles/server.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/server.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/server.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nivkeren/CLionProjects/OS/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/server.dir/rule
+
+# Convenience name for target.
+server: CMakeFiles/server.dir/rule
+
+.PHONY : server
+
+# clean rule for target.
+CMakeFiles/server.dir/clean:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/clean
+.PHONY : CMakeFiles/server.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/server.dir/clean
 
 .PHONY : clean
 

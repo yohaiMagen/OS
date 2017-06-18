@@ -3,6 +3,7 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
       <config projectName="Ex4" targetName="test5" />
+      <config projectName="Ex4" targetName="server" />
       <config projectName="Ex4" targetName="Ex4" />
       <config projectName="Ex4" targetName="main" />
     </generated>
@@ -15,16 +16,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5596bfe9-74fd-4b6b-90c6-06bfc38f6589" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/CacheAlg.cpp" afterPath="$PROJECT_DIR$/Ex4/CacheAlg.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/CacheAlg.h" afterPath="$PROJECT_DIR$/Ex4/CacheAlg.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/Fbr.cpp" afterPath="$PROJECT_DIR$/Ex4/Fbr.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/Fbr.h" afterPath="$PROJECT_DIR$/Ex4/Fbr.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/Lfu.cpp" afterPath="$PROJECT_DIR$/Ex4/Lfu.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/Lfu.h" afterPath="$PROJECT_DIR$/Ex4/Lfu.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/Lru.cpp" afterPath="$PROJECT_DIR$/Ex4/Lru.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/Lru.h" afterPath="$PROJECT_DIR$/Ex4/Lru.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex4/main.cpp" afterPath="$PROJECT_DIR$/Ex4/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex5/Server.cpp" afterPath="$PROJECT_DIR$/Ex5/Server.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex5/main.cpp" afterPath="$PROJECT_DIR$/Ex5/main.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" />
@@ -42,95 +35,39 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CacheAlg.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ex4/CacheAlg.cpp">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+            <state relative-caret-position="234">
+              <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Server.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Ex5/Server.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="62">
+              <caret line="188" column="4" lean-forward="true" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="4" />
               <folding>
-                <element signature="e#651#1097#0" expanded="false" />
-                <element signature="e#1099#1335#0" expanded="false" />
+                <element signature="e#40#63#0" expanded="true" />
+                <element signature="e#1614#1918#0" expanded="false" />
+                <element signature="e#1920#2172#0" expanded="false" />
+                <element signature="e#2174#2362#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CacheAlg.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ex4/CacheAlg.h">
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Ex5/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-17">
-              <caret line="31" column="22" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Fbr.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ex4/Fbr.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Fbr.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Ex4/Fbr.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
-              <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TEST.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ex4/TEST.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="443" column="0" lean-forward="false" selection-start-line="443" selection-start-column="0" selection-end-line="443" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CacheFS.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ex4/CacheFS.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="189" column="0" lean-forward="false" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Lfu.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ex4/Lfu.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Lru.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ex4/Lru.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="14" column="19" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Lru.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Ex4/Lru.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="38" column="9" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="584">
+              <caret line="34" column="25" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="34" selection-end-column="25" />
+              <folding>
+                <element signature="e#1#20#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -187,7 +124,6 @@
         <option value="$PROJECT_DIR$/Ex3/ThreadToContainer.cpp" />
         <option value="$PROJECT_DIR$/Ex3/MapReduceFramework.cpp" />
         <option value="$PROJECT_DIR$/Ex4/CacheFS.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/Ex4/Lfu.h" />
         <option value="$PROJECT_DIR$/Ex4/main.cpp" />
         <option value="$PROJECT_DIR$/Ex4/Lru.h" />
@@ -198,6 +134,9 @@
         <option value="$PROJECT_DIR$/Ex4/Lfu.cpp" />
         <option value="$PROJECT_DIR$/Ex4/TEST.cpp" />
         <option value="$PROJECT_DIR$/Ex4/Fbr.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Ex5/main.cpp" />
+        <option value="$PROJECT_DIR$/Ex5/Server.cpp" />
       </list>
     </option>
   </component>
@@ -266,7 +205,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Ex4" />
+              <option name="myItemId" value="Ex5" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -297,7 +236,9 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/CMakeLists.txt</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/.idea/workspace.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/CMakeLists.txt</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/CacheAlg.cpp</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/CacheAlg.h</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/CacheFS.cpp</PATH>
@@ -307,8 +248,20 @@
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/Lfu.h</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/Lru.cpp</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/Lru.h</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/main.dir/CXX.includecache</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/CXX.includecache</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/CacheAlg.cpp.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/DependInfo.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/Fbr.cpp.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/Lfu.cpp.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/Lru.cpp.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/build.make</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/cmake_clean.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/depend.internal</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/depend.make</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/link.txt</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/main.dir/main.cpp.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/Ex4.cbp</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/Makefile</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/main</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/main.cpp</PATH>
         </FILE-GROUP>
@@ -318,6 +271,86 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="CREATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/.~lock.answers.odt#</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/Answers.pdf</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/CacheAlg.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/CacheFS.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/Fbr.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/Lfu.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/Lru.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/README</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/TEST.cpp</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/Test1.cpp</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/answers.odt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/BufferOutput1</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/BufferOutput2</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/BufferOutput3</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/BufferOutput4</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/BufferOutput5</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/CacheFS.cpp.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/TEST.cpp.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/Test1.cpp.o</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CacheLog1</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CacheLog2</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CacheLog3</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CacheLog4</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CacheLog5</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/Ex4</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/StatLog1</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/StatLog2</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/StatLog3</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/StatLog4</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/StatLog5</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/ex4.tar</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/makefile</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/test.txt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/.idea/Ex5.iml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/.idea/inspectionProfiles/Project_Default.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/.idea/misc.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/.idea/modules.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/.idea/workspace.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/CMakeLists.txt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/Client.cpp</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/Client.h</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/Server.cpp</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeCache.txt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CMakeCCompiler.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CMakeCXXCompiler.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CMakeDetermineCompilerABI_C.bin</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CMakeDetermineCompilerABI_CXX.bin</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CMakeSystem.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CompilerIdC/CMakeCCompilerId.c</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CompilerIdC/a.out</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CompilerIdCXX/CMakeCXXCompilerId.cpp</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/3.6.3/CompilerIdCXX/a.out</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/CMakeOutput.log</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Ex5.dir/DependInfo.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Ex5.dir/build.make</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Ex5.dir/cmake_clean.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Ex5.dir/depend.make</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Ex5.dir/flags.make</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Ex5.dir/link.txt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Ex5.dir/progress.make</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Makefile.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/Makefile2</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/TargetDirectories.txt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/clion-environment.txt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/clion-log.txt</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/cmake.check_cache</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/feature_tests.bin</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/feature_tests.c</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/feature_tests.cxx</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/CMakeFiles/progress.marks</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/Ex5.cbp</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/Makefile</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/cmake-build-debug/cmake_install.cmake</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex5/main.cpp</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/ex4Tests/CacheFS.a</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/ex4Tests/RunTests</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/ex4Tests/RunValgrind</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/ex4Tests/Tests.tar</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/ex4Tests/ValgrindLog</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Deleted" />
@@ -325,6 +358,7 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="true" />
           <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Ex4/cmake-build-debug/CMakeFiles/Ex4.dir/main.cpp.o</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Restored" />
@@ -418,7 +452,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.test5">
+  <component name="RunManager" selected="Application.main">
     <configuration default="true" type="CLion_Remote" factoryName="GDB Remote Debug" remoteCommand="" symbolFile="" sysroot="">
       <method />
     </configuration>
@@ -617,16 +651,21 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="server" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Ex4" TARGET_NAME="server" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Ex4" RUN_TARGET_NAME="server">
+      <envs />
+      <method />
+    </configuration>
     <configuration default="false" name="test5" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Ex4" TARGET_NAME="test5" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Ex4" RUN_TARGET_NAME="test5">
       <envs />
       <method />
     </configuration>
-    <list size="5">
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.Search" />
       <item index="2" class="java.lang.String" itemvalue="Application.Ex4" />
       <item index="3" class="java.lang.String" itemvalue="Application.main" />
-      <item index="4" class="java.lang.String" itemvalue="Application.test5" />
+      <item index="4" class="java.lang.String" itemvalue="Application.server" />
+      <item index="5" class="java.lang.String" itemvalue="Application.test5" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -642,7 +681,7 @@
       <workItem from="1493050954667" duration="6751000" />
       <workItem from="1494198656417" duration="28106000" />
       <workItem from="1495476245831" duration="72000" />
-      <workItem from="1496130710571" duration="37751000" />
+      <workItem from="1496130710571" duration="43573000" />
     </task>
     <task id="LOCAL-00001" summary="changed map to thread*, passed all of jonas tests&#10;delete copy constructor">
       <created>1493058314121</created>
@@ -693,11 +732,18 @@
       <option name="project" value="LOCAL" />
       <updated>1496148405638</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="need to fix fbr">
+      <created>1497211943185</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1497211943185</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72680000" />
+    <option name="totallyTimeSpent" value="78502000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1212" extended-state="6" />
@@ -705,15 +751,15 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17412399" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32788375" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32788375" sideWeight="0.47439352" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29609445" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26158038" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32788375" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32788375" sideWeight="0.52560645" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19891009" sideWeight="0.49595687" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32788375" sideWeight="0.47439352" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3996367" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3996367" sideWeight="0.49811321" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -736,29 +782,15 @@
     <MESSAGE value="need to finish writing log life" />
     <MESSAGE value="map and comments" />
     <MESSAGE value="finished Alg - need to implement the three algorithms&#10;found implementation in O(n)" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished Alg - need to implement the three algorithms&#10;found implementation in O(n)" />
+    <MESSAGE value="need to fix fbr" />
+    <option name="LAST_COMMIT_MESSAGE" value="need to fix fbr" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Ex4/TEST.cpp</url>
-          <line>752</line>
-          <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Ex4/TEST.cpp</url>
-          <line>424</line>
-          <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Ex4/TEST.cpp</url>
-          <line>442</line>
-          <option name="timeStamp" value="47" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Ex4/CacheAlg.cpp</url>
-          <line>96</line>
+          <line>98</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
       </breakpoints>
@@ -779,30 +811,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Ex3/MapReduceFramework.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8136">
-          <caret line="452" column="2" lean-forward="false" selection-start-line="452" selection-start-column="2" selection-end-line="452" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Ex3/MapReduceClient.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="6" lean-forward="false" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Ex3/ThreadToContainer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="29" column="36" lean-forward="false" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Ex3/ThreadToContainer.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -1083,14 +1091,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="20" lean-forward="false" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/6/bits/stl_tree.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1134,7 +1134,7 @@
     <entry file="file://$PROJECT_DIR$/Ex4/Lru.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
-          <caret line="14" column="19" lean-forward="false" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+          <caret line="14" column="6" lean-forward="false" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1165,44 +1165,84 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Ex4/CacheAlg.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-          <folding>
-            <element signature="e#651#1097#0" expanded="false" />
-            <element signature="e#1099#1335#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="686">
+          <caret line="98" column="0" lean-forward="false" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Ex4/CacheAlg.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-17">
-          <caret line="31" column="22" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        <state relative-caret-position="37">
+          <caret line="34" column="7" lean-forward="false" selection-start-line="34" selection-start-column="7" selection-end-line="34" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Ex4/Lru.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="38" column="9" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="432">
+          <caret line="39" column="9" lean-forward="false" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+          <folding>
+            <marker date="1497469028547" expanded="true" signature="1173:1227" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Ex4/Fbr.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-          <folding />
+        <state relative-caret-position="684">
+          <caret line="38" column="26" lean-forward="false" selection-start-line="38" selection-start-column="26" selection-end-line="38" selection-end-column="26" />
+          <folding>
+            <marker date="1497469028547" expanded="true" signature="1001:1189" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Ex4/Fbr.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="82" column="0" lean-forward="false" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+        <state relative-caret-position="414">
+          <caret line="87" column="33" lean-forward="false" selection-start-line="87" selection-start-column="33" selection-end-line="87" selection-end-column="33" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/x86_64-linux-gnu/bits/socket.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="22" column="2" lean-forward="false" selection-start-line="22" selection-start-column="2" selection-end-line="22" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ex5/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="584">
+          <caret line="34" column="25" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="34" selection-end-column="25" />
+          <folding>
+            <element signature="e#1#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ex5/Server.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="188" column="4" lean-forward="true" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="4" />
+          <folding>
+            <element signature="e#40#63#0" expanded="true" />
+            <element signature="e#1614#1918#0" expanded="false" />
+            <element signature="e#1920#2172#0" expanded="false" />
+            <element signature="e#2174#2362#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

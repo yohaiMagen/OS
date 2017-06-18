@@ -124,6 +124,19 @@ test5/fast:
 .PHONY : test5/fast
 
 #=============================================================================
+# Target rules for targets named server
+
+# Build rule for target.
+server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server
+.PHONY : server
+
+# fast build rule for target.
+server/fast:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
+.PHONY : server/fast
+
+#=============================================================================
 # Target rules for targets named main
 
 # Build rule for target.
@@ -332,7 +345,6 @@ Ex4/main.o: Ex4/main.cpp.o
 
 # target to build an object file
 Ex4/main.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex4/main.cpp.o
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/main.cpp.o
 .PHONY : Ex4/main.cpp.o
 
@@ -342,7 +354,6 @@ Ex4/main.i: Ex4/main.cpp.i
 
 # target to preprocess a source file
 Ex4/main.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex4/main.cpp.i
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/main.cpp.i
 .PHONY : Ex4/main.cpp.i
 
@@ -352,9 +363,62 @@ Ex4/main.s: Ex4/main.cpp.s
 
 # target to generate assembly for a file
 Ex4/main.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex4/main.cpp.s
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/main.cpp.s
 .PHONY : Ex4/main.cpp.s
+
+Ex5/Server.o: Ex5/Server.cpp.o
+
+.PHONY : Ex5/Server.o
+
+# target to build an object file
+Ex5/Server.cpp.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Ex5/Server.cpp.o
+.PHONY : Ex5/Server.cpp.o
+
+Ex5/Server.i: Ex5/Server.cpp.i
+
+.PHONY : Ex5/Server.i
+
+# target to preprocess a source file
+Ex5/Server.cpp.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Ex5/Server.cpp.i
+.PHONY : Ex5/Server.cpp.i
+
+Ex5/Server.s: Ex5/Server.cpp.s
+
+.PHONY : Ex5/Server.s
+
+# target to generate assembly for a file
+Ex5/Server.cpp.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Ex5/Server.cpp.s
+.PHONY : Ex5/Server.cpp.s
+
+Ex5/main.o: Ex5/main.cpp.o
+
+.PHONY : Ex5/main.o
+
+# target to build an object file
+Ex5/main.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex5/main.cpp.o
+.PHONY : Ex5/main.cpp.o
+
+Ex5/main.i: Ex5/main.cpp.i
+
+.PHONY : Ex5/main.i
+
+# target to preprocess a source file
+Ex5/main.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex5/main.cpp.i
+.PHONY : Ex5/main.cpp.i
+
+Ex5/main.s: Ex5/main.cpp.s
+
+.PHONY : Ex5/main.s
+
+# target to generate assembly for a file
+Ex5/main.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex5/main.cpp.s
+.PHONY : Ex5/main.cpp.s
 
 # Help Target
 help:
@@ -365,6 +429,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test5"
+	@echo "... server"
 	@echo "... main"
 	@echo "... Ex4"
 	@echo "... Ex4/CacheAlg.o"
@@ -388,6 +453,12 @@ help:
 	@echo "... Ex4/main.o"
 	@echo "... Ex4/main.i"
 	@echo "... Ex4/main.s"
+	@echo "... Ex5/Server.o"
+	@echo "... Ex5/Server.i"
+	@echo "... Ex5/Server.s"
+	@echo "... Ex5/main.o"
+	@echo "... Ex5/main.i"
+	@echo "... Ex5/main.s"
 .PHONY : help
 
 
