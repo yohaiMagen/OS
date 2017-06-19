@@ -11,7 +11,10 @@
 #include <stdlib.h>
 #include <unordered_map>
 #include <unistd.h>
-
+#include <set>
+#include <map>
+#include <iostream>
+#include "utilities.h"
 
 #define MAX_HOST_NAME 30
 
@@ -19,25 +22,19 @@
 
 #define CLIENT_PER_SOCET 10
 
-#define SPACE_CHAR ' '
 
-
-#define CREATE_GROUP "create_group"
-#define SEND "send"
-#define WHO "who\n"
-#define EXIT "exit\n"
-#define CLIENT_NAME "cname"
-
-
-
-std::vector<int> clients;
 char _my_name[MAX_HOST_NAME + 1];
 int _sfd;
-int _port;
+int _port;//TODO remove if not needed
 struct sockaddr_in _sa;
 struct hostent *hp;
+
+void terminate_client(int fd);
+
 fd_set clientsfds, readfds;
 std::unordered_map<int, std::string> fd2name;
+std::map<std::string, int> name2fd;
+std::unordered_map<std::string, std::set<int>> groups;
 
 
 
@@ -85,34 +82,17 @@ int accept_client()
     {
         return -1;
     }
-    clients.push_back(client_fd);
+    my_write(client_fd, GET_NAME);
     FD_SET(client_fd, &clientsfds);
     return 0;
 }
 
-int readFromfd(int fd, char* buf)
-{
-    char* buf_p = buf;
-    int to_read = 256;
-    int read_T = -1;
-    while (to_read > 0 || read_T != 0)
-    {
-
-        if((read_T = read(fd, buf_p, to_read)) < 0)
-        {
-            //TODO ERR
-        }
-        buf_p += read_T;
-        to_read -= read_T;
-
-    }
-}
 
 int terminateServer(int status)
 {
-    for (int i = 0; i < clientsfds.fd_count ; ++i)
+    for (auto it = fd2name.begin(); it != fd2name.end(); ++it)
     {
-        if(close(clientsfds.fd_array[i]))
+        if(close(it->first))
         {
             //TODO ERR
         }
@@ -126,8 +106,8 @@ int terminateServer(int status)
 
 int serverStdInput()
 {
-    char buf[256];
-    readFromfd(STDIN_FILENO, buf);
+    char buf[943];
+    my_read(STDIN_FILENO, buf);
     if(strcmp(buf, "EXIT/n"))
     {
         terminateServer(0);
@@ -137,44 +117,119 @@ int serverStdInput()
         //TODO ERR
     }
 }
-void split(const std::string &s, std::vector<std::string>& result, unsigned int num_seg = -1)
+
+
+int cname(std::string name, int fd)
 {
-    std::stringstream ss;
-    ss.str(s);
-    std::string item;
-    if (num_seg < 0) {
-        while (std::getline(ss, item, SPACE_CHAR)) {
-            result.push_back(item);
+    if(name2fd.find(name) != name2fd.end())
+    {
+        //TODO err
+    }
+    fd2name[fd] = name;
+    name2fd[name] = fd;
+    std::cout << CLIENT_CONECTED(name) << std::endl;
+    my_write(fd, CLIENT_CONECTED_SUCC);
+
+    return 0;
+}
+
+int create_group(std::string group_name, std::string client_list, int fd)
+{
+    if(groups.find(group_name) != groups.end())
+    {
+        my_write(fd, CREATE_GROUP_ERR(group_name));
+        std::cout << fd2name[fd] << ": " << CREATE_GROUP_ERR(group_name) << std::endl;
+        return -1;
+    }
+    std::vector<std::string> split_client_list;
+    split(client_list, split_client_list, CLIENT_DELIM);
+    std::set<int> client_fds;
+    for(auto it = split_client_list.begin(); it != split_client_list.end(); ++it)
+    {
+        if(name2fd.find(*it) != name2fd.end())
+        {
+            client_fds.insert(name2fd[*it]);
+        }
+        else
+        {
+            my_write(fd, CREATE_GROUP_ERR(group_name));
+            std::cout << fd2name[fd] << ": " << CREATE_GROUP_ERR(group_name) << std::endl;
+            return -1;
+        }
+    }
+    //insert the creator client
+    client_fds.insert(fd);
+    if(client_fds.size() == 1)
+    {
+        my_write(fd, CREATE_GROUP_ERR(group_name));
+        std::cout << fd2name[fd] << ": " << CREATE_GROUP_ERR(group_name) << std::endl;
+        return -1;
+    }
+    groups[group_name] = client_fds;
+    std::cout << fd2name[fd] << ":" << CREATE_GROUP_SUCC(group_name) << std::endl;
+    my_write(fd, CREATE_GROUP_SUCC(group_name));
+    return 0;
+}
+
+int send_msg(std::string send_to, std::string msg, int fd)
+{
+    if(name2fd.find(send_to) != name2fd.end())
+    {
+        my_write(name2fd[send_to], msg);
+    }
+    else if(groups.find(send_to) != groups.end())
+    {
+        for(auto it = groups[send_to]. begin(); it != groups[send_to].end(); ++it)
+        {
+            if(*it != fd)
+            {
+                my_write(*it, msg);
+                my_write(fd, SENT_SUCC);
+            }
         }
     }
     else
     {
-        int pos = 0;
-        for (unsigned int i = 0; i < num_seg; ++i)
-        {
-            int next = s.find(' ', pos);
-            int len = 0;
-            if ( i == (num_seg - 1))
-                len = s.length() - pos;
-            else
-            {
-                len = next - pos;
-            }
-            result.push_back(s.substr(pos, len));
-            pos = next + 1;
+        my_write(fd, FAIL_SEND);
+        std::cout << fd2name[fd] << FAIL_SEND_SERVER(msg, send_to) << std::endl;
     }
+    std::cout << fd2name[fd] << SEND_MSG(msg, send_to) << std::endl;
 }
 
-int cname(std::string name, int fd)
+int who(int fd)
 {
-    fd2name[fd] = name;
+    std::string str;
+    for(auto it = name2fd.begin(); it != name2fd.end(); ++it)
+    {
+        if(it-> second != fd)
+        {
+            str = str + "," + it->first;
+        }
+    }
+    str = str + ".\n";
+    my_write(fd, str);
+    std::cout << fd2name[fd] << WHO_MSG << std::endl;
     return 0;
+}
+
+void terminate_client(int fd)
+{
+    for(auto it = groups.begin(); it != groups.end(); ++it)
+    {
+        it->second.erase(fd);
+    }
+    std::string name = fd2name[fd];
+    fd2name.erase(fd);
+    name2fd.erase(name);
+    my_write(fd, UN_REG);
+    std::cout << name << ":" << UN_REG <<std::endl;
+
 }
 
 int client_operation(int fd)
 {
-    char buf[256];
-    readFromfd(fd, buf);
+    char buf[943];
+    my_read(fd, buf);
     std::vector<std::string> split_msg;
     split(buf, split_msg, 3);
     if(split_msg[0] == CLIENT_NAME)
@@ -183,15 +238,15 @@ int client_operation(int fd)
     }
     else if(split_msg[0] == CREATE_GROUP)
     {
-        create_group(split_msg[1], split_msg[2]);
+        create_group(split_msg[1], split_msg[2], fd);
     }
     else if(split_msg[0] ==  SEND)
     {
-        send_msg(split_msg[1], split_msg[2]);
+        send_msg(split_msg[1], split_msg[2], fd);
     }
     else if(split_msg[0] ==  WHO)
     {
-        who();
+        who(fd);
     }
     else if(split_msg[0] ==  EXIT)
     {
@@ -220,24 +275,23 @@ int select_client()
     {
         accept_client();
     }
-    FD_CLR(_sfd, &readfds);
-    FD_CLR(STDIN_FILENO, &readfds);
-    for (int i = 0; i < readfds.fd_count ; ++i)
+    for(auto it = fd2name.begin(); it != fd2name.end(); ++it)
     {
-        client_operation(readfds.fd_array[i]);
-
-
+        if(FD_ISSET(it->first, &readfds))
+        {
+            client_operation(it->first);
+        }
     }
     return 0;
 
 }
 
-int main()
+int main(int argc, char **argv)
 {
-    init();
+    init(atoi(argv[1]));
     while (true)
     {
         select_client();
     }
-
+    return 0;
 }

@@ -124,6 +124,19 @@ test5/fast:
 .PHONY : test5/fast
 
 #=============================================================================
+# Target rules for targets named client
+
+# Build rule for target.
+client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client
+.PHONY : client
+
+# fast build rule for target.
+client/fast:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
+.PHONY : client/fast
+
+#=============================================================================
 # Target rules for targets named server
 
 # Build rule for target.
@@ -366,6 +379,33 @@ Ex4/main.cpp.s:
 	$(MAKE) -f CMakeFiles/Ex4.dir/build.make CMakeFiles/Ex4.dir/Ex4/main.cpp.s
 .PHONY : Ex4/main.cpp.s
 
+Ex5/Client.o: Ex5/Client.cpp.o
+
+.PHONY : Ex5/Client.o
+
+# target to build an object file
+Ex5/Client.cpp.o:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Ex5/Client.cpp.o
+.PHONY : Ex5/Client.cpp.o
+
+Ex5/Client.i: Ex5/Client.cpp.i
+
+.PHONY : Ex5/Client.i
+
+# target to preprocess a source file
+Ex5/Client.cpp.i:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Ex5/Client.cpp.i
+.PHONY : Ex5/Client.cpp.i
+
+Ex5/Client.s: Ex5/Client.cpp.s
+
+.PHONY : Ex5/Client.s
+
+# target to generate assembly for a file
+Ex5/Client.cpp.s:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Ex5/Client.cpp.s
+.PHONY : Ex5/Client.cpp.s
+
 Ex5/Server.o: Ex5/Server.cpp.o
 
 .PHONY : Ex5/Server.o
@@ -420,6 +460,33 @@ Ex5/main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex5/main.cpp.s
 .PHONY : Ex5/main.cpp.s
 
+Ex5/utilities.o: Ex5/utilities.cpp.o
+
+.PHONY : Ex5/utilities.o
+
+# target to build an object file
+Ex5/utilities.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex5/utilities.cpp.o
+.PHONY : Ex5/utilities.cpp.o
+
+Ex5/utilities.i: Ex5/utilities.cpp.i
+
+.PHONY : Ex5/utilities.i
+
+# target to preprocess a source file
+Ex5/utilities.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex5/utilities.cpp.i
+.PHONY : Ex5/utilities.cpp.i
+
+Ex5/utilities.s: Ex5/utilities.cpp.s
+
+.PHONY : Ex5/utilities.s
+
+# target to generate assembly for a file
+Ex5/utilities.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Ex5/utilities.cpp.s
+.PHONY : Ex5/utilities.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -429,6 +496,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test5"
+	@echo "... client"
 	@echo "... server"
 	@echo "... main"
 	@echo "... Ex4"
@@ -453,12 +521,18 @@ help:
 	@echo "... Ex4/main.o"
 	@echo "... Ex4/main.i"
 	@echo "... Ex4/main.s"
+	@echo "... Ex5/Client.o"
+	@echo "... Ex5/Client.i"
+	@echo "... Ex5/Client.s"
 	@echo "... Ex5/Server.o"
 	@echo "... Ex5/Server.i"
 	@echo "... Ex5/Server.s"
 	@echo "... Ex5/main.o"
 	@echo "... Ex5/main.i"
 	@echo "... Ex5/main.s"
+	@echo "... Ex5/utilities.o"
+	@echo "... Ex5/utilities.i"
+	@echo "... Ex5/utilities.s"
 .PHONY : help
 
 

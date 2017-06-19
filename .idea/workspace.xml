@@ -6,6 +6,7 @@
       <config projectName="Ex4" targetName="server" />
       <config projectName="Ex4" targetName="Ex4" />
       <config projectName="Ex4" targetName="main" />
+      <config projectName="Ex4" targetName="client" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -15,7 +16,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5596bfe9-74fd-4b6b-90c6-06bfc38f6589" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Ex5/utilities.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Ex5/utilities.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex5/Client.cpp" afterPath="$PROJECT_DIR$/Ex5/Client.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex5/Server.cpp" afterPath="$PROJECT_DIR$/Ex5/Server.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Ex5/main.cpp" afterPath="$PROJECT_DIR$/Ex5/main.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" />
@@ -38,23 +43,42 @@
       <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+            <state relative-caret-position="288">
+              <caret line="16" column="21" lean-forward="false" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Server.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Ex5/Server.cpp">
+      <file leaf-file-name="utilities.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Ex5/utilities.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="188" column="4" lean-forward="true" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="4" />
+            <state relative-caret-position="72">
+              <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Client.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Ex5/Client.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="673">
+              <caret line="74" column="1" lean-forward="false" selection-start-line="74" selection-start-column="1" selection-end-line="74" selection-end-column="1" />
               <folding>
-                <element signature="e#40#63#0" expanded="true" />
-                <element signature="e#1614#1918#0" expanded="false" />
-                <element signature="e#1920#2172#0" expanded="false" />
-                <element signature="e#2174#2362#0" expanded="false" />
+                <element signature="e#39#62#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utilities.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Ex5/utilities.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="576">
+              <caret line="32" column="28" lean-forward="false" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="28" />
+              <folding>
+                <element signature="e#92#109#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -63,10 +87,22 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Ex5/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="584">
-              <caret line="34" column="25" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="34" selection-end-column="25" />
+            <state relative-caret-position="522">
+              <caret line="54" column="58" lean-forward="false" selection-start-line="54" selection-start-column="58" selection-end-line="54" selection-end-column="58" />
               <folding>
                 <element signature="e#1#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Server.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Ex5/Server.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1391">
+              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding>
+                <element signature="e#40#63#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,6 +126,12 @@
       <find>_fd_</find>
       <find>_buf</find>
       <find>std::time_t</find>
+      <find>clients</find>
+      <find>it</find>
+      <find>read</find>
+      <find>readFromfd</find>
+      <find>split</find>
+      <find>spa</find>
     </findStrings>
     <replaceStrings>
       <replace>-&gt;</replace>
@@ -99,8 +141,9 @@
       <replace>x</replace>
       <replace>map_pthread2</replace>
       <replace>map_thread2</replace>
-      <replace>2</replace>
       <replace>unsigned long</replace>
+      <replace>2</replace>
+      <replace>my_read</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -134,9 +177,12 @@
         <option value="$PROJECT_DIR$/Ex4/Lfu.cpp" />
         <option value="$PROJECT_DIR$/Ex4/TEST.cpp" />
         <option value="$PROJECT_DIR$/Ex4/Fbr.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/Ex5/main.cpp" />
+        <option value="$PROJECT_DIR$/Ex5/utilities.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/Ex5/Server.cpp" />
+        <option value="$PROJECT_DIR$/Ex5/utilities.h" />
+        <option value="$PROJECT_DIR$/Ex5/Client.cpp" />
       </list>
     </option>
   </component>
@@ -643,6 +689,10 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="client" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Ex4" TARGET_NAME="client" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Ex4" RUN_TARGET_NAME="client">
+      <envs />
+      <method />
+    </configuration>
     <configuration default="false" name="Ex4" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Ex4" TARGET_NAME="Ex4" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Ex4" RUN_TARGET_NAME="Ex4">
       <envs />
       <method />
@@ -659,13 +709,14 @@
       <envs />
       <method />
     </configuration>
-    <list size="6">
+    <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.Search" />
-      <item index="2" class="java.lang.String" itemvalue="Application.Ex4" />
-      <item index="3" class="java.lang.String" itemvalue="Application.main" />
-      <item index="4" class="java.lang.String" itemvalue="Application.server" />
-      <item index="5" class="java.lang.String" itemvalue="Application.test5" />
+      <item index="2" class="java.lang.String" itemvalue="Application.client" />
+      <item index="3" class="java.lang.String" itemvalue="Application.Ex4" />
+      <item index="4" class="java.lang.String" itemvalue="Application.main" />
+      <item index="5" class="java.lang.String" itemvalue="Application.server" />
+      <item index="6" class="java.lang.String" itemvalue="Application.test5" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -681,7 +732,7 @@
       <workItem from="1493050954667" duration="6751000" />
       <workItem from="1494198656417" duration="28106000" />
       <workItem from="1495476245831" duration="72000" />
-      <workItem from="1496130710571" duration="43573000" />
+      <workItem from="1496130710571" duration="57884000" />
     </task>
     <task id="LOCAL-00001" summary="changed map to thread*, passed all of jonas tests&#10;delete copy constructor">
       <created>1493058314121</created>
@@ -739,11 +790,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497211943185</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixed splitting str and switch case">
+      <created>1497810714097</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1497810714097</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78502000" />
+    <option name="totallyTimeSpent" value="92813000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1212" extended-state="6" />
@@ -751,11 +809,11 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17412399" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32788375" sideWeight="0.47439352" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29609445" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32788375" sideWeight="0.52560645" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32788375" sideWeight="0.46361187" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29609445" sideWeight="0.49811321" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29609445" sideWeight="0.5018868" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19891009" sideWeight="0.49595687" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32788375" sideWeight="0.47439352" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32788375" sideWeight="0.46361187" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -783,7 +841,8 @@
     <MESSAGE value="map and comments" />
     <MESSAGE value="finished Alg - need to implement the three algorithms&#10;found implementation in O(n)" />
     <MESSAGE value="need to fix fbr" />
-    <option name="LAST_COMMIT_MESSAGE" value="need to fix fbr" />
+    <MESSAGE value="fixed splitting str and switch case" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed splitting str and switch case" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -811,32 +870,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Ex3/ThreadToContainer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="25" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
-          <folding>
-            <element signature="e#109#129#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Ex3/Search.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="19" lean-forward="false" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="133" lean-forward="false" selection-start-line="8" selection-start-column="133" selection-end-line="8" selection-end-column="133" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/c++/6/bits/stl_pair.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3564">
@@ -1207,14 +1240,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/x86_64-linux-gnu/bits/socket.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -1223,25 +1248,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="21" lean-forward="false" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Ex5/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
-          <caret line="34" column="25" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="34" selection-end-column="25" />
+        <state relative-caret-position="522">
+          <caret line="54" column="58" lean-forward="false" selection-start-line="54" selection-start-column="58" selection-end-line="54" selection-end-column="58" />
           <folding>
             <element signature="e#1#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Ex5/utilities.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ex5/utilities.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="32" column="28" lean-forward="false" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="28" />
+          <folding>
+            <element signature="e#92#109#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Ex5/Server.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="188" column="4" lean-forward="true" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="4" />
+        <state relative-caret-position="-1391">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
             <element signature="e#40#63#0" expanded="true" />
-            <element signature="e#1614#1918#0" expanded="false" />
-            <element signature="e#1920#2172#0" expanded="false" />
-            <element signature="e#2174#2362#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ex5/Client.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="673">
+          <caret line="74" column="1" lean-forward="false" selection-start-line="74" selection-start-column="1" selection-end-line="74" selection-end-column="1" />
+          <folding>
+            <element signature="e#39#62#0" expanded="true" />
           </folding>
         </state>
       </provider>
