@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yohai/CLionProjects/OS/Ex5/main.cpp
+cstdio
+-
+cstdlib
+-
+netdb.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+arpa/inet.h
+-
+iostream
+-
+regex
+-
+utilities.h
+/home/yohai/CLionProjects/OS/Ex5/utilities.h
+
+/home/yohai/CLionProjects/OS/Ex5/utilities.cpp
+utilities.h
+/home/yohai/CLionProjects/OS/Ex5/utilities.h
+
+/home/yohai/CLionProjects/OS/Ex5/utilities.h
+vector
+-
+unistd.h
+-
+string
+-
+cstring
+-
+sstream
+-
+

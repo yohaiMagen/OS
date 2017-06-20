@@ -1,3 +1,5 @@
 /home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/CMakeFiles/edit_cache.dir
 /home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/CMakeFiles/Ex5.dir
+/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/CMakeFiles/client.dir
+/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/CMakeFiles/server.dir
+/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/CMakeFiles/main.dir

@@ -1,71 +1,48 @@
 
+
+
+#include <cstdio>
+#include <cstdlib>
+#include <netdb.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #include <iostream>
-#include <sstream>
-#include <vector>
-#include <map>
+#include <regex>
+#include "utilities.h"
 
-#define SPACE_CHAR ' '
-
-int main()
+int main(int argc, char *argv[])
 {
-
-//    std::string str  = " name niv a a   a a   a a a\n";
-//    std::vector<std::string> result;
-//    std::stringstream ss(str);
-//    std::string item;
-////    if (num_seg < 0) {
-////        while (std::getline(ss, item, SPACE_CHAR))
-////        {
-////            result.push_back(item);
-////        }
-////    }
-////    else
-////    {
-//        int j = 0;
-//        for (unsigned int i = 0; i < 3; ++i)
-//        {
-//            int next = str.find(' ', j);
-//            int len = 0;
-//            if ( i == (3 - 1))
-//                len = str.length() - j;
-//            else
-//            {
-//                len = next - j;
-//            }
-//            result.push_back(str.substr(j, len));
-//            j = next + 1;
-//            std::getline(ss, item, SPACE_CHAR);
-//            result.push_back(item);
-//        }
-//    }
-
-
-
-
-
-
-
-    std::map<std::string,int> a;
-    a["abc"] = 6;
-    a["abd"] = 0;
-    a["aa"] = 3;
-    a["zzz"] = -4;
-    for(auto it = a.begin(); it != a.end(); ++it)
-    {
-        std::cout << it->first << "," << it->second << "\"" << std::endl;
+    struct hostent *h;
+    if (argc != 2) {
+        fprintf(stderr, "usage: getip address\n");
+        exit(1);
     }
 
-
-
-
-
-
-
-
-////    std::cout << SOMAXCONN << std::endl;
-//    for (int i = 0; i < result.size(); ++i)
+    if ((h=gethostbyname("localhost")) == NULL) {
+        fprintf(stderr, "gethostbyname ");
+        exit(1);
+    }
+    printf("Host name : %s\n", h->h_name);
+    printf("IP Address : %s\n",
+           inet_ntoa(*((struct in_addr *)h->h_addr)));
+    return 0;
+//    std::string s1("exit");
+//    std::string s12("who1");
+//    std::smatch t;
+//    std::regex regx("send [a-zA-Z0-9]+ .+");
+//    if(std::regex_match(s1, regx))
 //    {
-//        std::cout << "-" << result[i] << "-" << std::endl;
+//        printf("yaaaa");
 //    }
-//    return 0;
+
+//    std::string s2("create_group group1 avi,beni,g0nv8dj,simon");
+//    std::regex regx1("create_group [a-zA-Z0-9]+ ([a-zA-Z0-9]+,)*[a-zA-Z0-9]+");
+//    if(std::regex_match(s2, regx1))
+//    {
+//        printf("yaaaa");
+//    }
+
+
+
 }

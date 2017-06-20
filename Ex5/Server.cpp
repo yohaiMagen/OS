@@ -14,6 +14,7 @@
 #include <set>
 #include <map>
 #include <iostream>
+#include <arpa/inet.h>
 #include "utilities.h"
 
 #define MAX_HOST_NAME 30
@@ -61,6 +62,8 @@ int init(int port)
     _sa.sin_family = hp->h_addrtype;
     memcpy(&_sa.sin_addr, hp->h_addr, hp->h_length);
     _sa.sin_port = htons(_port);
+    printf("IP Address : %s\n",
+           inet_ntoa(*((struct in_addr *)hp->h_addr)));//TODO remove before submission
 
     if (bind(_sfd , (struct sockaddr *)&_sa , sizeof(struct
             sockaddr_in)) < 0)
@@ -259,7 +262,7 @@ int client_operation(int fd)
 
 }
 
-int select_client()
+int server_select()
 {
     readfds = clientsfds;
     if(select(CLIENT_PER_SOCET +1, &readfds, NULL, NULL, NULL) < 0)//TODO check if select need time limit
@@ -291,7 +294,7 @@ int main(int argc, char **argv)
     init(atoi(argv[1]));
     while (true)
     {
-        select_client();
+        server_select();
     }
     return 0;
 }

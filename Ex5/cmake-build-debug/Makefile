@@ -111,17 +111,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Ex5
+# Target rules for targets named client
 
 # Build rule for target.
-Ex5: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Ex5
-.PHONY : Ex5
+client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 client
+.PHONY : client
 
 # fast build rule for target.
-Ex5/fast:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/build
-.PHONY : Ex5/fast
+client/fast:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
+.PHONY : client/fast
+
+#=============================================================================
+# Target rules for targets named server
+
+# Build rule for target.
+server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 server
+.PHONY : server
+
+# fast build rule for target.
+server/fast:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
+.PHONY : server/fast
+
+#=============================================================================
+# Target rules for targets named main
+
+# Build rule for target.
+main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 main
+.PHONY : main
+
+# fast build rule for target.
+main/fast:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
+.PHONY : main/fast
 
 Client.o: Client.cpp.o
 
@@ -129,7 +155,7 @@ Client.o: Client.cpp.o
 
 # target to build an object file
 Client.cpp.o:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/Client.cpp.o
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Client.cpp.o
 .PHONY : Client.cpp.o
 
 Client.i: Client.cpp.i
@@ -138,7 +164,7 @@ Client.i: Client.cpp.i
 
 # target to preprocess a source file
 Client.cpp.i:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/Client.cpp.i
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Client.cpp.i
 .PHONY : Client.cpp.i
 
 Client.s: Client.cpp.s
@@ -147,7 +173,7 @@ Client.s: Client.cpp.s
 
 # target to generate assembly for a file
 Client.cpp.s:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/Client.cpp.s
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/Client.cpp.s
 .PHONY : Client.cpp.s
 
 Server.o: Server.cpp.o
@@ -156,7 +182,7 @@ Server.o: Server.cpp.o
 
 # target to build an object file
 Server.cpp.o:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/Server.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Server.cpp.o
 .PHONY : Server.cpp.o
 
 Server.i: Server.cpp.i
@@ -165,7 +191,7 @@ Server.i: Server.cpp.i
 
 # target to preprocess a source file
 Server.cpp.i:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/Server.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Server.cpp.i
 .PHONY : Server.cpp.i
 
 Server.s: Server.cpp.s
@@ -174,7 +200,7 @@ Server.s: Server.cpp.s
 
 # target to generate assembly for a file
 Server.cpp.s:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/Server.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/Server.cpp.s
 .PHONY : Server.cpp.s
 
 main.o: main.cpp.o
@@ -183,7 +209,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -192,7 +218,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -201,8 +227,41 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/Ex5.dir/build.make CMakeFiles/Ex5.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+utilities.o: utilities.cpp.o
+
+.PHONY : utilities.o
+
+# target to build an object file
+utilities.cpp.o:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/utilities.cpp.o
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/utilities.cpp.o
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utilities.cpp.o
+.PHONY : utilities.cpp.o
+
+utilities.i: utilities.cpp.i
+
+.PHONY : utilities.i
+
+# target to preprocess a source file
+utilities.cpp.i:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/utilities.cpp.i
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/utilities.cpp.i
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utilities.cpp.i
+.PHONY : utilities.cpp.i
+
+utilities.s: utilities.cpp.s
+
+.PHONY : utilities.s
+
+# target to generate assembly for a file
+utilities.cpp.s:
+	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/utilities.cpp.s
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/utilities.cpp.s
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/utilities.cpp.s
+.PHONY : utilities.cpp.s
 
 # Help Target
 help:
@@ -212,7 +271,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Ex5"
+	@echo "... client"
+	@echo "... server"
+	@echo "... main"
 	@echo "... Client.o"
 	@echo "... Client.i"
 	@echo "... Client.s"
@@ -222,6 +283,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... utilities.o"
+	@echo "... utilities.i"
+	@echo "... utilities.s"
 .PHONY : help
 
 

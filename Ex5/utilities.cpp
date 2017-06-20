@@ -11,12 +11,17 @@ int my_read(int fd, char* buf)
     char* buf_p = buf;
     int to_read = 943;
     int read_T = -1;
-    while (to_read > 0 || read_T != 0)
+    bool continue_while = true;
+    while (to_read > 0 && continue_while)
     {
 
         if((read_T = read(fd, buf_p, to_read)) < 0)
         {
             //TODO ERR
+        }
+        if(buf_p[read_T-1] == '\n')
+        {
+            continue_while = false;
         }
         buf_p += read_T;
         to_read -= read_T;
@@ -34,7 +39,7 @@ int my_write(int fd, std::string msg)
     while (to_write > 0 || written != 0)
     {
 
-        if((written = read(fd, buf_p, to_write)) < 0)
+        if((written = write(fd, buf_p, to_write)) < 0)
         {
             //TODO ERR
         }
@@ -44,7 +49,7 @@ int my_write(int fd, std::string msg)
     return 0;
 }
 
-void split(const std::string &s, std::vector<std::string>& result, char delim = SPACE_CHAR, unsigned int num_seg = -1)
+void split(const std::string &s, std::vector<std::string>& result, char delim , unsigned int num_seg)
 {
     std::stringstream ss;
     ss.str(s);

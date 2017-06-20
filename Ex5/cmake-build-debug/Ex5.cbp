@@ -37,8 +37,8 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="Ex5">
-				<Option output="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Ex5" prefix_auto="0" extension_auto="0"/>
+			<Target title="client">
+				<Option output="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/client" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -54,14 +54,14 @@
 					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 Ex5"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 client"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="Ex5/fast">
-				<Option output="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Ex5" prefix_auto="0" extension_auto="0"/>
+			<Target title="client/fast">
+				<Option output="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/client" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -77,7 +77,99 @@
 					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 Ex5/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 client/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="server">
+				<Option output="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 server"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="server/fast">
+				<Option output="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 server/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="main">
+				<Option output="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/main" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 main"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="main/fast">
+				<Option output="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/main" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 main/fast"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/home/yohai/CLionProjects/OS/Ex5/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -85,19 +177,26 @@
 			</Target>
 		</Build>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/Client.cpp">
-			<Option target="Ex5"/>
+			<Option target="client"/>
 		</Unit>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/Client.h">
-			<Option target="Ex5"/>
+			<Option target="client"/>
 		</Unit>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/Server.cpp">
-			<Option target="Ex5"/>
-		</Unit>
-		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/Server.h">
-			<Option target="Ex5"/>
+			<Option target="server"/>
 		</Unit>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/main.cpp">
-			<Option target="Ex5"/>
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/utilities.cpp">
+			<Option target="client"/>
+			<Option target="server"/>
+			<Option target="main"/>
+		</Unit>
+		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/utilities.h">
+			<Option target="client"/>
+			<Option target="server"/>
+			<Option target="main"/>
 		</Unit>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
