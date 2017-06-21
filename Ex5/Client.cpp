@@ -103,6 +103,10 @@ int user_input()
         my_write(_cfd, input);
         my_read(_cfd, buf);
         std::cout << buf << std::endl;
+        if(std::regex_match(input, exit))
+        {
+            exit(0);
+        }
     }
     else
     {
