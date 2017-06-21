@@ -29,6 +29,12 @@ map
 -
 iostream
 -
+arpa/inet.h
+-
+limits
+-
+climits
+-
 utilities.h
 /home/yohai/CLionProjects/OS/Ex5/utilities.h
 

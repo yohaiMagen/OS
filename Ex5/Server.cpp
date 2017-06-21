@@ -15,6 +15,8 @@
 #include <map>
 #include <iostream>
 #include <arpa/inet.h>
+#include <limits>
+#include <climits>
 #include "utilities.h"
 
 #define MAX_HOST_NAME 30
@@ -62,8 +64,8 @@ int init(int port)
     _sa.sin_family = hp->h_addrtype;
     memcpy(&_sa.sin_addr, hp->h_addr, hp->h_length);
     _sa.sin_port = htons(_port);
-    printf("IP Address : %s\n",
-           inet_ntoa(*((struct in_addr *)hp->h_addr)));//TODO remove before submission
+//    printf("IP Address : %s\n",
+//           inet_ntoa(*((struct in_addr *)hp->h_addr)));//TODO remove before submission
 
     if (bind(_sfd , (struct sockaddr *)&_sa , sizeof(struct
             sockaddr_in)) < 0)
@@ -87,6 +89,7 @@ int accept_client()
     }
     my_write(client_fd, GET_NAME);
     FD_SET(client_fd, &clientsfds);
+    fd2name[client_fd] = "NONE";
     return 0;
 }
 
@@ -109,7 +112,7 @@ int terminateServer(int status)
 
 int serverStdInput()
 {
-    char buf[943];
+    char buf[BUFF_SIZE];
     my_read(STDIN_FILENO, buf);
     if(strcmp(buf, "EXIT/n"))
     {
@@ -176,9 +179,10 @@ int create_group(std::string group_name, std::string client_list, int fd)
 
 int send_msg(std::string send_to, std::string msg, int fd)
 {
+    std::string msg_to_client = fd2name[fd] + ":" + msg + "\n";
     if(name2fd.find(send_to) != name2fd.end())
     {
-        my_write(name2fd[send_to], msg);
+        my_write(name2fd[send_to], msg_to_client );
     }
     else if(groups.find(send_to) != groups.end())
     {
@@ -186,8 +190,7 @@ int send_msg(std::string send_to, std::string msg, int fd)
         {
             if(*it != fd)
             {
-                my_write(*it, msg);
-                my_write(fd, SENT_SUCC);
+                my_write(*it, msg_to_client);
             }
         }
     }
@@ -195,16 +198,18 @@ int send_msg(std::string send_to, std::string msg, int fd)
     {
         my_write(fd, FAIL_SEND);
         std::cout << fd2name[fd] << FAIL_SEND_SERVER(msg, send_to) << std::endl;
+        return -1;
     }
-    std::cout << fd2name[fd] << SEND_MSG(msg, send_to) << std::endl;
+    my_write(fd, SENT_SUCC);
+    std::cout << fd2name[fd] << SEND_MSG(msg, send_to);
 }
 
 int who(int fd)
 {
-    std::string str;
+    std::string str = fd2name[fd];
     for(auto it = name2fd.begin(); it != name2fd.end(); ++it)
     {
-        if(it-> second != fd)
+        if(it->second != fd)
         {
             str = str + "," + it->first;
         }
@@ -231,10 +236,10 @@ void terminate_client(int fd)
 
 int client_operation(int fd)
 {
-    char buf[943];
+    char buf[BUFF_SIZE];
     my_read(fd, buf);
     std::vector<std::string> split_msg;
-    split(buf, split_msg, 3);
+    split(buf, split_msg, SPACE_CHAR, 3);
     if(split_msg[0] == CLIENT_NAME)
     {
         int x = cname(split_msg[1], fd);

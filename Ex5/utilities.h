@@ -12,26 +12,28 @@
 #include <cstring>
 #include <sstream>
 
+#define BUFF_SIZE 1000
+
 #define CREATE_GROUP "create_group"
 #define SEND "send"
-#define WHO "who\n"
-#define EXIT "exit\n"
+#define WHO "who"
+#define EXIT "exit"
 #define CLIENT_NAME "cname"
 
-#define GET_NAME "whats your name"
+#define GET_NAME "whats your name\n"
 #define SPACE_CHAR ' '
 
-#define UN_REG "Unregistered successfully."
-#define WHO_MSG ": Requests the currently connected client names."
-#define SEND_MSG(msg, send_to)  ":\"" << msg << "\" was sent successfully to" << send_to << "."
-#define FAIL_SEND_SERVER(msg, send_to) "\"" << msg << "\" to " << send_to << "."
-#define FAIL_SEND "ERROR: failed to send."
+#define UN_REG "Unregistered successfully.\n"
+#define WHO_MSG ": Requests the currently connected client names.\n"
+#define SEND_MSG(msg, send_to)  ":\"" << msg << "\" was sent successfully to " << send_to << ".\n"
+#define FAIL_SEND_SERVER(msg, send_to) "\"" << msg << "\" to " << send_to << ".\n"
+#define FAIL_SEND "ERROR: failed to send.\n"
 #define CLIENT_DELIM ','
-#define SENT_SUCC "Sent successfully."
-#define CREATE_GROUP_ERR(group_name) "ERROR: failed to create group \"" + group_name + "\"."
-#define CREATE_GROUP_SUCC(group_name) "Group \"" + group_name + "\' was created successfully."
-#define CLIENT_CONECTED_SUCC "Connected successfuly."
-#define CLIENT_CONECTED(name) name << "connected."
+#define SENT_SUCC "Sent successfully.\n"
+#define CREATE_GROUP_ERR(group_name) "ERROR: failed to create group \"" + group_name + "\".\n"
+#define CREATE_GROUP_SUCC(group_name) "Group \"" + group_name + "\' was created successfully.\n"
+#define CLIENT_CONECTED_SUCC "Connected successfuly.\n"
+#define CLIENT_CONECTED(name) name << " connected.\n"
 
 int my_read(int fd, char* buf);
 

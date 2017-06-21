@@ -14,7 +14,7 @@
 #include "Client.h"
 
 #define MAX_CLIENT_NAME 30
-#define SEND_NAME(name) "cname " + name
+#define SEND_NAME(name) "cname " + name + "\n"
 
 
 int _cfd;
@@ -43,7 +43,7 @@ int init(int port, char* ip, char* name)
         return 1;
     }
     _sa.sin_family = AF_INET;
-    _sa.sin_port = htons((u_short)port);
+    _sa.sin_port = htons(port);
 
     if((_cfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
@@ -58,7 +58,9 @@ int init(int port, char* ip, char* name)
     }
     FD_ZERO(&server_set);
     FD_SET(_cfd, &server_set);
-    select(1, &server_set, NULL, NULL, NULL);//TODO put time out
+//    select(2, &server_set, NULL, NULL, NULL);//TODO put time out
+    char buf[BUFF_SIZE];
+    my_read(_cfd, buf);
     if(FD_ISSET(_cfd, &server_set))
     {
         //TODO check if can send something else than get name
@@ -67,19 +69,17 @@ int init(int port, char* ip, char* name)
 
     FD_ZERO(&server_set);
     FD_SET(_cfd, &server_set);
-    select(1, &server_set, NULL, NULL, NULL);//TODO put time out
-
-    if(FD_ISSET(_cfd, &server_set))
-    {
-        char buf[943];
+//    select(1, &server_set, NULL, NULL, NULL);//TODO put time out
+//    if(FD_ISSET(_cfd, &server_set))
+//    {
         my_read(_cfd, buf);
-        std::cout << buf << std::endl;
-        if(!strcmp(buf, CLIENT_CONECTED_SUCC))
+        std::cout << buf;
+        if(strcmp(buf, CLIENT_CONECTED_SUCC) != 0)
         {
             close(_cfd);
             exit(1);
         }
-    }
+//    }
     FD_ZERO(&server_set);
     FD_SET(_cfd, &server_set);
     FD_SET(STDIN_FILENO, &server_set);
@@ -88,22 +88,22 @@ int init(int port, char* ip, char* name)
 
 int user_input()
 {
-    char buf[943];
+    char buf[BUFF_SIZE];
     my_read(STDIN_FILENO, buf);
     std::string input(buf);
     std::regex who("who");
     std::regex group("create_group [a-zA-Z0-9]+ ([a-zA-Z0-9]+,)*[a-zA-Z0-9]+");
     std::regex send("send [a-zA-Z0-9]+ .+");
-    std::regex exit("exit");
-    if(std::regex_match(input, who)||
-            std::regex_match(input, group)||
-            std::regex_match(input, send)||
-            std::regex_match(input, exit))
+    std::regex exit_rgx("exit");
+    if(std::regex_match(input.substr(0, strlen(buf) - 1), who)||
+            std::regex_match(input.substr(0, strlen(buf) - 1), group)||
+            std::regex_match(input.substr(0, strlen(buf) - 1), send)||
+            std::regex_match(input.substr(0, strlen(buf) - 1), exit_rgx))
     {
         my_write(_cfd, input);
         my_read(_cfd, buf);
-        std::cout << buf << std::endl;
-        if(std::regex_match(input, exit))
+        std::cout << buf;
+        if(std::regex_match(input.substr(0, strlen(buf) - 1), exit_rgx))
         {
             exit(0);
         }
@@ -117,8 +117,10 @@ int user_input()
 
 int client_select()
 {
-    read_set = server_set;
-    if(select(3, &read_set, NULL, NULL, NULL) < 0)
+    FD_ZERO(&read_set);
+    FD_SET(STDIN_FILENO, &read_set);
+    FD_SET(_cfd, &read_set);
+    if(select(11, &read_set, NULL, NULL, NULL) < 0)
     {
         //TODO ERR
     }
@@ -128,9 +130,9 @@ int client_select()
     }
     if(FD_ISSET(_cfd, &read_set))
     {
-        char buf[943];
+        char buf[BUFF_SIZE];
         my_read(_cfd, buf);
-        std::cout << buf << std::endl;
+        std::cout << buf;
     }
 
 }

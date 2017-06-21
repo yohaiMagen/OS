@@ -9,7 +9,7 @@
 int my_read(int fd, char* buf)
 {
     char* buf_p = buf;
-    int to_read = 943;
+    int to_read = BUFF_SIZE;
     int read_T = -1;
     bool continue_while = true;
     while (to_read > 0 && continue_while)
@@ -26,6 +26,7 @@ int my_read(int fd, char* buf)
         buf_p += read_T;
         to_read -= read_T;
     }
+    buf[BUFF_SIZE -  to_read] = '\0';
     return 0;
 }
 
@@ -36,7 +37,7 @@ int my_write(int fd, std::string msg)
     char* buf_p = buf;
     int to_write = strlen(buf);
     int written = -1;
-    while (to_write > 0 || written != 0)
+    while (to_write > 0 && written != 0)
     {
 
         if((written = write(fd, buf_p, to_write)) < 0)
@@ -68,8 +69,11 @@ void split(const std::string &s, std::vector<std::string>& result, char delim , 
         {
             int next = s.find(delim, pos);
             int len = 0;
-            if (i == (num_seg - 1))
-                len = s.length() - pos;
+            if (i == (num_seg - 1) || next == std::string::npos)
+            {
+                len = s.length() - pos - 1;
+                i = num_seg - 1 ;
+            }
             else
             {
                 len = next - pos;
