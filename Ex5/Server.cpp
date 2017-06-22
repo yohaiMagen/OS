@@ -64,8 +64,8 @@ int init(int port)
     _sa.sin_family = hp->h_addrtype;
     memcpy(&_sa.sin_addr, hp->h_addr, hp->h_length);
     _sa.sin_port = htons(_port);
-//    printf("IP Address : %s\n",
-//           inet_ntoa(*((struct in_addr *)hp->h_addr)));//TODO remove before submission
+    printf("IP Address : %s\n",
+           inet_ntoa(*((struct in_addr *)hp->h_addr)));//TODO remove before submission
 
     if (bind(_sfd , (struct sockaddr *)&_sa , sizeof(struct
             sockaddr_in)) < 0)
@@ -78,6 +78,7 @@ int init(int port)
     FD_ZERO(&clientsfds);
     FD_SET(_sfd, &clientsfds);
     FD_SET(STDIN_FILENO, &clientsfds);
+    std::cin.clear();
 }
 
 int accept_client()
@@ -141,7 +142,7 @@ int cname(std::string name, int fd)
 
 int create_group(std::string group_name, std::string client_list, int fd)
 {
-    if(groups.find(group_name) != groups.end())
+    if(groups.find(group_name) != groups.end() || name2fd.find(group_name) != name2fd.end())
     {
         my_write(fd, CREATE_GROUP_ERR(group_name));
         std::cout << fd2name[fd] << ": " << CREATE_GROUP_ERR(group_name) << std::endl;
@@ -206,13 +207,12 @@ int send_msg(std::string send_to, std::string msg, int fd)
 
 int who(int fd)
 {
-    std::string str = fd2name[fd];
-    for(auto it = name2fd.begin(); it != name2fd.end(); ++it)
+    auto it = name2fd.begin();
+    std::string str = it->first;
+    ++it;
+    for(; it != name2fd.end(); ++it)
     {
-        if(it->second != fd)
-        {
-            str = str + "," + it->first;
-        }
+        str = str + "," + it->first;
     }
     str = str + ".\n";
     my_write(fd, str);
@@ -230,6 +230,7 @@ void terminate_client(int fd)
     fd2name.erase(fd);
     name2fd.erase(name);
     my_write(fd, UN_REG);
+    close(fd);
     std::cout << name << ":" << UN_REG <<std::endl;
 
 }
@@ -296,7 +297,11 @@ int server_select()
 
 int main(int argc, char **argv)
 {
-    init(atoi(argv[1]));
+    if(argc != 2)
+    {
+        std::cerr << "invalid input" << std::endl;
+    }
+    init(std::stoi(argv[1]));
     while (true)
     {
         server_select();

@@ -50,7 +50,7 @@ int my_write(int fd, std::string msg)
     return 0;
 }
 
-void split(const std::string &s, std::vector<std::string>& result, char delim , unsigned int num_seg)
+void split(const std::string& s, std::vector<std::string>& result, char delim , int num_seg)
 {
     std::stringstream ss;
     ss.str(s);
@@ -59,6 +59,7 @@ void split(const std::string &s, std::vector<std::string>& result, char delim , 
     {
         while (std::getline(ss, item, delim))
         {
+//            auto x = std::getline(ss, item, delim);
             result.push_back(item);
         }
     }
@@ -71,8 +72,14 @@ void split(const std::string &s, std::vector<std::string>& result, char delim , 
             int len = 0;
             if (i == (num_seg - 1) || next == std::string::npos)
             {
-                len = s.length() - pos - 1;
+                len = s.length() - pos;
                 i = num_seg - 1 ;
+                // delete '\n' character if needed
+                if(s.at(s.length() - 1) == '\n')
+                {
+                    len--;
+                }
+
             }
             else
             {

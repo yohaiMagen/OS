@@ -39,6 +39,6 @@ int my_read(int fd, char* buf);
 
 int my_write(int fd, std::string msg);
 
-void split(const std::string &s, std::vector<std::string>& result, char delim = SPACE_CHAR, unsigned int num_seg = -1);
+void split(const std::string &s, std::vector<std::string>& result, char delim = SPACE_CHAR, int num_seg = -1);
 
 #endif //EX4_UTILITIES_H

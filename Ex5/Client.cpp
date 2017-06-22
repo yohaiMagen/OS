@@ -139,6 +139,10 @@ int client_select()
 
 int main(int argc, char **argv)
 {
+    if(argc != 4)
+    {
+        std::cerr << "invalid input" << std::endl;
+    }
     init(atoi(argv[3]), argv[2], argv[1]);
     while (true)
     {
