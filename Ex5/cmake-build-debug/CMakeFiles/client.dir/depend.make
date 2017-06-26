@@ -4,7 +4,9 @@
 CMakeFiles/client.dir/Client.cpp.o: ../Client.cpp
 CMakeFiles/client.dir/Client.cpp.o: ../Client.h
 CMakeFiles/client.dir/Client.cpp.o: ../utilities.h
+CMakeFiles/client.dir/Client.cpp.o: ../whatsapp_exception.h
 
 CMakeFiles/client.dir/utilities.cpp.o: ../utilities.cpp
 CMakeFiles/client.dir/utilities.cpp.o: ../utilities.h
+CMakeFiles/client.dir/utilities.cpp.o: ../whatsapp_exception.h
 

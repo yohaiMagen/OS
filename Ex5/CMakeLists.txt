@@ -9,5 +9,5 @@ add_executable(main ${SOURCE_FILES})
 set(SOURCE_FILES1 Server.cpp utilities.cpp )
 add_executable(server ${SOURCE_FILES1})
 
-set(SOURCE_FILES2 Client.cpp utilities.cpp)
+set(SOURCE_FILES2 Client.cpp utilities.cpp whatsapp_exception.h)
 add_executable(client ${SOURCE_FILES2})

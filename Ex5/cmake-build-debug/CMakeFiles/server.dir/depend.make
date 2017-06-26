@@ -3,7 +3,9 @@
 
 CMakeFiles/server.dir/Server.cpp.o: ../Server.cpp
 CMakeFiles/server.dir/Server.cpp.o: ../utilities.h
+CMakeFiles/server.dir/Server.cpp.o: ../whatsapp_exception.h
 
 CMakeFiles/server.dir/utilities.cpp.o: ../utilities.cpp
 CMakeFiles/server.dir/utilities.cpp.o: ../utilities.h
+CMakeFiles/server.dir/utilities.cpp.o: ../whatsapp_exception.h
 

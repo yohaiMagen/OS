@@ -8,29 +8,29 @@ INCS=-I.
 CFLAGS = -Wall -Wextra -g -c -std=c++11
 LOADLIBES = -L./
 
-TARGETS = *.o CacheFS.a
+TARGETS = *.o whatsappServer whatsappClient
 
 TAR=tar
 TARFLAGS=-cvf
-TARNAME=ex4.tar
-TARSRCS = CacheFS.cpp CacheAlg.cpp CacheAlg.h Lfu.cpp Lfu.h Lru.cpp Lru.h Fbr.cpp Fbr.h README makefile Answers.pdf
+TARNAME=ex5.tar
+TARSRCS =  README makefile Server.cpp utilities.h Client.cpp utilities.cpp whatsapp_exception.h
 
 all: server client
 
-Server.o: Server.cpp utilities.h
+Server.o: Server.cpp utilities.h whatsapp_exception.h
 	$(CC) $(CFLAGS)  Server.cpp -o Server.o
 
-Client.o: Client.cpp utilities.h
+Client.o: Client.cpp utilities.h whatsapp_exception.h
 	$(CC) $(CFLAGS) Client.cpp -o Client.o
 
-utilities.o: utilities.cpp utilities.h
+utilities.o: utilities.cpp utilities.h whatsapp_exception.h
 	$(CC) $(CFLAGS) utilities.cpp -o utilities.o
 
 server: Server.o utilities.o
-	$(CC) -o server Server.o utilities.o
+	$(CC) -o whatsappServer Server.o utilities.o
 
 client: Client.o utilities.o
-	$(CC) -o client Client.o utilities.o
+	$(CC) -o whatsappClient Client.o utilities.o
 
 
 

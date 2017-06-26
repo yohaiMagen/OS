@@ -198,6 +198,9 @@
 			<Option target="server"/>
 			<Option target="main"/>
 		</Unit>
+		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/whatsapp_exception.h">
+			<Option target="client"/>
+		</Unit>
 		<Unit filename="/home/yohai/CLionProjects/OS/Ex5/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

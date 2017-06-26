@@ -11,13 +11,14 @@
 #include <string>
 #include <cstring>
 #include <sstream>
+#include "whatsapp_exception.h"
 
 #define BUFF_SIZE 1000
 
 #define CREATE_GROUP "create_group"
 #define SEND "send"
 #define WHO "who"
-#define EXIT "exit"
+#define EXIT "EXIT"
 #define CLIENT_NAME "cname"
 
 #define GET_NAME "whats your name\n"
@@ -25,15 +26,22 @@
 
 #define UN_REG "Unregistered successfully.\n"
 #define WHO_MSG ": Requests the currently connected client names.\n"
+#define FAIL_WHO "ERROR: failed to receive list of connected clients.\n"
 #define SEND_MSG(msg, send_to)  ":\"" << msg << "\" was sent successfully to " << send_to << ".\n"
 #define FAIL_SEND_SERVER(msg, send_to) "\"" << msg << "\" to " << send_to << ".\n"
 #define FAIL_SEND "ERROR: failed to send.\n"
 #define CLIENT_DELIM ','
 #define SENT_SUCC "Sent successfully.\n"
 #define CREATE_GROUP_ERR(group_name) "ERROR: failed to create group \"" + group_name + "\".\n"
-#define CREATE_GROUP_SUCC(group_name) "Group \"" + group_name + "\' was created successfully.\n"
+#define CREATE_GROUP_SUCC(group_name) "Group \"" + group_name + "\" was created successfully.\n"
 #define CLIENT_CONECTED_SUCC "Connected successfuly.\n"
+#define CLIENT_CONECTED_FAIL "Failed to connect.\n"
 #define CLIENT_CONECTED(name) name << " connected.\n"
+#define ILLEGAL_REQUEST "illegal request.\n"
+#define NAME_IN_USE "Client name is already in use.\n"
+#define SERVER_EXIT "server_exit\n"
+#define INVALID_INPUT "ERROR: Invalid input.\n"
+
 
 int my_read(int fd, char* buf);
 
