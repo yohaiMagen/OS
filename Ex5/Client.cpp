@@ -1,7 +1,7 @@
 //
 // Created by yohai on 6/17/17.
 //
-
+// -----------------------------------------------includes------------------------------------------------------------
 #include <netinet/in.h>
 #include <unistd.h>
 #include <cstring>
@@ -9,16 +9,33 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include "utilities.h"
-
+// -----------------------------------------------defines------------------------------------------------------------
 #define MAX_CLIENT_NAME 30
+// macro for sending the name to the server format
 #define SEND_NAME(name) "cname " + name + "\n"
-
-
+// --------------------------------------------variables------------------------------------------------------
+int init(int port, char* ip, char* name);
+int user_input();
+int client_select();
+int main(int argc, char **argv);
+// --------------------------------------------function-----------------------------------------------------------------
 int _cfd;
 char _my_name[MAX_CLIENT_NAME +1];
 struct sockaddr_in _sa;
 fd_set server_set, read_set;
-
+// --------------------------------------------function deceleration----------------------------------------------------
+int init(int port, char* ip, char* name);
+int user_input();
+int client_select();
+int main(int argc, char **argv);
+// --------------------------------------------function-----------------------------------------------------------------
+/**
+ * init a conecten to a whatsapp Server
+ * @param port  the port the server listen to
+ * @param ip the ip f the server
+ * @param name the name of the client
+ * @return  0 on success 1 otherwise
+ */
 int init(int port, char* ip, char* name)
 {
     // init socket struct
@@ -70,7 +87,11 @@ int init(int port, char* ip, char* name)
     FD_SET(STDIN_FILENO, &server_set);
     return 0;
 }
-
+/**
+ * read std input from the user pass the input to the server only if it is a valid input and
+ * exit the program on an exit command.
+ * @return 0 on success  1 otherwise
+ */
 int user_input()
 {
     char buf[BUFF_SIZE];
@@ -130,7 +151,10 @@ int user_input()
     }
     return 0;
 }
-
+/**
+ * listen to the std input and the socket fd withe select() and responds accordingly.
+ * @return  0 on success  1 otherwise
+ */
 int client_select()
 {
     FD_ZERO(&read_set);
@@ -159,7 +183,11 @@ int client_select()
     }
     return 0;
 }
-
+/**
+ * the main function
+ * @param argc expext value = 2
+ * @param argv
+ */
 int main(int argc, char **argv)
 {
     if(argc != 4)

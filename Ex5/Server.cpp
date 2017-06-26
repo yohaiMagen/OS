@@ -61,7 +61,6 @@ int init(int port)
     _sa.sin_family = (sa_family_t)hp->h_addrtype;
     memcpy(&_sa.sin_addr, hp->h_addr, (int)hp->h_length);
     _sa.sin_port = htons((uint16_t)port);
-
     if (bind(_sfd , (struct sockaddr *)&_sa , sizeof(struct
             sockaddr_in)) < 0)
     {
