@@ -1,8 +1,3 @@
-//
-// Created by yohai on 6/17/17.
-//
-
-
 #include <netinet/in.h>
 #include <netdb.h>
 #include <vector>
@@ -15,31 +10,48 @@
 #include <iostream>
 #include <arpa/inet.h>
 #include <limits>
+#include <stdlib.h>
 #include "utilities.h"
 
+// --------------------------------- defines ---------------------------------
 #define MAX_HOST_NAME 30
 
 #define NUM_OF_CLIENTS 30
 
+// number of clients the server listen to at once
 #define CLIENT_PER_SOCKET 10
 
+// -------------------------functions deceleration---------------------------------
+int illegal_request(int fd);
+int init(int port);
+int accept_client();
+int terminate_server(int status);
+int server_std_input();
+int cname(std::string name, int fd);
+int create_group(std::string group_name, std::string client_list, int fd);
+int send_msg(std::string send_to, std::string msg, int fd);
+int who(int fd);
+void terminate_client(int fd);
+int client_operation(int fd);
+int illegal_request(int fd);
+int server_select();
 
 char _my_name[MAX_HOST_NAME + 1];
+//server fd
 int _sfd;
 struct sockaddr_in _sa;
 struct hostent *hp;
-
-void terminate_client(int fd);
-
-int illegal_request(int fd);
 
 fd_set clientsfds, readfds;
 std::unordered_map<int, std::string> fd2name;
 std::map<std::string, int> name2fd;
 std::unordered_map<std::string, std::set<int>> groups;
 
-
-
+/**
+ * initialize the server
+ * @param port - int, the number of port
+ * @return 0 if initialized successfully, -1 if an error accord
+ */
 int init(int port)
 {
     if((_sfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
@@ -77,6 +89,10 @@ int init(int port)
     return 0;
 }
 
+/**
+ * accept the client to the server
+ * @return 0 if  successful, -1 if failed
+ */
 int accept_client()
 {
 
@@ -100,8 +116,14 @@ int accept_client()
     return 0;
 }
 
-
-int terminateServer(int status)
+/**
+ * termintes the server and all the clients that are connected to the server
+ * @param status the reason for termination
+ *               0 if terminated intentionally, 1 if the server is terminated because of
+ *               an error
+ * @return 0 if  successful, -1 if failed
+ */
+int terminate_server(int status)
 {
     for (auto it = fd2name.begin(); it != fd2name.end(); ++it)
     {
@@ -117,7 +139,11 @@ int terminateServer(int status)
     exit(status);
 }
 
-int serverStdInput()
+/**
+ * reads from the servers standard input and compiles the command accordingly
+ * @return 0 if  successful, -1 if failed
+ */
+int server_std_input()
 {
     char buf[BUFF_SIZE];
     my_read(STDIN_FILENO, buf);
@@ -127,7 +153,7 @@ int serverStdInput()
         {
             my_write(it->first, SERVER_EXIT);
         }
-        terminateServer(0);
+        terminate_server(0);
     }
     else
     {
@@ -136,7 +162,12 @@ int serverStdInput()
     return 0;
 }
 
-
+/**
+ * handles a name that is sent by a client
+ * @param name string, the name of the new client
+ * @param fd int, the number of the new clients fd
+ * @return 0 if successful, -1 if failed
+ */
 int cname(std::string name, int fd)
 {
     if(name2fd.find(name) != name2fd.end() ||
@@ -146,7 +177,7 @@ int cname(std::string name, int fd)
         fd2name.erase(fd);
         FD_CLR(fd, &clientsfds);
         close(fd);
-        return 0;
+        return -1;
     }
     fd2name[fd] = name;
     name2fd[name] = fd;
@@ -156,6 +187,13 @@ int cname(std::string name, int fd)
     return 0;
 }
 
+/**
+ * create a new group of clients
+ * @param group_name string, the name of the new group
+ * @param client_list string, the list of clients
+ * @param fd int, the fd of the group creator
+ * @return 0 if  successful, -1 if failed
+ */
 int create_group(std::string group_name, std::string client_list, int fd)
 {
     if(groups.find(group_name) != groups.end() || name2fd.find(group_name) != name2fd.end())
@@ -194,6 +232,13 @@ int create_group(std::string group_name, std::string client_list, int fd)
     return 0;
 }
 
+/**
+ * sends the given message to the given client(recipient)
+ * @param send_to string, the name of the recipient client
+ * @param msg string, the message to be send
+ * @param fd int, the fd of the sender
+ * @return 0 if  successful, -1 if failed
+ */
 int send_msg(std::string send_to, std::string msg, int fd)
 {
     std::string msg_to_client = fd2name[fd] + ":" + msg + "\n";
@@ -223,6 +268,11 @@ int send_msg(std::string send_to, std::string msg, int fd)
     return 0;
 }
 
+/**
+ * send the lisat of users in alphabetical order to the given fd.
+ * @param fd int, the fd of the client that asked the question
+ * @return 0 if  successful, -1 if failed
+ */
 int who(int fd)
 {
     auto it = name2fd.begin();
@@ -238,6 +288,10 @@ int who(int fd)
     return 0;
 }
 
+/**
+ * terminates and deletes the client from the server
+ * @param fd int, the fd of the terminated client
+ */
 void terminate_client(int fd)
 {
     for(auto it = groups.begin(); it != groups.end(); ++it)
@@ -254,6 +308,11 @@ void terminate_client(int fd)
 
 }
 
+/**
+ * parses and compiles the message sent from the client to the server
+ * @param fd int, the fd of the client connected to the server
+ * @return 0 if  successful, -1 if failed
+ */
 int client_operation(int fd)
 {
     char buf[BUFF_SIZE];
@@ -287,11 +346,20 @@ int client_operation(int fd)
     return 0;
 }
 
+/**
+ * send the given fd a fail message
+ * @param fd int, client's fd
+ * @return 0 if  successful, -1 if failed
+ */
 int illegal_request(int fd)
 {
     return my_write(fd, ILLEGAL_REQUEST);
 }
 
+/**
+ * server's main function. gets the ready to read from fd and acts accordingly
+ * @return
+ */
 int server_select()
 {
     readfds = clientsfds;
@@ -302,7 +370,7 @@ int server_select()
 
     if( FD_ISSET(STDIN_FILENO, &readfds))
     {
-        serverStdInput();
+        server_std_input();
     }
     if (FD_ISSET(_sfd, &readfds))
     {
@@ -320,6 +388,9 @@ int server_select()
 
 }
 
+/**
+ * main
+ */
 int main(int argc, char **argv)
 {
 
