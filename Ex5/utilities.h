@@ -5,14 +5,14 @@
 #ifndef EX4_UTILITIES_H
 #define EX4_UTILITIES_H
 
-
+// -----------------------------------------------includes------------------------------------------------------------
 #include <vector>
 #include <unistd.h>
 #include <string>
 #include <cstring>
 #include <sstream>
 #include "whatsapp_exception.h"
-
+// -----------------------------------------------defines------------------------------------------------------------
 #define BUFF_SIZE 1000
 
 #define CREATE_GROUP "create_group"
@@ -42,11 +42,29 @@
 #define SERVER_EXIT "server_exit\n"
 #define INVALID_INPUT "ERROR: Invalid input.\n"
 
-
+// --------------------------------------------function deceleration----------------------------------------------------
+/**
+ * raed from the fd until reach the maximum length of a messge in the whatsapp app or until  end of a line
+ * @param fd the file discriptur to read from
+ * @param buf the buffer to write to
+ * @return0 0 on success 1 othewise
+ */
 int my_read(int fd, char* buf);
-
+/**
+ * write all the contante of msg to the file discriptur fd
+ * @param fd the file discriptur to write from
+ * @param msg the messge to write
+ * @return 0 on success 1 othewise
+ */
 int my_write(int fd, std::string msg);
-
+/**
+ * split the string s by the delimiter delim to num_seg segment or k if there is k delim and k < num_seg
+ * put them in the vector result given by the caller
+ * @param s the string to split
+ * @param result a vector of splited strings
+ * @param delim the delimiter to split by
+ * @param num_seg the number of segment
+ */
 void split(const std::string &s, std::vector<std::string>& result, char delim = SPACE_CHAR, int num_seg = -1);
 
 #endif //EX4_UTILITIES_H
